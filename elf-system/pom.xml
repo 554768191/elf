@@ -28,6 +28,10 @@
         </dependency>
 
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
         </dependency>
@@ -55,4 +59,6 @@
         </dependency>
 
     </dependencies>
+
+
 </project>
