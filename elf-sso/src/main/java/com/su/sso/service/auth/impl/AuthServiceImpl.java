@@ -1,10 +1,11 @@
 package com.su.sso.service.auth.impl;
 
 
-import com.su.sso.Constants;
+import com.su.common.Constants;
+import com.su.common.exception.CommonException;
+import com.su.sso.SsoConstants;
 import com.su.sso.cache.CacheData;
 import com.su.sso.entity.SsoUser;
-import com.su.sso.exception.SsoException;
 import com.su.sso.service.auth.AuthService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -93,7 +94,7 @@ public class AuthServiceImpl implements AuthService {
                 ops.put("privileges", sb.toString());
             }
         }
-        redisTemplate.expire(token, Constants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
+        redisTemplate.expire(token, SsoConstants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
         return token;
 
     }
@@ -109,7 +110,7 @@ public class AuthServiceImpl implements AuthService {
         if(weakHashMap.get(token+"_"+uri)!=null){
             CacheData cacheData = weakHashMap.get(token+"_"+uri);
             long now = System.currentTimeMillis();
-            if(now - cacheData.getTime() < Constants.MEMORY_CACHE_SECONDS*1000){
+            if(now - cacheData.getTime() < SsoConstants.MEMORY_CACHE_SECONDS*1000){
                 cacheData.setTime(now);
                 return (boolean) cacheData.getValue();
             }
@@ -124,7 +125,7 @@ public class AuthServiceImpl implements AuthService {
                 String isSuper = ops.get("is_super");
                 if(StringUtils.isNotEmpty(isSuper) && isSuper.equals("1")){
                     addCache(token+"_"+uri);
-                    redisTemplate.expire(token, Constants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
+                    redisTemplate.expire(token, SsoConstants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
                     return true;
                 }
                 String privileges = ops.get("privileges");
@@ -133,12 +134,12 @@ public class AuthServiceImpl implements AuthService {
                     for(String p:ps){
                         if(uri.indexOf(p)>=0){
                             addCache(token+"_"+uri);
-                            redisTemplate.expire(token, Constants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
+                            redisTemplate.expire(token, SsoConstants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
                             return true;
                         }
                     }
                 }
-                throw new SsoException(Constants.NO_PERMISSION, "no permission");
+                throw new CommonException(Constants.NO_PERMISSION, "no permission");
             }else{
                 logger.warn("[{}]的用户token是[{}], 与缓存的clientIP不一致, 可能是伪造的请求", clientIP, token);
             }

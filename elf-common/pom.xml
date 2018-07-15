@@ -2,21 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>elf-common</artifactId>
-    <packaging>jar</packaging>
-
-    <name>common</name>
-
     <parent>
         <groupId>com.su</groupId>
         <artifactId>elf</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <dependencies>
+    <modelVersion>4.0.0</modelVersion>
 
+    <artifactId>elf-common</artifactId>
+    <packaging>jar</packaging>
+
+    <name>elf-common</name>
+
+    <dependencies>
         <!-- apache common -->
         <dependency>
             <groupId>commons-net</groupId>
@@ -59,15 +58,7 @@
     </dependencies>
 
     <build>
-        <finalName>common</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
+        <finalName>elf-common</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

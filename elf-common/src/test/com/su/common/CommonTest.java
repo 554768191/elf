@@ -1,4 +1,4 @@
-package com.su;
+package com.su.common;
 
 
 import com.su.common.utils.CaptchaUtil;
@@ -12,10 +12,10 @@ import java.io.OutputStream;
  * Hello world!
  *
  */
-public class App {
+public class CommonTest {
 
-
-    public static void main( String[] args ) {
+    @Test
+    public void test() {
         try {
             String str = AESUtil.encrypt("{\"key\":\"value\"}", "123");
             System.out.println(str);

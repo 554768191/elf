@@ -1,6 +1,6 @@
 package com.su.common.exception;
 
-public class AppException extends RuntimeException {
+public class CommonException extends RuntimeException {
 
     /**
      * 错误编码
@@ -13,11 +13,11 @@ public class AppException extends RuntimeException {
      * @param message  信息描述
      * @param cause  根异常类（可以存入任何异常）
      */
-    public AppException(String message, Throwable cause){
+    public CommonException(String message, Throwable cause){
         super(message, cause);
     }
 
-    public AppException(String message){
+    public CommonException(String message){
         super(message);
     }
 
@@ -27,7 +27,7 @@ public class AppException extends RuntimeException {
      * @param errorCode 错误编码
      * @param message 信息描述
     */
-    public AppException(int errorCode, String message) {
+    public CommonException(int errorCode, String message) {
         super(message);
         setErrorCode(errorCode);
     }

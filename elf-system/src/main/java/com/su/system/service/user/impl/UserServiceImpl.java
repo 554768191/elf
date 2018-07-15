@@ -3,7 +3,6 @@ package com.su.system.service.user.impl;
 import com.su.common.entity.Log;
 import com.su.common.entity.SearchParam;
 import com.su.common.mapper.LogMapper;
-import com.su.system.entity.ClientUserAgent;
 import com.su.system.entity.User;
 import com.su.system.mapper.UserMapper;
 import com.su.system.service.user.UserService;
