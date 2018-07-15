@@ -1,6 +1,7 @@
 package com.su.system.controller;
 
-import com.su.common.entity.ResultMap;
+import com.alibaba.fastjson.JSONObject;
+import com.su.common.entity.ResponseMessage;
 import com.su.common.entity.SearchParam;
 import com.su.system.entity.Role;
 import com.su.system.service.role.RoleService;
@@ -29,36 +30,42 @@ public class RoleController {
     RoleService roleService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResultMap getRoleList(SearchParam param){
+    public String getRoleList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         List<Role> list = roleService.getList(param);
         int total = roleService.getCount(param);
-        return ResultMap.ok().put("count", total).put("data", list);
+        JSONObject json = new JSONObject();
+        json.put("count", total);
+        json.put("data", list);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResultMap addRole(@RequestBody Role role){
+    public String addRole(@RequestBody Role role){
         role = roleService.insertPojo(role);
-
-        return ResultMap.ok().put("id", role.getId());
+        JSONObject json = new JSONObject();
+        json.put("id", role.getId());
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public ResultMap deleteRole(@PathVariable int pid){
+    public String deleteRole(@PathVariable int pid){
         roleService.deletePojo(pid);
-        return ResultMap.ok();
+        return ResponseMessage.ok();
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResultMap updateRole(@RequestBody Role role){
+    public String updateRole(@RequestBody Role role){
         roleService.updatePojo(role);
-        return ResultMap.ok();
+        return ResponseMessage.ok();
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public ResultMap getRole(@PathVariable int pid){
+    public String getRole(@PathVariable int pid){
         Role role = roleService.getPojo(pid);
-        return ResultMap.ok().put("role", role);
+        JSONObject json = new JSONObject();
+        json.put("role", role);
+        return ResponseMessage.ok(json);
     }
 
 }
