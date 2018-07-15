@@ -1,12 +1,9 @@
 package com.su.common;
 
 
-import com.su.common.utils.CaptchaUtil;
 import com.su.common.utils.encrypt.AESUtil;
+import org.junit.Test;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
 /**
  * Hello world!
