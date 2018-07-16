@@ -31,7 +31,7 @@
     <properties>
         <junit.version>4.12</junit.version>
         <mockito.version>2.15.0</mockito.version>
-        <lombok.version>1.14.8</lombok.version>
+        <lombok.version>1.18.0</lombok.version>
         <spring.data.redis.version>2.0.7.RELEASE</spring.data.redis.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -135,7 +135,12 @@
                 <artifactId>jsch</artifactId>
                 <version>0.1.54</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.0</version>
+                <scope>provided</scope>
+            </dependency>
 
             <dependency>
                 <groupId>eu.bitwalker</groupId>

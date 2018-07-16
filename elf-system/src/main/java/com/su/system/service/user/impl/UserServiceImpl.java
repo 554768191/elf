@@ -1,15 +1,12 @@
 package com.su.system.service.user.impl;
 
-import com.su.common.entity.Log;
 import com.su.common.entity.SearchParam;
-import com.su.common.mapper.LogMapper;
 import com.su.system.entity.User;
 import com.su.system.mapper.UserMapper;
 import com.su.system.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -24,8 +21,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
 
-    @Autowired
-    LogMapper logMapper;
 
     @Override
     public User getByName(String userName) {
@@ -33,19 +28,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
-    public void addLoginLog(HttpServletRequest request, String username, String message) {
-        ClientUserAgent agentGetter = new ClientUserAgent(request);
-        // 添加到登录日志
-        Log log = new Log();
-        log.setLevel("info");
-        log.setModule("system");
-        log.setClientIp(agentGetter.getIpAddr());
-        log.setContent(username + "登陆系统，" + message);
-        log.setBrowser(agentGetter.getBrowser());
-        log.setOs(agentGetter.getOS());
-        logMapper.insert(log);
-    }
 
     @Override
     public List<User> getList(SearchParam params) {

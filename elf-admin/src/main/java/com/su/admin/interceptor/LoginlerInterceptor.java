@@ -1,7 +1,7 @@
 package com.su.admin.interceptor;
 
 import com.su.common.Constants;
-import com.su.common.exception.AppException;
+import com.su.common.exception.CommonException;
 import com.su.sso.service.auth.AuthService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -70,7 +70,7 @@ public class LoginlerInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         logger.warn("uri: [{}]校验失败", uri);
-        throw new AppException(Constants.UN_AUTH, "auth failed");
+        throw new CommonException(Constants.UN_AUTH, "auth failed");
 
     }
 }
