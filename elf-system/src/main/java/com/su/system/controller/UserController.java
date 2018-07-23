@@ -3,7 +3,6 @@ package com.su.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.su.common.entity.ResponseMessage;
 import com.su.common.entity.SearchParam;
-import com.su.sso.service.auth.AuthService;
 import com.su.system.entity.User;
 import com.su.system.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +28,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    AuthService authService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getUserList(SearchParam param){

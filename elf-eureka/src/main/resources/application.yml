@@ -1,0 +1,8 @@
+server:
+  port: 8070
+
+#eureka.instance.hostname=localhost
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false

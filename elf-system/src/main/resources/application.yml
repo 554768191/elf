@@ -1,11 +1,19 @@
 app:
   version: 1.0
 
-#server.port=8080
-#server.servlet.context-path=/system
+server:
+  port: 8081
+#  servlet:
+#    context-path: /system
 
+eureka:
+  client:
+    service-url.defaultZone: http://localhost:8070/eureka/
 #
 spring:
+##
+  application:
+    name: system
 ## mysql 配置
   datasource:
     url: jdbc:mysql://172.18.36.120:3306/wechat?characterEncoding=UTF-8
@@ -18,7 +26,7 @@ spring:
     port: 6379
 
 mybatis:
-  mapper-locations: classpath*:mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml
 
 #
 logging:
@@ -26,6 +34,5 @@ logging:
     com.su: debug
 #logging.level.org.springframework.transaction=debug
     org.mybatis: debug
-
 
 

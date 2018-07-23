@@ -57,7 +57,8 @@ body {
   margin: 10px;
 }
 .wrapper {
-  margin-left: 300px;
+  padding-bottom: 200px;
   width: 100%;
-  min-height: 500px;
+  height: 100%;
+  min-height: 700px;
 }
