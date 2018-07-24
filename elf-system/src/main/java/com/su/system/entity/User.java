@@ -6,7 +6,7 @@ public class User {
 
 	private int id;
 	private String account;
-	private String passWord;
+	private String password;
 	private String nickName = "";
 	private String phone = "";
 	private int sex;
@@ -32,12 +32,12 @@ public class User {
 		this.account = account;
 	}
 
-	public String getPassWord() {
-		return passWord;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getNickName() {

@@ -1,5 +1,6 @@
 package com.su.admin.service.privilege.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.su.admin.entity.Privilege;
 import com.su.admin.service.privilege.PrivilegeService;
 import com.su.common.entity.SearchParam;
@@ -44,7 +45,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public List<Privilege> getList(SearchParam params) {
+    public JSONObject getList(SearchParam params) {
         List<Privilege> pList = getPrivilegeByParentId(0);
         Map<Integer, String> maps = new HashMap<>();
         for(Privilege p:pList){
@@ -56,30 +57,26 @@ public class PrivilegeServiceImpl implements PrivilegeService {
                 p.setParentName(maps.get(p.getParentId()));
             }
         }
-        return list;
+        return null;
     }
 
-    @Override
-    public int getCount(SearchParam params) {
-        return 0;
-    }
 
     @Override
-    public Privilege getPojo(int id) {
+    public JSONObject getPojo(int id) {
         return null;
     }
 
     @Override
-    public Privilege insertPojo(Privilege pojo) {
+    public int insertPojo(Privilege pojo) {
         int id = 0;
         pojo.setId(id);
-        return pojo;
+        return id;
     }
 
     @Override
-    public Privilege updatePojo(Privilege pojo) {
+    public int updatePojo(Privilege pojo) {
         //privilegeMapper.update(pojo);
-        return pojo;
+        return 0;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.su.common.entity;
+package com.su.system.entity;
 
 /**
  * @author surongyao

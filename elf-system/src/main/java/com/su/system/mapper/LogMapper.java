@@ -1,7 +1,8 @@
-package com.su.common.mapper;
+package com.su.system.mapper;
 
 
-import com.su.common.entity.Log;
+import com.su.common.mapper.BaseMapper;
+import com.su.system.entity.Log;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

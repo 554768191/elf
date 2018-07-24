@@ -53,8 +53,9 @@ public class RequestLogAspect {
                         if(args[i] != null) {
                             String className = args[i].getClass().getSimpleName();
                             // HttpServletRequest and HttpServletResponse not need
-                            if(className.equalsIgnoreCase("HttpServletRequest")
-                                    || className.equalsIgnoreCase("HttpServletResponse")){
+                            if(className.indexOf("HttpServletRequest")>=0
+                                    || className.indexOf("HttpServletResponse")>=0
+                                    || className.indexOf("ResponseFacade")>=0){
                                 continue;
                             }
                             if(j > 0){

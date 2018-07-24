@@ -88,7 +88,8 @@ public class LoginController {
         User user = userService.getByName(account);
 
         if(user!=null){
-            if(password!=null && user.getPassWord().equals(password)){
+            if(!StringUtils.isAnyEmpty(password, user.getPassWord())
+                    && user.getPassWord().equals(password)){
                 SsoUser ssoUser = new SsoUser();
                 ssoUser.setAccount(account);
                 ssoUser.setIsSuper(user.getIsSuper());
@@ -119,7 +120,7 @@ public class LoginController {
                 return ResponseMessage.error(Constants.ILLEGAL_PARAM, "密码错误");
             }
         }else{
-            return ResponseMessage.error(-14, "用户不存在");
+            return ResponseMessage.error(Constants.NO_USER, "用户不存在");
         }
 
     }

@@ -2,6 +2,7 @@ package com.su.admin.service;
 
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.su.common.entity.SearchParam;
 
 import java.util.List;
@@ -18,16 +19,7 @@ public interface BaseService<T> {
      * @return List
      * @throws
      */
-    List<T> getList(SearchParam params);
-
-    /**
-     * get count.
-     *
-     * @param params
-     * @return int
-     * @throws
-     */
-    int getCount(SearchParam params);
+    JSONObject getList(SearchParam params);
 
     /**
      * get pojo.
@@ -36,7 +28,7 @@ public interface BaseService<T> {
      * @return T
      * @throws
      */
-    T getPojo(int id);
+    JSONObject getPojo(int id);
 
     /**
      * add pojo.
@@ -45,7 +37,7 @@ public interface BaseService<T> {
      * @return int
      * @throws
      */
-    T insertPojo(T pojo);
+    int insertPojo(T pojo);
 
     /**
      * update pojo.
@@ -54,7 +46,7 @@ public interface BaseService<T> {
      * @return int
      * @throws
      */
-    T updatePojo(T pojo);
+    int updatePojo(T pojo);
 
     /**
      * delete pojo.

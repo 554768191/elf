@@ -21,10 +21,11 @@
     <modules>
         <module>elf-common</module>
         <module>elf-sso</module>
+        <module>elf-eureka</module>
         <module>elf-system</module>
         <module>elf-admin</module>
         <module>elf-web</module>
-        <module>elf-eureka</module>
+
         <!--<module>sso</module>-->
     </modules>
 

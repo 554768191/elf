@@ -17,7 +17,7 @@ spring:
     name: system
 ## mysql 配置
   datasource:
-    url: jdbc:mysql://172.18.36.120:3306/wechat?characterEncoding=UTF-8
+    url: jdbc:mysql://172.18.36.120:3306/cms?characterEncoding=UTF-8
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
@@ -28,6 +28,11 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+#  config-location: classpath:mybatis/mybatis-config.xml
+#  configuration:
+#    interceptors:
+#      - com.su.system.interceptor.mybatis.SqlFetchInterceptor
+
 
 #
 logging:

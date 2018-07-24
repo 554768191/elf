@@ -8,6 +8,8 @@ package com.su.common;
 public class Constants {
 
     //通用错误，未知具体错误
+    public static final int SUCCESS = 0;
+    //通用错误，未知具体错误
     public static final int SERVER_ERROR = 500;
     // 参数非法
     public static final int ILLEGAL_PARAM = 100;
