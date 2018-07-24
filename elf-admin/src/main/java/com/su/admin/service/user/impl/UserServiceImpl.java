@@ -1,11 +1,15 @@
 package com.su.admin.service.user.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.su.admin.entity.ClientUserAgent;
 import com.su.admin.entity.User;
 import com.su.admin.service.user.UserService;
 import com.su.common.entity.Log;
 import com.su.common.entity.SearchParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -19,14 +23,27 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     @Override
-    public User getByName(String userName) {
-        //User user = userMapper.getByName(userName);
+    @HystrixCommand(fallbackMethod = "fallback")
+    public User getByName(String account) {
+        String string = restTemplate.getForEntity("http://system/user?name=admin", String.class).getBody();
+        JSONObject json = JSONObject.parseObject(string);
+
         return null;
     }
+
+    /**
+     * hystrix fallback方法
+     */
+    public User fallback(String account) {
+        System.out.println("异常发生，进入fallback方法");
+        return null;
+    }
+
 
     @Override
     public void addLoginLog(HttpServletRequest request, String username, String message) {
@@ -74,5 +91,6 @@ public class UserServiceImpl implements UserService {
     public int deletePojo(int id) {
         return 0;
     }
+
 
 }

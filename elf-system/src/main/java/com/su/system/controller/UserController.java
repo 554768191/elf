@@ -36,7 +36,7 @@ public class UserController {
         int total = userService.getCount(param);
         JSONObject json = new JSONObject();
         json.put("count", total);
-        json.put("data", list);
+        json.put("list", list);
         return ResponseMessage.ok(json);
     }
 

@@ -32,7 +32,7 @@ public class IndexController {
 
     @RequestMapping()
     public String welcome(){
-        return "welcome to system, version is " + version;
+        return "welcome to admin, version is " + version;
     }
 
     @RequestMapping("/menu")

@@ -36,7 +36,7 @@ public class RoleController {
         int total = roleService.getCount(param);
         JSONObject json = new JSONObject();
         json.put("count", total);
-        json.put("data", list);
+        json.put("list", list);
         return ResponseMessage.ok(json);
     }
 

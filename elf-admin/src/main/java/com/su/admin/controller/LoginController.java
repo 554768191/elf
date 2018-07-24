@@ -45,7 +45,8 @@ public class LoginController {
 
 
     @RequestMapping("/captcha")
-    public void captcha(HttpServletRequest request, HttpServletResponse response, String codeKey) throws Exception{
+    public void captcha(HttpServletRequest request, HttpServletResponse response, String codeKey)
+            throws Exception{
         response.setHeader("Cache-Control", "no-store");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
@@ -69,7 +70,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(HttpServletRequest request, HttpServletResponse response, String account,
                         String password, String captcha, String verkey){
-
+        /*
         String text = null; //(String) session.getAttribute("verifyCode");
         if(StringUtils.isNotEmpty(verkey)){
             text = redisDao.get(verkey);
@@ -78,7 +79,7 @@ public class LoginController {
         if(StringUtils.isEmpty(text) || !text.equalsIgnoreCase(captcha)){
             return ResponseMessage.error(Constants.ILLEGAL_PARAM, "验证码不正确");
         }
-
+        */
         //校验用户名密码
         if(!RegexUtil.isRegexMatch(account, "^[A-Za-z0-9@#$-_.]{1,64}$")){
             return ResponseMessage.error(Constants.ILLEGAL_PARAM, "用户名格式不合法");
