@@ -34,8 +34,9 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return privilegeMapper.getPrivilegeByParentId(parentId);
     }
 
+
     @Override
-    public List<Privilege> getPrivileges() {
+    public List<Privilege> getList(SearchParam params) {
         List<Privilege> list = getPrivilegeByParentId(0);
         if(!CollectionUtils.isEmpty(list)){
             for(Privilege p:list){
@@ -44,22 +45,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
             }
         }
         return list;
-    }
 
-    @Override
-    public List<Privilege> getList(SearchParam params) {
-        List<Privilege> pList = getPrivilegeByParentId(0);
-        Map<Integer, String> maps = new HashMap<>();
-        for(Privilege p:pList){
-            maps.put(p.getId(), p.getPrivilegeName());
-        }
-        List<Privilege> list = privilegeMapper.getList(params);
-        for(Privilege p:list){
-            if(p.getParentId()>0){
-                p.setParentName(maps.get(p.getParentId()));
-            }
-        }
-        return list;
     }
 
     @Override

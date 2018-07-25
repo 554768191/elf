@@ -1,15 +1,18 @@
 package com.su.admin.service.privilege.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.su.admin.entity.Privilege;
 import com.su.admin.service.privilege.PrivilegeService;
+import com.su.admin.service.rest.RestService;
 import com.su.common.entity.SearchParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Desc
@@ -20,41 +23,21 @@ import java.util.Map;
 @Service
 public class PrivilegeServiceImpl implements PrivilegeService {
 
-
-
-    @Override
-    public List<Privilege> getPrivilegeByRoleId(int roleId) {
-        return null;
-    }
+    @Autowired
+    private RestService restService;
 
     @Override
-    public List<Privilege> getPrivilegeByParentId(int parentId) {
-        return null;
-    }
+    public List<String> getPrivilegeByRoleId(int roleId) {
 
-    @Override
-    public List<Privilege> getPrivileges() {
-        List<Privilege> list = getPrivilegeByParentId(0);
-        if(!CollectionUtils.isEmpty(list)){
-            for(Privilege p:list){
-                List<Privilege> subList = getPrivilegeByParentId(p.getId());
-                p.setSubprivileges(subList);
-            }
-        }
-        return list;
-    }
-
-    @Override
-    public JSONObject getList(SearchParam params) {
-        List<Privilege> pList = getPrivilegeByParentId(0);
-        Map<Integer, String> maps = new HashMap<>();
-        for(Privilege p:pList){
-            maps.put(p.getId(), p.getPrivilegeName());
-        }
-        List<Privilege> list = null;
-        for(Privilege p:list){
-            if(p.getParentId()>0){
-                p.setParentName(maps.get(p.getParentId()));
+        JSONObject json = restService.get("http://system/privilege/role/" + roleId);
+        if(json!=null){
+            JSONArray array = json.getJSONArray("list");
+            if(array!=null && array.size()>0){
+                List<String> list = new ArrayList<>();
+                for(int i=0;i<array.size();i++){
+                    list.add(array.getJSONObject(i).getString("link"));
+                }
+                return list;
             }
         }
         return null;
@@ -62,7 +45,42 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 
     @Override
-    public JSONObject getPojo(int id) {
+    public List<Privilege> getList(SearchParam params) {
+        JSONObject json = restService.get("http://system/privilege");
+        if(json!=null){
+            JSONArray array = json.getJSONArray("list");
+            if(array!=null && array.size()>0){
+                /*
+                Privilege p;
+                for(int i=0;i<array.size();i++){
+                    JSONObject j = array.getJSONObject(i);
+                    JSONArray subArray = j.getJSONArray("subprivileges");
+                    if(subArray!=null && subArray.size()>0){
+                        p = new Privilege();
+                        p.setId(j.getInteger("id"));
+                        p.setCategory(j.getInteger("category"));
+                        p.setHasChild(1);
+                        p.setSeq(j.getInteger("seq"));
+                        p.setLink(j.getString("link"));
+                        p.setParentId(j.getInteger("parentId"));
+                        p.setParentName(j.getString("parentName"));
+                        p.setCreateTime(j.getString("createTime"));
+                    }
+                }
+                */
+                Gson gson = new Gson();
+                List<Privilege> list = gson.fromJson(array.toJSONString(),
+                        new TypeToken<List<Privilege>>() {}.getType());
+                return list;
+            }
+
+        }
+        return null;
+    }
+
+
+    @Override
+    public Privilege getPojo(int id) {
         return null;
     }
 

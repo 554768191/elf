@@ -69,4 +69,12 @@ public class PrivilegeController {
         return ResponseMessage.ok(json);
     }
 
+    @RequestMapping(value = "/role/{roleId}", method = RequestMethod.GET)
+    public String getPrivilegeListByRole(@PathVariable int roleId){
+        List<Privilege> list = privilegeService.getPrivilegeByRoleId(roleId);
+        JSONObject json = new JSONObject();
+        json.put("list", list);
+        return ResponseMessage.ok(json);
+    }
+
 }

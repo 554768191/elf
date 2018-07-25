@@ -72,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
         ops.put("client", request.getRemoteAddr());
         ops.put("userAccount", ssoUser.getAccount());
         ops.put("is_super", ssoUser.getIsSuper()+"");
-        ops.put("readOnly", ssoUser.getReadOnly()+"");
+        //ops.put("readOnly", ssoUser.getReadOnly()+"");
 
         //redisDao.hset(token, "client", request.getRemoteAddr());
         //redisDao.hset(token, "userAccount", ssoUser.getAccount());

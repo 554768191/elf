@@ -9,6 +9,7 @@ package com.su.common.entity;
 public class SearchParam {
 
     private int id;
+    private int roleId;
     private String name;  // 用户名
 
     private int limit = 10;
@@ -24,6 +25,14 @@ public class SearchParam {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getName() {

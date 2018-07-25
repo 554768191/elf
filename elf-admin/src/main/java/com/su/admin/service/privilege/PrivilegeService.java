@@ -14,10 +14,8 @@ import java.util.List;
  */
 public interface PrivilegeService extends BaseService<Privilege> {
 
-    List<Privilege> getPrivilegeByRoleId(int roleId);
+    List<String> getPrivilegeByRoleId(int roleId);
 
-    List<Privilege> getPrivilegeByParentId(int parentId);
-
-    List<Privilege> getPrivileges();
+//    List<Privilege> getPrivilegeByParentId(int parentId);
 
 }

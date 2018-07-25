@@ -31,13 +31,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public JSONObject getList(SearchParam params) {
+    public List<Role> getList(SearchParam params) {
         return null;
     }
 
 
     @Override
-    public JSONObject getPojo(int id) {
+    public Role getPojo(int id) {
         return null;
     }
 

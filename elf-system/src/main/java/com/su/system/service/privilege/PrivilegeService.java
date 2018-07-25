@@ -17,6 +17,4 @@ public interface PrivilegeService extends BaseService<Privilege> {
 
     List<Privilege> getPrivilegeByParentId(int parentId);
 
-    List<Privilege> getPrivileges();
-
 }

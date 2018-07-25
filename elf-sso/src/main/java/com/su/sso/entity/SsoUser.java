@@ -6,8 +6,6 @@ public class SsoUser {
 
 	private int id;
 	private String account;
-	private String passWord;
-	private int roleId;
 	private int isSuper;
 	private int readOnly;
 	private List<String> privaleges;
@@ -26,22 +24,6 @@ public class SsoUser {
 
 	public void setAccount(String account) {
 		this.account = account;
-	}
-
-	public String getPassWord() {
-		return passWord;
-	}
-
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
-	}
-
-	public int getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
 	}
 
 	public int getIsSuper() {

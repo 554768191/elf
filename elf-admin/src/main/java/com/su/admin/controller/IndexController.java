@@ -37,7 +37,7 @@ public class IndexController {
 
     @RequestMapping("/menu")
     public String getMenu(HttpServletRequest request){
-        List<Privilege> list = privilegeService.getPrivileges();
+        List<Privilege> list = privilegeService.getList(null);
         String token = authService.fetchToken(request);
         boolean flag = authService.isSuper(token);
         JSONObject data = new JSONObject();

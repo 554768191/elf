@@ -1,6 +1,6 @@
 package com.su.admin.controller;
 
-import com.su.admin.entity.Privilege;
+import com.alibaba.fastjson.JSONObject;
 import com.su.admin.entity.User;
 import com.su.admin.service.privilege.PrivilegeService;
 import com.su.admin.service.user.UserService;
@@ -23,7 +23,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -91,19 +90,13 @@ public class LoginController {
             if(!StringUtils.isAnyEmpty(password, user.getPassWord())
                     && user.getPassWord().equals(password)){
                 SsoUser ssoUser = new SsoUser();
+                //ssoUser.setReadOnly(user.get);
                 ssoUser.setAccount(account);
                 ssoUser.setIsSuper(user.getIsSuper());
-                //ssoUser.setReadOnly(user.get);
-                ssoUser.setRoleId(user.getRoleId());
-                ssoUser.setPassWord(password);
                 if(user.getIsSuper()!=1){
-                    List<String> ps = new ArrayList<>();
-                    List<Privilege> list = privilegeService.getPrivilegeByRoleId(user.getRoleId());
+                    List<String> list = privilegeService.getPrivilegeByRoleId(user.getRoleId());
                     if(list!=null && list.size()>0){
-                        for(Privilege p:list){
-                            ps.add(p.getLink());
-                        }
-                        ssoUser.setPrivaleges(ps);
+                        ssoUser.setPrivaleges(list);
                     }
                 }
                 String token = authService.generateToken(request, ssoUser);
@@ -114,7 +107,10 @@ public class LoginController {
                 // 添加到登录日志
                 userService.addLoginLog(request, account, "登录成功");
 
-                return ResponseMessage.ok("登录成功");//.put("token", "").put("user", user);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("token", token);
+                //jsonObject.put("account", account);
+                return ResponseMessage.ok(jsonObject);//.put("token", "").put("user", user);
             }else{
                 userService.addLoginLog(request, account, "密码错误");
                 return ResponseMessage.error(Constants.ILLEGAL_PARAM, "密码错误");
