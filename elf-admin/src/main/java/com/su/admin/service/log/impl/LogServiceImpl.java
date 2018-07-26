@@ -45,7 +45,7 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public JSONObject deletePojo(int id) {
-        return restService.exchange("http://system/log", HttpMethod.DELETE, id+"");
+        return restService.exchange("http://system/log/" + id, HttpMethod.DELETE, id+"");
     }
 
 }

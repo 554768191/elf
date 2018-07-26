@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,24 +88,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public JSONObject getPojo(int id) {
-        JSONObject json = restService.get("http://system/user/" + id);
-        return null;
+        return restService.get("http://system/user/" + id);
     }
 
     @Override
     public JSONObject insertPojo(JSONObject pojo) {
-        return null;
+        return restService.post("http://system/user", pojo.toJSONString());
     }
 
     @Override
     public JSONObject updatePojo(JSONObject pojo) {
-        //userMapper.update(pojo);
-        return null;
+        return restService.exchange("http://system/user", HttpMethod.PUT, pojo.toJSONString());
     }
 
     @Override
     public JSONObject deletePojo(int id) {
-        return null;
+        return restService.exchange("http://system/user/" + id, HttpMethod.DELETE, id+"");
     }
 
 

@@ -23,13 +23,6 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User getByName(String userName) {
-        User user = userMapper.getByName(userName);
-        return user;
-    }
-
-
-    @Override
     public List<User> getList(SearchParam params) {
         return userMapper.getList(params);
     }
@@ -46,7 +39,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insertPojo(User pojo) {
-        return userMapper.insert(pojo);
+        userMapper.insert(pojo);
+        return pojo.getId();
     }
 
     @Override

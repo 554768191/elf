@@ -49,7 +49,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int insertPojo(Role pojo) {
-        return roleMapper.insert(pojo);
+        roleMapper.insert(pojo);
+        return pojo.getId();
     }
 
     @Override
@@ -59,7 +60,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int deletePojo(int id) {
-        return roleMapper.deletePrivilege(id);
+        roleMapper.deletePrivilege(id);
+        return roleMapper.delete(id);
     }
 
 }

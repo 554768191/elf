@@ -2,8 +2,11 @@ package com.su.admin.service.role.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.su.admin.entity.RolePrivilege;
+import com.su.admin.service.rest.RestService;
 import com.su.admin.service.role.RoleService;
 import com.su.common.entity.SearchParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +20,8 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-
+    @Autowired
+    private RestService restService;
 
     @Override
     public int deletePrivilege(int roleId) {
@@ -31,29 +35,28 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public JSONObject getList(SearchParam params) {
-        return null;
+        return restService.get("http://system/role");
     }
 
 
     @Override
     public JSONObject getPojo(int id) {
-        return null;
+        return restService.get("http://system/role/" + id);
     }
 
     @Override
     public JSONObject insertPojo(JSONObject pojo) {
-        return null;
+        return restService.post("http://system/role", pojo.toJSONString());
     }
 
     @Override
     public JSONObject updatePojo(JSONObject pojo) {
-        //roleMapper.update(pojo);
-        return null;
+        return restService.exchange("http://system/role", HttpMethod.PUT, pojo.toJSONString());
     }
 
     @Override
     public JSONObject deletePojo(int id) {
-        return null;
+        return restService.exchange("http://system/role/" + id, HttpMethod.DELETE, id+"");
     }
 
 }

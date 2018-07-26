@@ -69,12 +69,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     public JSONObject getPojo(int id) {
-        JSONObject json = restService.get("http://system/privilege/" + id);
-        if(json!=null && json.getJSONObject("privilege")!=null){
-            //json = json.getJSONObject("privilege");
-            return json;
-        }
-        return null;
+        return restService.get("http://system/privilege/" + id);
     }
 
     @Override
@@ -89,7 +84,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     public JSONObject deletePojo(int id) {
-        return restService.exchange("http://system/privilege", HttpMethod.DELETE, id+"");
+        return restService.exchange("http://system/privilege/" + id, HttpMethod.DELETE, id+"");
     }
 
 }

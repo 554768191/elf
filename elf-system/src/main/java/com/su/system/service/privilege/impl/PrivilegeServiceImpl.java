@@ -58,7 +58,8 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     public int insertPojo(Privilege pojo) {
-        return privilegeMapper.insert(pojo);
+        privilegeMapper.insert(pojo);
+        return pojo.getId();
     }
 
     @Override

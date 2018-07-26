@@ -12,6 +12,4 @@ import com.su.system.service.BaseService;
  */
 public interface UserService extends BaseService<User> {
 
-    User getByName(String userName);
-
 }

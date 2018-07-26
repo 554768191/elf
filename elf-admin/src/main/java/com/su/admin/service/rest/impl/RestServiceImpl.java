@@ -53,7 +53,8 @@ public class RestServiceImpl implements RestService {
 
         // 请求头
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+        headers.setContentType(type);
         HttpEntity<String> entity = new HttpEntity<>(param, headers);
 
         ResponseEntity<String> resultEntity = restTemplate.exchange(url, httpMethod, entity, String.class);
