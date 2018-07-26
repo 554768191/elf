@@ -1,8 +1,6 @@
 package com.su.admin.service.role.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.su.admin.entity.ListData;
-import com.su.admin.entity.Role;
 import com.su.admin.entity.RolePrivilege;
 import com.su.admin.service.role.RoleService;
 import com.su.common.entity.SearchParam;
@@ -32,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public ListData<Role> getList(SearchParam params) {
+    public JSONObject getList(SearchParam params) {
         return null;
     }
 
@@ -43,14 +41,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public JSONObject insertPojo(Role pojo) {
-        int id = 0;
-        pojo.setId(id);
+    public JSONObject insertPojo(JSONObject pojo) {
         return null;
     }
 
     @Override
-    public JSONObject updatePojo(Role pojo) {
+    public JSONObject updatePojo(JSONObject pojo) {
         //roleMapper.update(pojo);
         return null;
     }

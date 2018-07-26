@@ -1,7 +1,6 @@
 package com.su.admin.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.su.admin.entity.User;
 import com.su.admin.service.privilege.PrivilegeService;
 import com.su.admin.service.user.UserService;
 import com.su.common.Constants;
@@ -84,22 +83,18 @@ public class LoginController {
             return ResponseMessage.error(Constants.ILLEGAL_PARAM, "用户名格式不合法");
         }
 
-        User user = userService.getByName(account);
+        SsoUser user = userService.getByName(account);
 
         if(user!=null){
             if(!StringUtils.isAnyEmpty(password, user.getPassWord())
                     && user.getPassWord().equals(password)){
-                SsoUser ssoUser = new SsoUser();
-                //ssoUser.setReadOnly(user.get);
-                ssoUser.setAccount(account);
-                ssoUser.setIsSuper(user.getIsSuper());
                 if(user.getIsSuper()!=1){
                     List<String> list = privilegeService.getPrivilegeByRoleId(user.getRoleId());
                     if(list!=null && list.size()>0){
-                        ssoUser.setPrivaleges(list);
+                        user.setPrivaleges(list);
                     }
                 }
-                String token = authService.generateToken(request, ssoUser);
+                String token = authService.generateToken(request, user);
                 Cookie cookie = new Cookie("token", token);
                 cookie.setPath("/");
                 cookie.setMaxAge(-1);

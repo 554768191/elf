@@ -3,11 +3,11 @@ package com.su.admin.service.user.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.su.admin.entity.ClientUserAgent;
-import com.su.admin.entity.ListData;
-import com.su.admin.entity.User;
+import com.su.admin.service.log.LogService;
 import com.su.admin.service.rest.RestService;
 import com.su.admin.service.user.UserService;
 import com.su.common.entity.SearchParam;
+import com.su.sso.entity.SsoUser;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Desc
@@ -32,15 +30,27 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RestService restService;
 
+    @Autowired
+    private LogService logService;
 
     @Override
     //@Cacheable(value="getUser")
-    public User getByName(String account) {
+    public SsoUser getByName(String account) {
         SearchParam params = new SearchParam();
         params.setName(account);
-        List<User> list = getList(params).getList();
-        if(list!=null && list.size()>0){
-            return list.get(0);
+        JSONObject json = getList(params);
+        if(json!=null){
+            JSONArray array = json.getJSONArray("list");
+            if(array!=null && array.size()>0){
+                SsoUser user= new SsoUser();;
+                json = array.getJSONObject(0);
+                user.setId(json.getInteger("id"));
+                user.setAccount(json.getString("account"));
+                user.setRoleId(json.getInteger("roleId"));
+                user.setIsSuper(json.getInteger("isSuper"));
+                user.setPassWord(json.getString("password"));
+                return user;
+            }
         }
 
         return null;
@@ -59,43 +69,20 @@ public class UserServiceImpl implements UserService {
         jsonObj.put("browser", agentGetter.getBrowser());
         jsonObj.put("os", agentGetter.getOS());
 
-        JSONObject result = restService.post("http://system/log", jsonObj.toJSONString());
+        JSONObject result = logService.insertPojo(jsonObj);
         logger.info(result.toJSONString());
 
     }
 
     @Override
-    public ListData<User> getList(SearchParam params) {
+    public JSONObject getList(SearchParam params) {
         StringBuilder sb = new StringBuilder("http://system/user");
         if(params!=null){
             if(StringUtils.isNotEmpty(params.getName())){
                 sb.append("?name=").append(params.getName());
             }
         }
-        JSONObject json = restService.get(sb.toString());
-        if(json!=null){
-            JSONArray array = json.getJSONArray("list");
-            if(array!=null && array.size()>0){
-                List<User> list = new ArrayList<>();
-                User user;
-                for(int i=0;i<array.size();i++){
-                    json = array.getJSONObject(0);
-                    user = new User();
-                    user.setId(json.getInteger("id"));
-                    user.setAccount(json.getString("account"));
-                    user.setRoleId(json.getInteger("roleId"));
-                    user.setIsSuper(json.getInteger("isSuper"));
-                    user.setPassWord(json.getString("password"));
-                    list.add(user);
-                }
-                ListData<User> listData = new ListData<>();
-                listData.setList(list);
-                listData.setCount(json.getInteger("count"));
-                return listData;
-            }
-        }
-        return null;
-
+        return restService.get(sb.toString());
     }
 
     @Override
@@ -105,14 +92,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JSONObject insertPojo(User pojo) {
-        int id = 0;
-        pojo.setId(id);
+    public JSONObject insertPojo(JSONObject pojo) {
         return null;
     }
 
     @Override
-    public JSONObject updatePojo(User pojo) {
+    public JSONObject updatePojo(JSONObject pojo) {
         //userMapper.update(pojo);
         return null;
     }

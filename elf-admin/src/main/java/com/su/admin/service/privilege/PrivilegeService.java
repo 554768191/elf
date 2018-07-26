@@ -12,10 +12,10 @@ import java.util.List;
  * @date 2018/5/25 下午5:30
  * @version
  */
-public interface PrivilegeService extends BaseService<Privilege> {
+public interface PrivilegeService extends BaseService {
 
     List<String> getPrivilegeByRoleId(int roleId);
 
-//    List<Privilege> getPrivilegeByParentId(int parentId);
+    List<Privilege> getPrivileges();
 
 }

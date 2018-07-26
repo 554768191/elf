@@ -1,8 +1,8 @@
 package com.su.admin.service.user;
 
 
-import com.su.admin.entity.User;
 import com.su.admin.service.BaseService;
+import com.su.sso.entity.SsoUser;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2018/5/25 下午5:29
  * @version
  */
-public interface UserService extends BaseService<User> {
+public interface UserService extends BaseService {
 
-    User getByName(String userName);
+    SsoUser getByName(String userName);
 
     void addLoginLog(HttpServletRequest request, String username, String message);
 

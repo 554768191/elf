@@ -33,7 +33,7 @@ public class RequestLogAspect {
 
 
     @Around("addLog()")
-    public Object around(ProceedingJoinPoint pjp){
+    public Object around(ProceedingJoinPoint pjp) throws Throwable {
         Object o = null;
 
         if(isOpen !=null && isOpen==1){
@@ -71,25 +71,16 @@ public class RequestLogAspect {
                 logger.info(sb.toString());
             }
 
-            try {
-                o = pjp.proceed();
-                if(logger.isInfoEnabled()){
-                    logger.info("方法返回: [{}]", o.toString());
-                }
-
-            } catch (Throwable e) {
-                e.printStackTrace();
+            o = pjp.proceed();
+            if(logger.isInfoEnabled()){
+                logger.info("方法返回: [{}]", o.toString());
             }
 
         }else{
             if(logger.isDebugEnabled()){
                 logger.debug("AOP Around 获取日志关闭");
             }
-            try {
-                o = pjp.proceed();
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
+            o = pjp.proceed();
         }
 
         return o;

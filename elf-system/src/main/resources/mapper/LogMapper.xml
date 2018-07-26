@@ -6,7 +6,7 @@
         <result column="id" property="id" />
         <result column="level" property="level" />
         <result column="module" property="module" />
-        <result column="client_ip" property="clirntIp" />
+        <result column="client_ip" property="clientIp" />
         <result column="os" property="os" />
         <result column="browser" property="browser" />
         <result column="content" property="content" />

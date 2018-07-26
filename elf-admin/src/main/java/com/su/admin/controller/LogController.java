@@ -1,16 +1,14 @@
 package com.su.admin.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.su.admin.service.privilege.PrivilegeService;
+import com.su.admin.service.log.LogService;
 import com.su.common.entity.ResponseMessage;
 import com.su.common.entity.SearchParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 
 /**
  * @Desc
@@ -19,43 +17,31 @@ import org.springframework.web.bind.annotation.RestController;
  * @version
  */
 @RestController
-@RequestMapping("/privilege")
-public class PrivilegeController {
+@RequestMapping("/log")
+public class LogController {
 
     //private static final Logger logger = LoggerFactory.getLogger(PrivilegeController.class);
 
     @Autowired
-    private PrivilegeService privilegeService;
+    private LogService logService;
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getPrivilegeList(SearchParam param){
+    public String getLogList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
-        JSONObject json = privilegeService.getList(param);
+        JSONObject json = logService.getList(param);
         return ResponseMessage.ok(json);
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String addPrivilege(@RequestBody JSONObject privilege){
-        JSONObject jsonObject = privilegeService.insertPojo(privilege);
-        return ResponseMessage.ok(jsonObject);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deletePrivilege(@PathVariable int pid){
-        JSONObject json = privilegeService.deletePojo(pid);
-        return ResponseMessage.ok(json);
-    }
-
-    @RequestMapping(method = RequestMethod.PUT)
-    public String updatePrivilege(@RequestBody JSONObject privilege){
-        JSONObject json = privilegeService.updatePojo(privilege);
+    public String deleteLog(@PathVariable int pid){
+        JSONObject json = logService.deletePojo(pid);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getPrivilege(@PathVariable int pid){
-        JSONObject json = privilegeService.getPojo(pid);
+    public String getLog(@PathVariable int pid){
+        JSONObject json = logService.getPojo(pid);
         return ResponseMessage.ok(json);
     }
 

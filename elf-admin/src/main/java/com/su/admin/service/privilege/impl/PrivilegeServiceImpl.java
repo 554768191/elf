@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.su.admin.entity.ListData;
 import com.su.admin.entity.Privilege;
 import com.su.admin.service.privilege.PrivilegeService;
 import com.su.admin.service.rest.RestService;
@@ -45,42 +44,26 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return null;
     }
 
-
     @Override
-    public ListData<Privilege> getList(SearchParam params) {
-        JSONObject json = restService.get("http://system/privilege");
+    public List<Privilege> getPrivileges() {
+        JSONObject json = getList(null);
         if(json!=null){
             JSONArray array = json.getJSONArray("list");
             if(array!=null && array.size()>0){
-                /*
-                Privilege p;
-                for(int i=0;i<array.size();i++){
-                    JSONObject j = array.getJSONObject(i);
-                    JSONArray subArray = j.getJSONArray("subprivileges");
-                    if(subArray!=null && subArray.size()>0){
-                        p = new Privilege();
-                        p.setId(j.getInteger("id"));
-                        p.setCategory(j.getInteger("category"));
-                        p.setHasChild(1);
-                        p.setSeq(j.getInteger("seq"));
-                        p.setLink(j.getString("link"));
-                        p.setParentId(j.getInteger("parentId"));
-                        p.setParentName(j.getString("parentName"));
-                        p.setCreateTime(j.getString("createTime"));
-                    }
-                }
-                */
                 Gson gson = new Gson();
                 List<Privilege> list = gson.fromJson(array.toJSONString(),
                         new TypeToken<List<Privilege>>() {}.getType());
-                ListData<Privilege> listData = new ListData<>();
-                listData.setList(list);
-                listData.setCount(json.getInteger("count"));
-                return listData;
+
+                return list;
             }
 
         }
         return null;
+    }
+
+    @Override
+    public JSONObject getList(SearchParam params) {
+        return restService.get("http://system/privilege");
     }
 
 
@@ -95,15 +78,13 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public JSONObject insertPojo(Privilege pojo) {
-        Gson gson = new Gson();
-        return restService.post("http://system/privilege", gson.toJson(pojo));
+    public JSONObject insertPojo(JSONObject pojo) {
+        return restService.post("http://system/privilege", pojo.toJSONString());
     }
 
     @Override
-    public JSONObject updatePojo(Privilege pojo) {
-        Gson gson = new Gson();
-        return restService.exchange("http://system/privilege", HttpMethod.PUT, gson.toJson(pojo));
+    public JSONObject updatePojo(JSONObject pojo) {
+        return restService.exchange("http://system/privilege", HttpMethod.PUT, pojo.toJSONString());
     }
 
     @Override

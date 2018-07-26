@@ -1,6 +1,5 @@
 package com.su.admin.controller;
 
-import com.su.admin.entity.User;
 import com.su.admin.service.user.UserService;
 import com.su.common.entity.SearchParam;
 import com.su.common.exception.CommonException;
