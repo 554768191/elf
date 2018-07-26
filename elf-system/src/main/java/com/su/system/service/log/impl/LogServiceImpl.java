@@ -38,16 +38,13 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public Log insertPojo(Log pojo) {
-        int id = logMapper.insert(pojo);
-        pojo.setId(id);
-        return pojo;
+    public int insertPojo(Log pojo) {
+        return logMapper.insert(pojo);
     }
 
     @Override
-    public Log updatePojo(Log pojo) {
-        logMapper.update(pojo);
-        return pojo;
+    public int updatePojo(Log pojo) {
+        return logMapper.update(pojo);
     }
 
     @Override

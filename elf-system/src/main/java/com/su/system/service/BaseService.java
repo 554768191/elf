@@ -45,7 +45,7 @@ public interface BaseService<T> {
      * @return int
      * @throws
      */
-    T insertPojo(T pojo);
+    int insertPojo(T pojo);
 
     /**
      * update pojo.
@@ -54,7 +54,7 @@ public interface BaseService<T> {
      * @return int
      * @throws
      */
-    T updatePojo(T pojo);
+    int updatePojo(T pojo);
 
     /**
      * delete pojo.

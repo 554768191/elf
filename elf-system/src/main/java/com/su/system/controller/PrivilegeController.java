@@ -43,22 +43,26 @@ public class PrivilegeController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String addPrivilege(@RequestBody Privilege privilege){
-        privilege = privilegeService.insertPojo(privilege);
+        int id = privilegeService.insertPojo(privilege);
         JSONObject json = new JSONObject();
-        json.put("id", privilege.getId());
+        json.put("id", id);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
     public String deletePrivilege(@PathVariable int pid){
-        privilegeService.deletePojo(pid);
-        return ResponseMessage.ok();
+        int result = privilegeService.deletePojo(pid);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public String updatePrivilege(@RequestBody Privilege privilege){
-        privilegeService.updatePojo(privilege);
-        return ResponseMessage.ok();
+        int result = privilegeService.updatePojo(privilege);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)

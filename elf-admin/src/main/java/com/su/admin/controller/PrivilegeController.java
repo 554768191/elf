@@ -1,7 +1,10 @@
 package com.su.admin.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.su.admin.entity.ListData;
 import com.su.admin.entity.Privilege;
 import com.su.admin.service.privilege.PrivilegeService;
+import com.su.common.entity.ResponseMessage;
 import com.su.common.entity.SearchParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,37 +30,39 @@ public class PrivilegeController {
     @Autowired
     private PrivilegeService privilegeService;
 
-    /*
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResultMap getPrivilegeList(SearchParam param){
+    public String getPrivilegeList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
-        List<Privilege> list = privilegeService.getList(param);
-        int total = privilegeService.getCount(param);
-        return ResultMap.ok().put("count", total).put("data", list);
+        ListData<Privilege> list = privilegeService.getList(param);
+        JSONObject json = new JSONObject();
+        json.put("count", list.getCount());
+        json.put("list", list.getList());
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResultMap addPrivilege(@RequestBody Privilege privilege){
-        privilege = privilegeService.insertPojo(privilege);
-        return ResultMap.ok().put("id", privilege.getId());
+    public String addPrivilege(@RequestBody Privilege privilege){
+        JSONObject jsonObject = privilegeService.insertPojo(privilege);
+        return ResponseMessage.ok(jsonObject);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public ResultMap deletePrivilege(@PathVariable int pid){
-        privilegeService.deletePojo(pid);
-        return ResultMap.ok();
+    public String deletePrivilege(@PathVariable int pid){
+        JSONObject json = privilegeService.deletePojo(pid);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResultMap updatePrivilege(@RequestBody Privilege privilege){
-        privilegeService.updatePojo(privilege);
-        return ResultMap.ok();
+    public String updatePrivilege(@RequestBody Privilege privilege){
+        JSONObject json = privilegeService.updatePojo(privilege);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public ResultMap getPrivilege(@PathVariable int pid){
-        Privilege privilege = privilegeService.getPojo(pid);
-        return ResultMap.ok().put("privilege", privilege);
+    public String getPrivilege(@PathVariable int pid){
+        JSONObject json = privilegeService.getPojo(pid);
+        return ResponseMessage.ok(json);
     }
-    */
+
 }

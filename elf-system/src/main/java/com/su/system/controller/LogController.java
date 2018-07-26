@@ -42,23 +42,26 @@ public class LogController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String addLog(@RequestBody Log log){
-        log = logService.insertPojo(log);
+        int id = logService.insertPojo(log);
         JSONObject json = new JSONObject();
-        json.put("id", log.getId());
+        json.put("id", id);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
     public String deleteLog(@PathVariable int pid){
-        logService.deletePojo(pid);
-        //responseMessage.setData(result);
-        return ResponseMessage.ok();
+        int result = logService.deletePojo(pid);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public String updateRole(@RequestBody Log log){
-        logService.updatePojo(log);
-        return ResponseMessage.ok();
+        int result = logService.updatePojo(log);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)

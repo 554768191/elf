@@ -3,6 +3,7 @@ package com.su.admin.service.user.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.su.admin.entity.ClientUserAgent;
+import com.su.admin.entity.ListData;
 import com.su.admin.entity.User;
 import com.su.admin.service.rest.RestService;
 import com.su.admin.service.user.UserService;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public User getByName(String account) {
         SearchParam params = new SearchParam();
         params.setName(account);
-        List<User> list = getList(params);
+        List<User> list = getList(params).getList();
         if(list!=null && list.size()>0){
             return list.get(0);
         }
@@ -58,13 +59,13 @@ public class UserServiceImpl implements UserService {
         jsonObj.put("browser", agentGetter.getBrowser());
         jsonObj.put("os", agentGetter.getOS());
 
-        JSONObject result = restService.post("http://system/log", jsonObj);
+        JSONObject result = restService.post("http://system/log", jsonObj.toJSONString());
         logger.info(result.toJSONString());
 
     }
 
     @Override
-    public List<User> getList(SearchParam params) {
+    public ListData<User> getList(SearchParam params) {
         StringBuilder sb = new StringBuilder("http://system/user");
         if(params!=null){
             if(StringUtils.isNotEmpty(params.getName())){
@@ -87,7 +88,10 @@ public class UserServiceImpl implements UserService {
                     user.setPassWord(json.getString("password"));
                     list.add(user);
                 }
-                return list;
+                ListData<User> listData = new ListData<>();
+                listData.setList(list);
+                listData.setCount(json.getInteger("count"));
+                return listData;
             }
         }
         return null;
@@ -95,27 +99,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getPojo(int id) {
+    public JSONObject getPojo(int id) {
         JSONObject json = restService.get("http://system/user/" + id);
         return null;
     }
 
     @Override
-    public int insertPojo(User pojo) {
+    public JSONObject insertPojo(User pojo) {
         int id = 0;
         pojo.setId(id);
-        return id;
+        return null;
     }
 
     @Override
-    public int updatePojo(User pojo) {
+    public JSONObject updatePojo(User pojo) {
         //userMapper.update(pojo);
-        return 0;
+        return null;
     }
 
     @Override
-    public int deletePojo(int id) {
-        return 0;
+    public JSONObject deletePojo(int id) {
+        return null;
     }
 
 

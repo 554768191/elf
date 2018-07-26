@@ -7,6 +7,7 @@ import com.su.common.entity.ResponseMessage;
 import com.su.sso.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,12 +38,18 @@ public class IndexController {
 
     @RequestMapping("/menu")
     public String getMenu(HttpServletRequest request){
-        List<Privilege> list = privilegeService.getList(null);
+        List<Privilege> list = privilegeService.getList(null).getList();
         String token = authService.fetchToken(request);
         boolean flag = authService.isSuper(token);
         JSONObject data = new JSONObject();
 
         if(flag){
+            for(Privilege p:list){
+                if(!CollectionUtils.isEmpty(p.getSubprivileges())){
+                    p.setHasChild(1);
+                }
+
+            }
             data.put("menus", list);
             return ResponseMessage.ok(data);
         }else{
@@ -56,6 +63,12 @@ public class IndexController {
                         subs.remove(x);
                     }
                 }
+            }
+            for(Privilege p:list){
+                if(!CollectionUtils.isEmpty(p.getSubprivileges())){
+                    p.setHasChild(1);
+                }
+
             }
         }
         data.put("menus", list);

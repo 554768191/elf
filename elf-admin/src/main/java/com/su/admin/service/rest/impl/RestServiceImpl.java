@@ -8,9 +8,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 
 /**
  * @Desc
@@ -31,18 +35,34 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public JSONObject post(String url, JSONObject param) {
+    public JSONObject post(String url, String param) {
         HttpHeaders headers = new HttpHeaders();
         MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
         headers.setContentType(type);
         headers.add("Accept", MediaType.APPLICATION_JSON.toString());
 
-        HttpEntity<String> formEntity = new HttpEntity(param.toString(), headers);
+        HttpEntity<String> formEntity = new HttpEntity(param, headers);
 
         String result = restTemplate.postForObject(url, formEntity, String.class);
 
         return parseResult(result);
     }
+
+    @Override
+    public JSONObject exchange(String url, HttpMethod httpMethod, String param) {
+
+        // 请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(param, headers);
+
+        ResponseEntity<String> resultEntity = restTemplate.exchange(url, httpMethod, entity, String.class);
+        if (resultEntity.getStatusCode() == HttpStatus.OK) {
+            return parseResult(resultEntity.getBody());
+        }
+        return null;
+    }
+
 
     private JSONObject parseResult(String result) {
         if(StringUtils.isNotEmpty(result)){

@@ -42,23 +42,26 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String addUser(@RequestBody User user){
-        user = userService.insertPojo(user);
+        int id = userService.insertPojo(user);
         JSONObject json = new JSONObject();
-        json.put("id", user.getId());
+        json.put("id", id);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
     public String deleteUser(@PathVariable int pid){
-        userService.deletePojo(pid);
-        //responseMessage.setData(result);
-        return ResponseMessage.ok();
+        int result = userService.deletePojo(pid);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public String updateRole(@RequestBody User user){
-        userService.updatePojo(user);
-        return ResponseMessage.ok();
+        int result = userService.updatePojo(user);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)

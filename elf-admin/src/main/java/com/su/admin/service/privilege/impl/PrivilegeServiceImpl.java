@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.su.admin.entity.ListData;
 import com.su.admin.entity.Privilege;
 import com.su.admin.service.privilege.PrivilegeService;
 import com.su.admin.service.rest.RestService;
 import com.su.common.entity.SearchParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 
     @Override
-    public List<Privilege> getList(SearchParam params) {
+    public ListData<Privilege> getList(SearchParam params) {
         JSONObject json = restService.get("http://system/privilege");
         if(json!=null){
             JSONArray array = json.getJSONArray("list");
@@ -71,7 +73,10 @@ public class PrivilegeServiceImpl implements PrivilegeService {
                 Gson gson = new Gson();
                 List<Privilege> list = gson.fromJson(array.toJSONString(),
                         new TypeToken<List<Privilege>>() {}.getType());
-                return list;
+                ListData<Privilege> listData = new ListData<>();
+                listData.setList(list);
+                listData.setCount(json.getInteger("count"));
+                return listData;
             }
 
         }
@@ -80,26 +85,30 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 
     @Override
-    public Privilege getPojo(int id) {
+    public JSONObject getPojo(int id) {
+        JSONObject json = restService.get("http://system/privilege/" + id);
+        if(json!=null && json.getJSONObject("privilege")!=null){
+            //json = json.getJSONObject("privilege");
+            return json;
+        }
         return null;
     }
 
     @Override
-    public int insertPojo(Privilege pojo) {
-        int id = 0;
-        pojo.setId(id);
-        return id;
+    public JSONObject insertPojo(Privilege pojo) {
+        Gson gson = new Gson();
+        return restService.post("http://system/privilege", gson.toJson(pojo));
     }
 
     @Override
-    public int updatePojo(Privilege pojo) {
-        //privilegeMapper.update(pojo);
-        return 0;
+    public JSONObject updatePojo(Privilege pojo) {
+        Gson gson = new Gson();
+        return restService.exchange("http://system/privilege", HttpMethod.PUT, gson.toJson(pojo));
     }
 
     @Override
-    public int deletePojo(int id) {
-        return 0;
+    public JSONObject deletePojo(int id) {
+        return restService.exchange("http://system/privilege", HttpMethod.DELETE, id+"");
     }
 
 }

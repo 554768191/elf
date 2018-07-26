@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Desc
@@ -59,16 +57,13 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public Privilege insertPojo(Privilege pojo) {
-        int id = privilegeMapper.insert(pojo);
-        pojo.setId(id);
-        return pojo;
+    public int insertPojo(Privilege pojo) {
+        return privilegeMapper.insert(pojo);
     }
 
     @Override
-    public Privilege updatePojo(Privilege pojo) {
-        privilegeMapper.update(pojo);
-        return pojo;
+    public int updatePojo(Privilege pojo) {
+        return privilegeMapper.update(pojo);
     }
 
     @Override

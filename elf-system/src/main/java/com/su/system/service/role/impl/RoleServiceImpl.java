@@ -48,16 +48,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role insertPojo(Role pojo) {
-        int id = roleMapper.insert(pojo);
-        pojo.setId(id);
-        return pojo;
+    public int insertPojo(Role pojo) {
+        return roleMapper.insert(pojo);
     }
 
     @Override
-    public Role updatePojo(Role pojo) {
-        roleMapper.update(pojo);
-        return pojo;
+    public int updatePojo(Role pojo) {
+        return roleMapper.update(pojo);
     }
 
     @Override

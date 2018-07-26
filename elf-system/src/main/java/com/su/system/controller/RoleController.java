@@ -42,22 +42,26 @@ public class RoleController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String addRole(@RequestBody Role role){
-        role = roleService.insertPojo(role);
+        int id = roleService.insertPojo(role);
         JSONObject json = new JSONObject();
-        json.put("id", role.getId());
+        json.put("id", id);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
     public String deleteRole(@PathVariable int pid){
-        roleService.deletePojo(pid);
-        return ResponseMessage.ok();
+        int result = roleService.deletePojo(pid);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public String updateRole(@RequestBody Role role){
-        roleService.updatePojo(role);
-        return ResponseMessage.ok();
+        int result = roleService.updatePojo(role);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
+        return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)

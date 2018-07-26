@@ -45,16 +45,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User insertPojo(User pojo) {
-        int id = userMapper.insert(pojo);
-        pojo.setId(id);
-        return pojo;
+    public int insertPojo(User pojo) {
+        return userMapper.insert(pojo);
     }
 
     @Override
-    public User updatePojo(User pojo) {
-        userMapper.update(pojo);
-        return pojo;
+    public int updatePojo(User pojo) {
+        return userMapper.update(pojo);
     }
 
     @Override
