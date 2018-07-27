@@ -1,0 +1,65 @@
+
+body,html {
+    background-color: #929495;
+    height: 100%;
+    color: #666;
+    font-family: 'Montserrat', Arial, Tahoma, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.user-login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    max-width: 880px;
+}
+
+.card-plain {
+    max-width: 320px;
+}
+.card-plain .header {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.logo-container {
+    width: 65px;
+    margin: 0 auto;
+}
+
+.header h5 {
+    padding: 15px 0;
+    font-size: 1.57em;
+    line-height: 1.4em;
+    color: #FFFFFF;
+}
+.content-center {
+    width: 308px;
+    margin: 0 auto;
+}
+.content-center .input-group-addon {
+    background-color: transparent;
+    border-radius: 30px;
+}
+.content-center placeholder {
+    color: #FFFFFF;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.form-control {
+    background-color: transparent;
+    border-radius: 30px;
+    font-size: .8571em;
+    color: #FFFFFF;
+    padding: 10px 20px;
+}
+

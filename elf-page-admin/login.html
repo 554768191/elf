@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8" />
+    <title>用户登录</title>
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+<div class="user-login">
+    <div class="container">
+        <div class="col-md-12">
+            <form class="form" method="" action="">
+                <div class="header">
+                    <div class="logo-container">
+                        <img src="images/logo.svg" alt="">
+                    </div>
+                    <h5>欢迎</h5>
+                </div>
+
+                <div class="content-center">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-user fa-fw"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Enter User Name">
+
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-key fa-fw"></i>
+                        </span>
+                        <input type="password" placeholder="Password" class="form-control" />
+                    </div>
+                </div>
+                <div class="footer content-center">
+                    <a href="index.html" class="btn btn-primary btn-round btn-lg btn-block ">登 录</a>
+                    <h5><a href="forgot-password.html" class="link">Forgot Password?</a></h5>
+                </div>
+            </form>
+        </div>
+        <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 录</button>
+            </div>
+            <div class="layui-trans layui-form-item layadmin-user-login-other">
+                <label>社交账号登录</label>
+                <a href="javascript:;"><img src="assets/images/icon_qq.png" width="30px"/></a>
+                <a href="javascript:;"><img src="assets/images/icon_weixin.png" width="30px"/></a>
+                <a href="javascript:;"><img src="assets/images/icon_weibo.png" width="30px"/></a>
+                <a href="javascript:;" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-trans layadmin-user-login-footer">
+        <p>Copyright © 2018 </p>
+        <p><a href="javascript:;">EasyWeb</a> All Rights Reserved.</p>
+    </div>
+</div>
+
+<script type="text/javascript" src="plugins/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="assets/libs/jquery.md5.js"></script>
+<script type="text/javascript" src="assets/js/config.js"></script>
+<script type="text/javascript" src="assets/js/login.js"></script>
+</body>
+</html>
