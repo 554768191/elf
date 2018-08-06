@@ -18,7 +18,52 @@
   <link href="css/style.css" rel="stylesheet">
 
 </head>
+
+<style type="text/css">
+
+  /****************************** 回到顶部功能样式 *********************************************/
+  #rocket-to-top div {
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 149px;
+  }
+  #rocket-to-top .level-2 {
+    background: url("http://images.cnblogs.com/cnblogs_com/mq0036/508398/o_rocket_button_up.png") no-repeat scroll -149px 0 transparent;
+    display: none;
+    height: 250px;
+    opacity: 0;
+    z-index: 1;
+  }
+  #rocket-to-top .level-3 {
+    background: none repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: block;
+    height: 150px;
+    z-index: 2;
+  }
+  #rocket-to-top {
+    background: url("http://images.cnblogs.com/cnblogs_com/mq0036/508398/o_rocket_button_up.png") no-repeat scroll 0 0 transparent;
+    cursor: default;
+    display: block;
+    height: 250px;
+    margin: -125px 0 0;
+    overflow: hidden;
+    padding: 0;
+    position: fixed;
+    right: 0;
+    top: 80%;
+    width: 149px;
+    z-index: 11;
+  }
+
+</style>
+
 <body>
+  <!--<a name="top" id="top"></a>-->
   <header class="header">
     <nav class="site-header sticky-top">
       <div class="container d-flex flex-column flex-md-row justify-content-between">
@@ -29,6 +74,7 @@
         <a class="py-2 d-none d-md-inline-block" href="#"><i class="fa fa-user"></i> 关于</a>
       </div>
     </nav>
+
   </header><!-- #ace-header -->
   <div class="wrapper">
     <article class="card-outer">
@@ -49,10 +95,16 @@
   </div>
 
 
+  <div style="height: 500px;"></div>
 
 
 
+  <!--<a class="back-to-top" href="#top">返回顶部</a>-->
 
+  <div style="background-position: 0px 0px; margin-top: -125px;" id="rocket-to-top">
+    <div style="opacity: 0; display: block;" class="level-2"></div>
+    <div class="level-3"></div>
+  </div>
 
   <footer class="footer me-footer">
     <p> Copyright &copy; 2018 sususky</p>
@@ -62,5 +114,72 @@
   <script type="text/javascript" src="plugins/jquery/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="plugins/bootstrap/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/love.js"></script>
+
+  <script type="text/javascript">
+
+      // jQuery火箭图标返回顶部代码
+
+      $(function() {
+          var e = $("#rocket-to-top"),
+              t = $(document).scrollTop(),
+              n,
+              r,
+              i = !0;
+          $(window).scroll(function() {
+              var t = $(document).scrollTop();
+              t == 0 ? e.css("background-position") == "0px 0px" ? e.fadeOut("slow") : i && (i = !1, $(".level-2").css("opacity", 1), e.delay(100).animate({
+                      marginTop: "-1000px"
+                  },
+                  "normal",
+                  function() {
+                      e.css({
+                          "margin-top": "-125px",
+                          display: "none"
+                      }),
+                          i = !0
+                  })) : e.fadeIn("slow")
+          }),
+              e.hover(function() {
+                      $(".level-2").stop(!0).animate({
+                          opacity: 1
+                      })
+                  },
+                  function() {
+                      $(".level-2").stop(!0).animate({
+                          opacity: 0
+                      })
+                  }),
+              $(".level-3").click(function() {
+                  function t() {
+                      var t = e.css("background-position");
+                      if (e.css("display") == "none" || i == 0) {
+                          clearInterval(n),
+                              e.css("background-position", "0px 0px");
+                          return
+                      }
+                      switch (t){
+                          case "0px 0px":
+                              e.css("background-position", "-298px 0px");
+                              break;
+                          case "-298px 0px":
+                              e.css("background-position", "-447px 0px");
+                              break;
+                          case "-447px 0px":
+                              e.css("background-position", "-596px 0px");
+                              break;
+                          case "-596px 0px":
+                              e.css("background-position", "-745px 0px");
+                              break;
+                          case "-745px 0px":
+                              e.css("background-position", "-298px 0px");
+                      }
+                  }
+                  if (!i) return;
+                  n = setInterval(t, 50),
+                      $("html,body").animate({scrollTop: 0},"slow");
+              });
+      });
+
+  </script>
 </body>
 </html>
