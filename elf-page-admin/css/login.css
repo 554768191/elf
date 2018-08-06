@@ -7,7 +7,26 @@ body,html {
     font-weight: 400;
     font-size: 15px;
 }
+.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 53px;
+    width: 100%;
+}
+.navbar-collapse .navbar-nav {
+    display: inline-block;
+    float: right;
+}
+.navbar-collapse .navbar-nav li {
+    display: inline-block;
+    float: left;
+    margin-right: 20px;
 
+}
+.nav-item a {
+    color: #fff;
+}
 .user-login {
     position: absolute;
     top: 50%;
@@ -43,23 +62,69 @@ body,html {
     width: 308px;
     margin: 0 auto;
 }
+.content-center .input-group {
+    margin-bottom: 10px;
+}
 .content-center .input-group-addon {
     background-color: transparent;
     border-radius: 30px;
+    border: 1px solid #E3E3E3;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-right: 0 none;
+    vertical-align: middle;
+    border-color: rgba(255,255,255,0.5);
+    padding: 14px 10px;
 }
-.content-center placeholder {
-    color: #FFFFFF;
-}
-
-.input-group {
-    margin-bottom: 10px;
-}
-
-.form-control {
+.content-center .form-control {
     background-color: transparent;
     border-radius: 30px;
     font-size: .8571em;
-    color: #FFFFFF;
+    color: #fff;
     padding: 10px 20px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-left: 0 none;
 }
-
+.content-center .form-control:focus {
+    background-color: transparent;
+    box-shadow: none;
+    color: #fff;
+    border: solid 1px #fff;
+    border-left: none;
+}
+.content-center .form-control:focus ~ .input-group-addon {
+    border: solid 1px #fff;
+}
+.input-group-focus .input-group-addon{
+    background-color: transparent;
+    border-color:#fff;
+    color: #fff;
+}
+.content-center .btn {
+    border-radius: 30px;
+    background-color: #6572b8;
+    border:none;
+}
+.content-center .btn:hover {
+    background-color: #8c99e0;
+}
+.forget {
+    height: 30px;
+    margin: 8px;
+}
+.forget a {
+    float:right;
+}
+.link {
+    color: #fff;
+}
+.link:hover {
+    text-decoration: none;
+    color: #fff;
+    font-style: border;
+}
+.footer {
+    color: #fff;
+    margin-top: 50px;
+}

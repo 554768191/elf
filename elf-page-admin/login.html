@@ -6,13 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta charset="utf-8" />
     <title>用户登录</title>
+
     <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="plugins/fontawesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/main.css"> -->
     <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
+    <!-- Navbar -->
+    <nav class="navbar fixed-top">
+        <div class="container">
+            <div class="navbar-translate n_logo">
+                <button class="navbar-toggler" type="button">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" title="QQ登录" href="javascript:void(0);" target="_blank">
+                            <i class="fa fa-qq"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="关注微博" href="javascript:void(0);" target="_blank">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="关注微信" href="javascript:void(0);" target="_blank">
+                            <i class="fa fa-wechat"></i>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
 <div class="user-login">
     <div class="container">
         <div class="col-md-12">
@@ -27,49 +61,58 @@
                 <div class="content-center">
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="fa fa-user fa-fw"></i>
+                            <i class="fa fa-user-o"></i>
                         </span>
-                        <input type="text" class="form-control" placeholder="Enter User Name">
+                        <input type="text" class="form-control" placeholder="账号">
 
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <i class="fa fa-key fa-fw"></i>
+                            <i class="fa fa-key"></i>
                         </span>
-                        <input type="password" placeholder="Password" class="form-control" />
+                        <input type="password" placeholder="密码" class="form-control" />
                     </div>
+                    <div>
+                        <div class="input-group" style="width:180px;">
+                            <span class="input-group-addon">
+                                <i class="fa fa-shield"></i>
+                            </span>
+                            <input type="text" placeholder="验证码" class="form-control " />
+                        </div>
+
+                        <div style="margin-left: 10px;">
+							<img src="" class="" id="user-get-vercode">
+						</div>
+                    </div>
+                    <div class="forget">
+                        <a href="#" class="link">忘记密码?</a>
+                    </div>
+                    <div>
+                        <a href="index.html" class="btn btn-primary btn-round btn-lg btn-block ">登 录</a>
+                    </div>
+
                 </div>
-                <div class="footer content-center">
-                    <a href="index.html" class="btn btn-primary btn-round btn-lg btn-block ">登 录</a>
-                    <h5><a href="forgot-password.html" class="link">Forgot Password?</a></h5>
-                </div>
+
             </form>
         </div>
-        <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
 
-            <div class="layui-form-item">
-                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 录</button>
-            </div>
-            <div class="layui-trans layui-form-item layadmin-user-login-other">
-                <label>社交账号登录</label>
-                <a href="javascript:;"><img src="assets/images/icon_qq.png" width="30px"/></a>
-                <a href="javascript:;"><img src="assets/images/icon_weixin.png" width="30px"/></a>
-                <a href="javascript:;"><img src="assets/images/icon_weibo.png" width="30px"/></a>
-                <a href="javascript:;" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
-            </div>
-        </div>
     </div>
 
-    <div class="layui-trans layadmin-user-login-footer">
+    <div class="footer">
         <p>Copyright © 2018 </p>
-        <p><a href="javascript:;">EasyWeb</a> All Rights Reserved.</p>
+        <p><a href="javascript:;" class="link">sususky</a> All Rights Reserved.</p>
     </div>
 </div>
 
 <script type="text/javascript" src="plugins/jquery/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="assets/libs/layui/layui.js"></script>
-<script type="text/javascript" src="assets/libs/jquery.md5.js"></script>
-<script type="text/javascript" src="assets/js/config.js"></script>
-<script type="text/javascript" src="assets/js/login.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<script>
+    //=============================================================================
+    $('.form-control').on("focus", function() {
+        $(this).parent('.input-group').addClass("input-group-focus");
+    }).on("blur", function() {
+        $(this).parent(".input-group").removeClass("input-group-focus");
+    });
+</script>
 </body>
 </html>
