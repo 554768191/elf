@@ -14,9 +14,13 @@ body,html {
     height: 53px;
     width: 100%;
 }
+@media screen and (min-width: 992px) { .navbar-collapse {
+    float: right;
+}
+}
 .navbar-collapse .navbar-nav {
     display: inline-block;
-    float: right;
+    /*float: right;*/
 }
 .navbar-collapse .navbar-nav li {
     display: inline-block;
@@ -24,8 +28,82 @@ body,html {
     margin-right: 20px;
 
 }
+.navbar .navbar-toggler {
+    width: 37px;
+    height: 27px;
+    outline: 0;
+    cursor: pointer;
+}
 .nav-item a {
     color: #fff;
+}
+
+@media screen and (max-width: 991px) {
+    .authentication .navbar-collapse {
+        position: fixed;
+        display: block;
+        top: 0;
+        height: 100% !important;
+        width: 300px;
+        right: 0;
+        z-index: 1032;
+        visibility: visible;
+        background-color: #999;
+        overflow-y: visible;
+        border-top: none;
+        text-align: left;
+        max-height: none !important;
+        -webkit-transform: translate3d(300px, 0, 0);
+        -moz-transform: translate3d(300px, 0, 0);
+        -o-transform: translate3d(300px, 0, 0);
+        -ms-transform: translate3d(300px, 0, 0);
+        transform: translate3d(300px, 0, 0);
+        -webkit-transition: all .5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        -moz-transition: all .5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        -o-transition: all .5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        -ms-transition: all .5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        transition: all .5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+    }
+}
+@media screen and (max-width: 991px) {
+    .authentication .navbar .navbar-toggler-bar {
+        display: block;
+        position: relative;
+        width: 22px;
+        height: 1px;
+        border-radius: 1px;
+        background: #fff;
+    }
+}
+@media screen and (max-width: 991px) {
+    .authentication .bar1 {
+        top: 0px;
+        -webkit-animation: topbar-back 500ms linear 0s;
+        -moz-animation: topbar-back 500ms linear 0s;
+        animation: topbar-back 500ms 0s;
+        -webkit-animation-fill-mode: forwards;
+        -moz-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+}
+@media screen and (max-width: 991px) {
+    .authentication .navbar .navbar-toggler-bar + .navbar-toggler-bar {
+        margin-top: 7px;
+    }
+}
+@media screen and (max-width: 991px) {
+    .authentication .bar2 {
+        opacity: 1;
+    }
+}
+@media screen and (max-width: 991px) {
+    .nav-open .authentication .navbar-collapse {
+        -webkit-transform: translate3d(0px, 0, 0);
+        -moz-transform: translate3d(0px, 0, 0);
+        -o-transform: translate3d(0px, 0, 0);
+        -ms-transform: translate3d(0px, 0, 0);
+        transform: translate3d(0px, 0, 0);
+    }
 }
 .user-login {
     position: absolute;
@@ -74,14 +152,14 @@ body,html {
     border-right: 0 none;
     vertical-align: middle;
     border-color: rgba(255,255,255,0.5);
-    padding: 14px 10px;
+    padding: 14px;
 }
 .content-center .form-control {
     background-color: transparent;
     border-radius: 30px;
     font-size: .8571em;
     color: #fff;
-    padding: 10px 20px;
+    padding: 25px 5px;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     border-left: 0 none;

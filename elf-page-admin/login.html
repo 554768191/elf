@@ -7,17 +7,17 @@
     <meta charset="utf-8" />
     <title>用户登录</title>
     <link rel="icon" href="images/icons/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="plugins/fontawesome/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="css/main.css"> -->
     <link rel="stylesheet" href="css/login.css">
 </head>
 
-<body>
+<body class="authentication">
     <!-- Navbar -->
-    <nav class="navbar fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <div class="navbar-translate n_logo">
+            <div class="navbar-translate">
                 <button class="navbar-toggler" type="button">
                     <span class="navbar-toggler-bar bar1"></span>
                     <span class="navbar-toggler-bar bar2"></span>
@@ -105,9 +105,13 @@
 </div>
 
     <script type="text/javascript" src="plugins/jquery/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap/bootstrap.min.js"></script>
+
     <script type="text/javascript" src="js/login.js"></script>
     <script>
+        $(".navbar-toggler").on('click',function() {
+            $("html").toggleClass("nav-open");
+        });
         //=============================================================================
         $('.form-control').on("focus", function() {
             $(this).parent('.input-group').addClass("input-group-focus");
