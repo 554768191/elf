@@ -1,0 +1,15 @@
+.theme-purple .navbar, .theme-purple .page-loader-wrapper {
+    background: #8c99e0;
+}
+
+
+.theme-purple .sidebar .menu .list li.active {
+    background-color: transparent;
+}
+.theme-purple .sidebar .menu .list li.active>:first-child span {
+    color: #6572b8;
+}
+.theme-purple .sidebar .menu .list li.active>:first-child i,
+.theme-purple .sidebar .menu .list li.active>:first-child span {
+    color: #6572b8;
+}

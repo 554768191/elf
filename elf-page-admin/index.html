@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
-<title>苏苏</title>
-<link rel="icon" href="images/icons/favicon.ico" type="image/x-icon"> <!-- Favicon-->
-<link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" href="plugins/fontawesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
-<link rel="stylesheet" href="assets/plugins/morrisjs/morris.min.css" />
-<!-- Custom Css -->
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/color_skins.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="个人博客网站">
+    <title>苏苏</title>
+    <link rel="icon" href="images/icons/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css"/>
+    <link rel="stylesheet" href="assets/plugins/morrisjs/morris.min.css" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/skin.css">
 </head>
 <body class="theme-purple">
 <!-- Page Loader -->
@@ -27,20 +27,26 @@
 <div class="overlay"></div>
 
 <!-- Top Bar -->
-<nav class="navbar p-l-5 p-r-5">
-    <ul class="nav navbar-nav navbar-left">
+<nav class="navbar" role="navigation">
+    <ul class="nav list-inline">
         <li>
-            <div class="navbar-header">
-                <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html"><img src="assets/images/logo.svg" width="30" alt="Oreo"><span class="m-l-10">Oreo</span></a>
+            <a class="navbar-toggle" data-toggle="collapse" data-target="#leftsidebar">
+                <i class="fa fa-outdent"></i>
+            </a>
+        </li>
+
+        <li class="nav-search">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search...">
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
             </div>
         </li>
-        <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>
-        <li class="hidden-md-down"><a href="events.html" title="Events"><i class="zmdi zmdi-calendar"></i></a></li>
-        <li class="hidden-md-down"><a href="mail-inbox.html" title="Inbox"><i class="zmdi zmdi-email"></i></a></li>
-        <li><a href="contact.html" title="Contact List"><i class="zmdi zmdi-account-box-phone"></i></a></li>
-        <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="zmdi zmdi-notifications"></i>
-            <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
+        <li class="float-right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                <i class="fa fa-bell"></i>
+                <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
             </a>
             <ul class="dropdown-menu pullDown">
                 <li class="body">
@@ -104,124 +110,22 @@
                 </li>
                 <li class="footer"> <a href="javascript:void(0);">View All</a> </li>
             </ul>
-        </li>
-        <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="zmdi zmdi-flag"></i>
-            <div class="notify">
-                <span class="heartbit"></span>
-                <span class="point"></span>
-            </div>
-            </a>
-            <ul class="dropdown-menu pullDown">
-                <li class="header">Project</li>
-                <li class="body">
-                    <ul class="menu tasks list-unstyled">
-                        <li>
-                            <a href="javascript:void(0);">
-                                <div class="progress-container progress-primary">
-                                    <span class="progress-badge">eCommerce Website</span>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="width: 86%;">
-                                            <span class="progress-value">86%</span>
-                                        </div>
-                                    </div>
-                                    <ul class="list-unstyled team-info">
-                                        <li class="m-r-15"><small class="text-muted">Team</small></li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar2.jpg" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar3.jpg" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar4.jpg" alt="Avatar">
-                                        </li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">
-                                <div class="progress-container progress-info">
-                                    <span class="progress-badge">iOS Game Dev</span>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-                                            <span class="progress-value">45%</span>
-                                        </div>
-                                    </div>
-                                    <ul class="list-unstyled team-info">
-                                        <li class="m-r-15"><small class="text-muted">Team</small></li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar10.jpg" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar9.jpg" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar8.jpg" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar7.jpg" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar6.jpg" alt="Avatar">
-                                        </li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">
-                                <div class="progress-container progress-warning">
-                                    <span class="progress-badge">Home Development</span>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" style="width: 29%;">
-                                            <span class="progress-value">29%</span>
-                                        </div>
-                                    </div>
-                                    <ul class="list-unstyled team-info">
-                                        <li class="m-r-15"><small class="text-muted">Team</small></li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar5.jpg" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar2.jpg" alt="Avatar">
-                                        </li>
-                                        <li>
-                                            <img src="assets/images/xs/avatar7.jpg" alt="Avatar">
-                                        </li>
-                                    </ul>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="footer"><a href="javascript:void(0);">View All</a></li>
-            </ul>
-        </li>
-        <li class="hidden-sm-down">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search...">
-                <span class="input-group-addon">
-                    <i class="zmdi zmdi-search"></i>
-                </span>
-            </div>
-        </li>
-        <li class="float-right">
-            <a href="javascript:void(0);" class="fullscreen hidden-sm-down" data-provide="fullscreen" data-close="true"><i class="zmdi zmdi-fullscreen"></i></a>
-            <a href="sign-in.html" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a>
-            <a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a>
+
+            <a href="javascript:void(0);" class="fullscreen hidden-sm-down" data-provide="fullscreen" data-close="true"><i class="fa fa-square-o"></i></a>
+            <a href="sign-in.html" class="mega-menu" data-close="true"><i class="fa fa-power-off"></i></a>
+            <a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="fa fa-cog fa-spin"></i></a>
         </li>
     </ul>
 </nav>
 
 <!-- Left Sidebar -->
 <aside id="leftsidebar" class="sidebar">
-    <div class="tab-pane stretchRight active" id="dashboard">
+    <div id="dashboard">
         <div class="menu">
             <ul class="list">
                 <li>
                     <div class="user-info">
-                        <div class="image"><a href="profile.html"><img src="images/avatar/profile_av.jpg" alt="User"></a></div>
+                        <div class="image"><a href="profile.html"><img src="images/avatar/2018-3-2.jpg" width="100" height="100"></a></div>
                         <div class="detail">
                             <h4>苏荣耀</h4>
                             <small>JAVA Developer</small>
@@ -231,8 +135,8 @@
                         <a title="github" href="#"><i class="fa fa-github"></i></a>
                     </div>
                 </li>
-                <li class="header">MAIN</li>
-                <li class="active open"> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a>
+                <li class="header"></li>
+                <li class="active open"> <a href="javascript:void(0);" class="menu-toggle"><i class="fa fa-home"></i><span>Dashboard</span></a>
                     <ul class="ml-menu">
                         <li class="active"><a href="index.html">Main</a> </li>
                         <li><a href="dashboard-rtl.html">RTL</a></li>
@@ -278,91 +182,7 @@
                         <li> <a href="waves.html">Waves</a></li>
                     </ul>
                 </li>
-                <li class="header">FORMS, CHARTS, TABLES</li>
-                <li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Forms</span> </a>
-                    <ul class="ml-menu">
-                        <li><a href="basic-form-elements.html">Basic Elements</a> </li>
-                        <li><a href="advanced-form-elements.html">Advanced Elements</a> </li>
-                        <li><a href="form-examples.html">Form Examples</a> </li>
-                        <li><a href="form-validation.html">Form Validation</a> </li>
-                        <li><a href="form-wizard.html">Form Wizard</a> </li>
-                        <li><a href="form-editors.html">Editors</a> </li>
-                        <li><a href="form-upload.html">File Upload</a></li>
-                    </ul>
-                </li>
-                <li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Tables</span> </a>
-                    <ul class="ml-menu">
-                        <li> <a href="normal-tables.html">Normal Tables</a> </li>
-                        <li> <a href="jquery-datatable.html">Jquery Datatables</a> </li>
-                        <li> <a href="editable-table.html">Editable Tables</a> </li>
-                        <li> <a href="footable.html">Foo Tables</a> </li>
-                        <li> <a href="table-color.html">Tables Color</a> </li>
-                    </ul>
-                </li>
-                <li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-chart"></i><span>Charts</span> </a>
-                    <ul class="ml-menu">
-                        <li> <a href="morris.html">Morris</a> </li>
-                        <li> <a href="flot.html">Flot</a> </li>
-                        <li> <a href="chartjs.html">ChartJS</a> </li>
-                        <li> <a href="sparkline.html">Sparkline</a> </li>
-                        <li> <a href="jquery-knob.html">Jquery Knob</a> </li>
-                    </ul>
-                </li>
-                <li class="header">EXTRA COMPONENTS</li>
-                <li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-delicious"></i><span>Widgets</span> </a>
-                    <ul class="ml-menu">
-                        <li><a href="widgets-app.html">Apps Widgetse</a></li>
-                        <li><a href="widgets-data.html">Data Widgetse</a></li>
-                    </ul>
-                </li>
-                <li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-lock"></i><span>Authentication</span> </a>
-                    <ul class="ml-menu">
-                        <li><a href="sign-in.html">Sign In</a> </li>
-                        <li><a href="sign-up.html">Sign Up</a> </li>
-                        <li><a href="forgot-password.html">Forgot Password</a> </li>
-                        <li><a href="404.html">Page 404</a> </li>
-                        <li><a href="500.html">Page 500</a> </li>
-                        <li><a href="page-offline.html">Page Offline</a> </li>
-                        <li><a href="locked.html">Locked Screen</a> </li>
-                    </ul>
-                </li>
-                <li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-copy"></i><span>Sample Pages</span> </a>
-                    <ul class="ml-menu">
-                        <li><a href="blank.html">Blank Page</a> </li>
-                        <li> <a href="image-gallery.html">Image Gallery</a> </li>
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="timeline.html">Timeline</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="invoices.html">Invoices</a></li>
-                        <li><a href="search-results.html">Search Results</a></li>
-                    </ul>
-                </li>
-                <li> <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-map"></i><span>Maps</span> </a>
-                    <ul class="ml-menu">
-                        <li> <a href="google.html">Google Map</a> </li>
-                        <li> <a href="yandex.html">YandexMap</a> </li>
-                        <li> <a href="jvectormap.html">jVectorMap</a> </li>
-                    </ul>
-                </li>
-                <li class="header">Extra</li>
-                <li>
-                    <div class="progress-container progress-primary m-t-10">
-                        <span class="progress-badge">Traffic this Month</span>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="width: 67%;">
-                                <span class="progress-value">67%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="progress-container progress-info">
-                        <span class="progress-badge">Server Load</span>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="width: 86%;">
-                                <span class="progress-value">86%</span>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+
             </ul>
         </div>
     </div>
@@ -1425,14 +1245,16 @@
     </div>
 </section>
 <!-- Jquery Core Js -->
-<script src="assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+<script type="text/javascript" src="plugins/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="plugins/bootstrap/js/bootstrap.min.js"></script>
+
 <script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- slimscroll, waves Scripts Plugin Js -->
 
 <script src="assets/bundles/morrisscripts.bundle.js"></script><!-- Morris Plugin Js -->
 <script src="assets/bundles/jvectormap.bundle.js"></script> <!-- JVectorMap Plugin Js -->
 <script src="assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob, Count To, Sparkline Js -->
 
-<script src="assets/bundles/mainscripts.bundle.js"></script>
+<script src="js/mainscripts.bundle.js"></script>
 <script src="assets/js/pages/index.js"></script>
 </body>
 </html>
