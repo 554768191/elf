@@ -11,6 +11,9 @@ body {
 button, input, select, a {
     outline: none !important;
 }
+a {
+    cursor: pointer;
+}
 a:hover {
     text-decoration: none;
 }
@@ -44,6 +47,9 @@ ul li {
 .navbar ul li {
     display: inline-block;
 }
+.nav-search {
+    margin-left: 100px;
+}
 .nav-search .form-control {
     background-color: transparent;
     border: 1px solid #E3E3E3;
@@ -51,23 +57,23 @@ ul li {
     color: #2c2c2c;
     line-height: normal;
     font-size: .8571em;
-    -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    -ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    border-right: none;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 .nav-search .input-group-addon {
     border: 1px solid #E3E3E3;
     border-radius: 30px;
-    padding: 10px 18px 10px 0;
+    padding: 7px 18px 7px 0;
     background-color: transparent;
     color: #fff;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-left: 0 none;
 }
 .navbar a:not(.btn):not(.dropdown-item) {
     color: #fff;
+    line-height: 69px;
 }
 .navbar .float-right a {
     padding: 0px 12px;
@@ -77,7 +83,7 @@ ul li {
 .notify {
     position: absolute;
     top: 30px;
-    right: 11px;
+    padding-left: 30px;
 }
 .notify .heartbit {
     position: absolute;
@@ -98,6 +104,27 @@ ul li {
     -ms-animation: heartbit 1s ease-out;
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
+}
+@-moz-keyframes heartbit{
+    0%{-moz-transform:scale(0);opacity:0}
+    25%{-moz-transform:scale(0.1);opacity:.1}
+    50%{-moz-transform:scale(0.5);opacity:.3}
+    75%{-moz-transform:scale(0.8);opacity:.5}
+    100%{-moz-transform:scale(1);opacity:0}
+}
+@-webkit-keyframes heartbit{
+    0%{-webkit-transform:scale(0);opacity:0}
+    25%{-webkit-transform:scale(0.1);opacity:.1}
+    50%{-webkit-transform:scale(0.5);opacity:.3}
+    75%{-webkit-transform:scale(0.8);opacity:.5}
+    100%{-webkit-transform:scale(1);opacity:0}
+}
+@-ms-keyframes heartbit{
+    0%{-ms-transform:scale(0);opacity:0}
+    25%{-ms-transform:scale(0.1);opacity:.1}
+    50%{-ms-transform:scale(0.5);opacity:.3}
+    75%{-ms-transform:scale(0.8);opacity:.5}
+    100%{-ms-transform:scale(1);opacity:0}
 }
 .notify .point {
     width: 6px;
@@ -179,7 +206,20 @@ ul li {
 .sidebar .menu .list .ml-menu li.active a.toggled:not(.menu-toggle) {
     font-weight: 600;
 }
-
+.overlay {
+    position: fixed;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 12;
+}
+.float-right .dropdown-toggle::after {
+    display: none;
+}
 
 .chat-launcher {
     position: fixed;

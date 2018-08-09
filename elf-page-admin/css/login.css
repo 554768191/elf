@@ -14,30 +14,45 @@ body,html {
     height: 53px;
     width: 100%;
 }
-@media screen and (min-width: 992px) { .navbar-collapse {
-    float: right;
-}
-}
-.navbar-collapse .navbar-nav {
-    display: inline-block;
-    /*float: right;*/
+.navbar-collapse {
+    flex-grow: 0;
 }
 .navbar-collapse .navbar-nav li {
     display: inline-block;
     float: left;
     margin-right: 20px;
-
 }
 .navbar .navbar-toggler {
     width: 37px;
     height: 27px;
-    outline: 0;
-    cursor: pointer;
+    float: right;
+    outline: none;
 }
 .nav-item a {
     color: #fff;
 }
+.nav-link:not(.btn):hover {
+    background-color: rgba(255,255,255,0.2);
+    border-radius: .1875rem;
+}
 
+@media screen and (min-width: 992px) {
+    .navbar-collapse {
+        float: right;
+    }
+}
+@media screen and (max-width: 991px) {
+    .authentication .navbar .navbar-translate {
+        width: 100%;
+        position: relative;
+        /*display: flex;*/
+        -ms-flex-pack: justify !important;
+        justify-content: space-between !important;
+        -ms-flex-align: center;
+        align-items: center;
+
+    }
+}
 @media screen and (max-width: 991px) {
     .authentication .navbar-collapse {
         position: fixed;
@@ -66,6 +81,11 @@ body,html {
     }
 }
 @media screen and (max-width: 991px) {
+    .authentication .navbar .navbar-toggler-bar + .navbar-toggler-bar {
+        margin-top: 7px;
+    }
+}
+@media screen and (max-width: 991px) {
     .authentication .navbar .navbar-toggler-bar {
         display: block;
         position: relative;
@@ -76,28 +96,24 @@ body,html {
     }
 }
 @media screen and (max-width: 991px) {
-    .authentication .bar1 {
-        top: 0px;
-        -webkit-animation: topbar-back 500ms linear 0s;
-        -moz-animation: topbar-back 500ms linear 0s;
-        animation: topbar-back 500ms 0s;
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
+    .authentication .navbar .navbar-toggler-bar.bar2 {
+        width: 17px;
     }
 }
-@media screen and (max-width: 991px) {
-    .authentication .navbar .navbar-toggler-bar + .navbar-toggler-bar {
-        margin-top: 7px;
-    }
+.authentication .navbar-toggler:hover .navbar-toggler-bar.bar2 {
+    width:22px;
 }
-@media screen and (max-width: 991px) {
-    .authentication .bar2 {
-        opacity: 1;
-    }
+
+.nav-open .authentication .navbar-toggler {
+    margin-right: 300px;
+    /*transition: width .2s linear;*/
+}
+.nav-open .authentication ul li {
+    padding:10px 20px;
 }
 @media screen and (max-width: 991px) {
     .nav-open .authentication .navbar-collapse {
+        background-color: #6572b8;
         -webkit-transform: translate3d(0px, 0, 0);
         -moz-transform: translate3d(0px, 0, 0);
         -o-transform: translate3d(0px, 0, 0);
@@ -105,6 +121,7 @@ body,html {
         transform: translate3d(0px, 0, 0);
     }
 }
+
 .user-login {
     position: absolute;
     top: 50%;
