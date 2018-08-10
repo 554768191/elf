@@ -28,10 +28,24 @@
 </nav>
 <h1>Hello, world!</h1>
 
+
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script type="text/javascript" src="plugins/jquery/jquery-3.3.1.min.js"></script>
-<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script type="text/javascript" src="plugins/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/libs/q.js"></script>
+<!--<script type="text/javascript" src="js/index.js"></script>-->
+
+<script>
+    Q.reg('home', function () {
+        $("h1").innerHTML='12345';
+    });
+
+    Q.init({
+        index:'home'
+    });
+</script>
+
 </body>
 </html>
