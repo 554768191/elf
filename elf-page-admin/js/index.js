@@ -5,7 +5,7 @@ $(function() {
 
     //路由注册
     Q.reg('home',function(){
-        //load('home');
+        load('home');
     }).reg('system',function(path){
         load('system/'+path);
     }).init({
@@ -21,9 +21,10 @@ function load(path) {
     //     activeNav(path);
     // }
     refreshNav = true;
-    $("#main-content").load("template/" + path +".html",function(){
+    $("#main-content").load("template/" + path +".html", function(){
 
     });
+
 }
 
 //获取左侧导航栏
