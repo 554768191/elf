@@ -30,9 +30,9 @@ layui.define(function (exports) {
             name: '主页',
             icon: 'layui-icon-home',
             subMenus: [{
-                name: '主页一',
-                url: 'console',
-                path: 'console.html'
+                name: 'home',
+                url: 'home',
+                path: 'home.html'
             }]
         }, {
             name: '系统管理',
@@ -53,9 +53,9 @@ layui.define(function (exports) {
                 path: 'system/authorities.html',
                 auth: 'get:/authorities'
             }, {
-                name: '登录日志',
-                url: 'login_record',
-                path: 'system/login_record.html',
+                name: '系统日志',
+                url: 'log',
+                path: 'system/log.html',
                 auth: 'get:/loginRecord'
             }]
         }],
@@ -72,7 +72,48 @@ layui.define(function (exports) {
                 key: 'loginUser',
                 value: JSON.stringify(user)
             });
+        },
+        // 封装ajax请求
+        req: function (url, data, success, method) {
+            if ('put' == method.toLowerCase()) {
+                method = 'POST';
+                data._method = 'PUT';
+            } else if ('delete' == method.toLowerCase()) {
+                method = 'POST';
+                data._method = 'DELETE';
+            }
+            var token = config.getToken();
+            if (token) {
+                data.access_token = token.access_token;
+            }
+            $.ajax({
+                url: config.base_server + url,
+                data: data,
+                type: method,
+                dataType: 'JSON',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    console.log(xhr.status + ' - ' + xhr.statusText);
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    } else {
+                        success({code: xhr.status, msg: xhr.statusText});
+                    }
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', 'Basic ' + token.access_token);
+                    }
+                }
+            });
         }
+
     };
     exports('config', config);
 });
