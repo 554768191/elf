@@ -147,9 +147,19 @@ html {
     font-weight: bold;
 }
 .layui-nav-tree .layui-nav-child dd.layui-this {
-    background-color: #f2f2f2;
+    background-color: #fff;
+    border-right: 3px solid #8c99e0;
 }
-
+.layui-nav-tree .layui-nav-child dd.layui-this a {
+    font-weight: bold;
+}
+/*
+.layui-nav-tree .layui-nav-child dd.layui-this a:before {
+    font-family:'FontAwesome';
+    content: "\f178";
+    margin-right: 5px;
+}
+*/
 
 /** 侧边栏样式结束 */
 
@@ -227,7 +237,7 @@ html {
 }
 
 .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed > a {
-    background: rgba(0, 0, 0, .3);
+    background-color: #8c99e0;
 }
 
 /** 修改折叠的图标 */

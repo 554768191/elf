@@ -41,7 +41,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             var liContent = '';
             $.each(menus, function (i, data) {
                 liContent = liContent + '<li class="layui-nav-item" p-for="menus">';
-                liContent = liContent + '<a href="javascript:;"><i p-bind="class:layui-icon ' + data.icon;
+                liContent = liContent + '<a href="javascript:;"><i class="layui-icon ' + data.icon;
                 liContent = liContent + '"></i>&emsp;<cite>' + data.name + '</cite></a> ';
 
                 if (data.subMenus) {
