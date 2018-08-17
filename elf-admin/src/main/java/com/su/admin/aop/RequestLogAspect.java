@@ -73,7 +73,12 @@ public class RequestLogAspect {
 
             o = pjp.proceed();
             if(logger.isInfoEnabled()){
-                logger.info("方法返回: [{}]", o.toString());
+                if(o!=null){
+                    logger.info("方法返回: [{}]", o.toString());
+                }else{
+                    logger.info("没有返回值");
+                }
+
             }
 
         }else{

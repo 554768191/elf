@@ -36,7 +36,7 @@
             <li class="layui-nav-item" lay-unselect>
                 <a>
                     <img src="images/avatar/profile_av.jpg" class="layui-nav-img">
-                    <cite>{{nickName}}</cite>
+                    <cite>管理员</cite>
                 </a>
                 <dl class="layui-nav-child">
                     <dd lay-unselect>
@@ -60,7 +60,7 @@
     <!-- 侧边栏 -->
     <div class="layui-side" p-com="side">
         <div class="layui-side-scroll">
-            <ul class="layui-nav layui-nav-tree" style="margin-top: 15px;">
+            <ul class="layui-nav layui-nav-tree" style="margin-top: 15px;" id="menu-view">
 
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="layui-icon layui-icon-senior"></i>&emsp;<cite>系统监控</cite></a>
@@ -90,21 +90,6 @@
 <script type="text/javascript" src="plugins/layui/layui.js"></script>
 <script type="text/javascript" src="js/lib/q.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-
-<script id="menu" type="text/html">
-
-    {{#  layui.each(d, function(index, item){ }}
-    <li class="layui-nav-item" p-for="menus">
-        <a href="javascript:;"><i p-bind="class:layui-icon {{item.icon}}"></i>&emsp;<cite>{{item.name}}</cite></a>
-        {{#  layui.each(item.subMenus, function(i, em){ }}
-        <dl class="layui-nav-child" p-each="subMenus">
-            <dd><a p-bind="href:#!{{em.url}}">{{em.name}}</a></dd>
-        </dl>
-        {{#  }); }}
-    </li>
-    {{#  }); }}
-
-</script>
 
 </body>
 

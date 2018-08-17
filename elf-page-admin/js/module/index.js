@@ -1,9 +1,8 @@
-layui.define(['config', 'layer', 'element', 'form', 'laytpl'], function (exports) {
+layui.define(['config', 'layer', 'element', 'form'], function (exports) {
     var config = layui.config;
     var layer = layui.layer;
     var element = layui.element;
     var form = layui.form;
-    var laytpl = layui.laytpl;
 
     var popupRightIndex, popupCenterIndex, popupCenterParam;
 
@@ -26,32 +25,41 @@ layui.define(['config', 'layer', 'element', 'form', 'laytpl'], function (exports
                 }
             }
 
-            laytpl(menu.innerHTML).render(authMenus, function(html){
-                $(".layui-nav-tree").innerHTML = html;
-                // layui.element.render('nav', 'index-nav');
-            });
+            index.initRouter(authMenus);
 
             index.activeNav(Q.lash);
         },
         // 路由注册
-        initRouter: function () {
-            index.regRouter(config.menus);
+        initRouter: function (menus) {
+            index.regAndDraw(menus);
             Q.init({
                 index: 'home'
             });
         },
         // 使用递归循环注册
-        regRouter: function (menus) {
+        regAndDraw: function (menus) {
+            var liContent = '';
             $.each(menus, function (i, data) {
-                if (data.url) {
-                    Q.reg(data.url, function () {
-                        index.loadView('template/' + data.path);
-                    });
-                }
+                liContent = liContent + '<li class="layui-nav-item" p-for="menus">';
+                liContent = liContent + '<a href="javascript:;"><i p-bind="class:layui-icon ' + data.icon;
+                liContent = liContent + '"></i>&emsp;<cite>' + data.name + '</cite></a> ';
+
                 if (data.subMenus) {
-                    index.regRouter(data.subMenus);
+                    liContent = liContent + '<dl class="layui-nav-child" p-each="subMenus">';
+                    $.each(data.subMenus, function(j, subData){
+                        liContent = liContent + '<dd><a href="#!';
+                        liContent = liContent + subData.url + '">' + subData.name + '</a></dd> ';
+
+                        Q.reg(subData.url, function () {
+                            index.loadView('template/' + subData.path);
+                        });
+                    } );
+                    liContent = liContent + '</dl> ';
                 }
+                liContent = liContent + '</li> ';
+
             });
+            $("#menu-view").html(liContent);
         },
         // 路由加载组件
         loadView: function (path) {
@@ -69,22 +77,12 @@ layui.define(['config', 'layer', 'element', 'form', 'laytpl'], function (exports
         },
 
         // 从服务器获取登录用户的信息
-        getUser: function (success) {
-            /*
-            layer.load(2);
-            admin.req('userInfo', {}, function (data) {
-                layer.closeAll('loading');
-                if (200 == data.code) {
-                    config.putUser(data.user);
-                    success(data.user);
-                } else {
-                    layer.msg('获取用户失败', {icon: 2});
-                }
-            }, 'GET');
-            */
-            user = {"userId":"29ogl979","username":"demo","password":"{bcrypt}$2a$10$kKqZaoluuMjfvusTuB5Z6e/RPhQgCXtkmBdhGokWPIi0RdhoWxD42","nickName":"demo","avatar":null,"sex":"男","phone":"13625436602","email":null,"emailVerified":null,"personId":null,"state":0,"createTime":"2018-06-28T08:19:32.000+0000","updateTime":"2018-06-29T05:52:52.000+0000","authorities":null,"roles":[{"roleId":"user","roleName":"普通用户","comments":"系统普通用户","isDelete":0,"createTime":"2018-02-23T00:32:11.000+0000","updateTime":"2018-02-23T03:19:08.000+0000"}],"enabled":true,"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true},{"userId":"admin","username":"admin","password":"{bcrypt}$2a$10$qrL6p6FKEitfGQnVRa.PPO.PsOJ4Dj9BSjEXll6fnruqBXABb/51O","nickName":"管理员","avatar":"","sex":"女","phone":"13125062807","email":"whvcse@foxmail.com","emailVerified":null,"personId":null,"state":0,"createTime":"2017-08-14T06:12:36.000+0000","updateTime":"2018-06-29T09:51:13.000+0000","authorities":null,"roles":[{"roleId":"admin","roleName":"管理员","comments":"系统管理员","isDelete":0,"createTime":"2018-02-23T00:31:22.000+0000","updateTime":"2018-02-23T03:18:26.000+0000"}],"enabled":true,"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true};
-            config.putUser(user);
-            success(user);
+        initUserInfo: function () {
+            // 获取当前用户信息
+            var loginUser = config.getUser();
+            if(loginUser){
+
+            }
         },
         // 页面元素绑定事件监听
         bindEvent: function () {
@@ -254,7 +252,7 @@ layui.define(['config', 'layer', 'element', 'form', 'laytpl'], function (exports
     index.events = {
         flexible: function (e) {  // 折叠侧导航
             var expand = $('.layui-layout-admin').hasClass('admin-nav-mini');
-            admin.flexible(expand);
+            index.flexible(expand);
         },
         refresh: function () {  // 刷新主体部分
             Q.refresh();
@@ -263,7 +261,7 @@ layui.define(['config', 'layer', 'element', 'form', 'laytpl'], function (exports
             history.back();
         },
         theme: function () {  // 设置主题
-            admin.popupRight('components/tpl/theme.html');
+            index.popupRight('components/tpl/theme.html');
         },
         fullScreen: function (e) {  // 全屏
             var ac = 'layui-icon-screen-full', ic = 'layui-icon-screen-restore';
@@ -296,13 +294,13 @@ layui.define(['config', 'layer', 'element', 'form', 'laytpl'], function (exports
     // 所有ew-event
     $('body').on('click', '*[ew-event]', function () {
         var event = $(this).attr('ew-event');
-        var te = admin.events[event];
+        var te = index.events[event];
         te && te.call(this, $(this));
     });
 
     // 移动设备遮罩层点击事件
     $('.site-mobile-shade').click(function () {
-        admin.flexible(true);
+        index.flexible(true);
     });
 
     // 侧导航折叠状态下鼠标经过显示提示
@@ -319,7 +317,7 @@ layui.define(['config', 'layer', 'element', 'form', 'laytpl'], function (exports
     $('body').on('click', '.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
         if (document.body.clientWidth > 750) {
             layer.closeAll('tips');
-            admin.flexible(true);
+            index.flexible(true);
         }
     });
 

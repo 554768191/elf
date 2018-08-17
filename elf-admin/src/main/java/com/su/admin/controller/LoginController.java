@@ -43,7 +43,7 @@ public class LoginController {
 
 
     @RequestMapping("/captcha")
-    public void captcha(HttpServletRequest request, HttpServletResponse response, String codeKey)
+    public void captcha(HttpServletResponse response, String uuid)
             throws Exception{
         response.setHeader("Cache-Control", "no-store");
         response.setHeader("Pragma", "no-cache");
@@ -53,10 +53,10 @@ public class LoginController {
         //生产验证码字符串并保存到session中
         CaptchaUtil cu = new CaptchaUtil(200, 60, 5);
         String createText = cu.getCode();
-        //request.getSession().setAttribute("verifyCode", createText);
+        // request.getSession().setAttribute("verifyCode", createText);
         logger.info("生成验证码[{}]", createText);
-        if(StringUtils.isNotEmpty(codeKey)){
-            redisDao.set(codeKey, createText);
+        if(StringUtils.isNotEmpty(uuid)){
+            redisDao.set(uuid, createText);
         }
         ServletOutputStream responseOutputStream = response.getOutputStream();
         cu.write(responseOutputStream);
@@ -67,17 +67,17 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(HttpServletRequest request, HttpServletResponse response, String account,
-                        String password, String captcha, String verkey){
-        /*
+                        String password, String captcha, String uuid){
+
         String text = null; //(String) session.getAttribute("verifyCode");
-        if(StringUtils.isNotEmpty(verkey)){
-            text = redisDao.get(verkey);
+        if(StringUtils.isNotEmpty(uuid)){
+            text = redisDao.get(uuid);
         }
 
         if(StringUtils.isEmpty(text) || !text.equalsIgnoreCase(captcha)){
             return ResponseMessage.error(Constants.ILLEGAL_PARAM, "验证码不正确");
         }
-        */
+
         //校验用户名密码
         if(!RegexUtil.isRegexMatch(account, "^[A-Za-z0-9@#$-_.]{1,64}$")){
             return ResponseMessage.error(Constants.ILLEGAL_PARAM, "用户名格式不合法");
@@ -104,7 +104,8 @@ public class LoginController {
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("token", token);
-                //jsonObject.put("account", account);
+                jsonObject.put("isSuper", user.getIsSuper());
+                jsonObject.put("privileges", user.getPrivaleges());
                 return ResponseMessage.ok(jsonObject);//.put("token", "").put("user", user);
             }else{
                 userService.addLoginLog(request, account, "密码错误");

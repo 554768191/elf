@@ -14,46 +14,16 @@
         return;
     }
        */
-    // 获取当前用户信息
-    var loginUser = config.getUser();
 
-    index.initRouter();
-    element.render('nav');
+    index.initUserInfo();
     index.initLeftNav();
+    element.render('nav');
     index.bindEvent();
 
 });
 
 //
-//
-// //获取左侧导航栏
-// function initNav(){
-//     var indexNavStr = sessionStorage.getItem("index-nav");
-//     var indexNav = JSON.parse(indexNavStr);
-//     if(indexNav==null){
-//         $.get(apiHost + "menu", {
-//             token : getToken()
-//         }, function (data) {
-//             if(0==data.code){
-//                 sessionStorage.setItem("index-nav",JSON.stringify(data.menus));
-//                 initNav();
-//             }else if(101==data.code){
-//                 //console.log(data.message);
-//                 layer.msg(data.message,{icon: 2});
-//                 setTimeout(function() {
-//                     loginOut();
-//                 }, 1500);
-//             }else{
-//                 layer.msg("获取导航失败，请刷新页面",{icon: 2});
-//             }
-//         },"json");
-//     }else{
-//         layui.laytpl(sideNav.innerHTML).render(indexNav, function(html){
-//             $("#index-nav").html(html);
-//             layui.element.render('nav', 'index-nav');
-//         });
-//     }
-// }
+
 //
 // //获取用户信息
 // function initUserInfo(){

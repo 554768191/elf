@@ -14,7 +14,10 @@ import java.util.Date;
 public class CommonTest {
 
     @Test
-    public void test() throws ParseException {
+    public void test() {
+        String time = "2018-08-16 10:00-11:00";
+        System.out.println(time.substring(0, 16));
+        /*
         long now = System.currentTimeMillis();
         System.out.println(now);
         Date today = new Date();
@@ -23,7 +26,7 @@ public class CommonTest {
         Date yeye = DateUtil.addHour(today, -24);
         System.out.println(DateUtil.date2Long(yeye));
         System.out.println(DateUtil.date2String(yeye, "yyyy-MM-dd HH:mm:ss"));
-
+        */
     }
 
 }
