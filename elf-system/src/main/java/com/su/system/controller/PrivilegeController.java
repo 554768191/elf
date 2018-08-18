@@ -31,7 +31,7 @@ public class PrivilegeController {
     private PrivilegeService privilegeService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getPrivilegeList(SearchParam param){
+    public ResponseMessage getPrivilegeList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         List<Privilege> list = privilegeService.getList(param);
         int total = privilegeService.getCount(param);
@@ -42,7 +42,7 @@ public class PrivilegeController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addPrivilege(@RequestBody Privilege privilege){
+    public ResponseMessage addPrivilege(@RequestBody Privilege privilege){
         int id = privilegeService.insertPojo(privilege);
         JSONObject json = new JSONObject();
         json.put("id", id);
@@ -50,7 +50,7 @@ public class PrivilegeController {
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deletePrivilege(@PathVariable int pid){
+    public ResponseMessage deletePrivilege(@PathVariable int pid){
         int result = privilegeService.deletePojo(pid);
         JSONObject json = new JSONObject();
         json.put("result", result);
@@ -58,7 +58,7 @@ public class PrivilegeController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String updatePrivilege(@RequestBody Privilege privilege){
+    public ResponseMessage updatePrivilege(@RequestBody Privilege privilege){
         int result = privilegeService.updatePojo(privilege);
         JSONObject json = new JSONObject();
         json.put("result", result);
@@ -66,7 +66,7 @@ public class PrivilegeController {
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getPrivilege(@PathVariable int pid){
+    public ResponseMessage getPrivilege(@PathVariable int pid){
         Privilege privilege = privilegeService.getPojo(pid);
         JSONObject json = new JSONObject();
         json.put("privilege", privilege);
@@ -74,7 +74,7 @@ public class PrivilegeController {
     }
 
     @RequestMapping(value = "/role/{roleId}", method = RequestMethod.GET)
-    public String getPrivilegeListByRole(@PathVariable int roleId){
+    public ResponseMessage getPrivilegeListByRole(@PathVariable int roleId){
         List<Privilege> list = privilegeService.getPrivilegeByRoleId(roleId);
         JSONObject json = new JSONObject();
         json.put("list", list);

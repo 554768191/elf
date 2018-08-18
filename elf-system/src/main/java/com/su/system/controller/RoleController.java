@@ -30,7 +30,7 @@ public class RoleController {
     RoleService roleService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getRoleList(SearchParam param){
+    public ResponseMessage getRoleList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         List<Role> list = roleService.getList(param);
         int total = roleService.getCount(param);
@@ -41,7 +41,7 @@ public class RoleController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addRole(@RequestBody Role role){
+    public ResponseMessage addRole(@RequestBody Role role){
         int id = roleService.insertPojo(role);
         JSONObject json = new JSONObject();
         json.put("id", id);
@@ -49,7 +49,7 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deleteRole(@PathVariable int pid){
+    public ResponseMessage deleteRole(@PathVariable int pid){
         int result = roleService.deletePojo(pid);
         JSONObject json = new JSONObject();
         json.put("result", result);
@@ -57,7 +57,7 @@ public class RoleController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String updateRole(@RequestBody Role role){
+    public ResponseMessage updateRole(@RequestBody Role role){
         int result = roleService.updatePojo(role);
         JSONObject json = new JSONObject();
         json.put("result", result);
@@ -65,7 +65,7 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getRole(@PathVariable int pid){
+    public ResponseMessage getRole(@PathVariable int pid){
         Role role = roleService.getPojo(pid);
         JSONObject json = new JSONObject();
         json.put("role", role);

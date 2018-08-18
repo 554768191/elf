@@ -30,7 +30,7 @@ public class LogController {
     LogService logService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getLogList(SearchParam param){
+    public ResponseMessage getLogList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         List<Log> list = logService.getList(param);
         int total = logService.getCount(param);
@@ -41,7 +41,7 @@ public class LogController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addLog(@RequestBody Log log){
+    public ResponseMessage addLog(@RequestBody Log log){
         int id = logService.insertPojo(log);
         JSONObject json = new JSONObject();
         json.put("id", id);
@@ -49,7 +49,7 @@ public class LogController {
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deleteLog(@PathVariable int pid){
+    public ResponseMessage deleteLog(@PathVariable int pid){
         int result = logService.deletePojo(pid);
         JSONObject json = new JSONObject();
         json.put("result", result);
@@ -57,7 +57,7 @@ public class LogController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String updateRole(@RequestBody Log log){
+    public ResponseMessage updateRole(@RequestBody Log log){
         int result = logService.updatePojo(log);
         JSONObject json = new JSONObject();
         json.put("result", result);
@@ -65,7 +65,7 @@ public class LogController {
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getUser(@PathVariable int pid){
+    public ResponseMessage getUser(@PathVariable int pid){
         Log log = logService.getPojo(pid);
         JSONObject json = new JSONObject();
         json.put("log", log);

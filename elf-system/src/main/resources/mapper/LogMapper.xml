@@ -10,7 +10,7 @@
         <result column="os" property="os" />
         <result column="browser" property="browser" />
         <result column="content" property="content" />
-        <result column="createTime" property="create_time" />
+        <result column="create_time" property="createTime" />
     </resultMap>
 
     <sql id="base_Column_List">

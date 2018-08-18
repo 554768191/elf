@@ -1,5 +1,6 @@
 package com.su.common.entity;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 
@@ -9,33 +10,33 @@ import com.alibaba.fastjson.JSONObject;
  * @author wangfan
  * @date 2017-6-10 上午10:10:07
  */
-public class ResponseMessage {
+public class ResponseMessage extends JSONObject {
 
     /**
      * 返回成功
      */
-    public static String ok() {
+    public static ResponseMessage ok() {
         return msg(0, "成功！", null);
     }
 
     /**
      * 返回成功
      */
-    public static String ok(int code) {
+    public static ResponseMessage ok(int code) {
         return msg(code, "成功！", null);
     }
 
     /**
      * 返回成功
      */
-    public static String ok(String message) {
+    public static ResponseMessage ok(String message) {
         return msg(0, message, null);
     }
 
     /**
      * 返回成功
      */
-    public static String ok(JSONObject data) {
+    public static ResponseMessage ok(JSON data) {
         return msg(0, "成功！", data);
     }
     
@@ -43,28 +44,28 @@ public class ResponseMessage {
     /**
      * 返回失败
      */
-    public static String error() {
+    public static ResponseMessage error() {
         return msg(-1,"失败！", null);
     }
 
     /**
      * 返回失败
      */
-    public static String error(int code) {
+    public static ResponseMessage error(int code) {
         return msg(code,"失败！", null);
     }
     
     /**
      * 返回失败
      */
-    public static String error(String message) {
+    public static ResponseMessage error(String message) {
         return msg(-1, message, null);
     }
 
     /**
      * 返回失败
      */
-    public static String error(int code, String message) {
+    public static ResponseMessage error(int code, String message) {
         return msg(code, message, null);
     }
 
@@ -72,14 +73,17 @@ public class ResponseMessage {
     /**
      * 返回信息
      */
-    public static String msg(int code, String message, JSONObject data) {
-        JSONObject json = new JSONObject();
+    public static ResponseMessage msg(int code, String message, JSON data) {
+        ResponseMessage json = new ResponseMessage();
         json.put("code", code);
         json.put("msg", message);
         json.put("data", data);
-        return json.toJSONString();
+        return json;
     }
-    
-    
-    
+
+    @Override
+    public ResponseMessage put(String key, Object value) {
+        super.put(key, value);
+        return this;
+    }
 }

@@ -16,7 +16,7 @@ public class ExceptionHandle {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
-    public String Handle(Exception e){
+    public ResponseMessage Handle(Exception e){
         if (e instanceof CommonException){
             CommonException exception = (CommonException) e;
             return ResponseMessage.error(exception.getErrorCode(), exception.getMessage());

@@ -27,20 +27,20 @@ public class LogController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getLogList(SearchParam param){
+    public ResponseMessage getLogList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         JSONObject json = logService.getList(param);
-        return ResponseMessage.ok(json);
+        return ResponseMessage.ok(json.getJSONArray("list")).put("count", json.getInteger("count"));
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deleteLog(@PathVariable int pid){
+    public ResponseMessage deleteLog(@PathVariable int pid){
         JSONObject json = logService.deletePojo(pid);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getLog(@PathVariable int pid){
+    public ResponseMessage getLog(@PathVariable int pid){
         JSONObject json = logService.getPojo(pid);
         return ResponseMessage.ok(json);
     }

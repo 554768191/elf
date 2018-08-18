@@ -29,32 +29,32 @@ public class PrivilegeController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getPrivilegeList(SearchParam param){
+    public ResponseMessage getPrivilegeList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         JSONObject json = privilegeService.getList(param);
-        return ResponseMessage.ok(json);
+        return ResponseMessage.ok(json.getJSONArray("list")).put("count", json.getInteger("count"));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addPrivilege(@RequestBody JSONObject privilege){
+    public ResponseMessage addPrivilege(@RequestBody JSONObject privilege){
         JSONObject jsonObject = privilegeService.insertPojo(privilege);
         return ResponseMessage.ok(jsonObject);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deletePrivilege(@PathVariable int pid){
+    public ResponseMessage deletePrivilege(@PathVariable int pid){
         JSONObject json = privilegeService.deletePojo(pid);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String updatePrivilege(@RequestBody JSONObject privilege){
+    public ResponseMessage updatePrivilege(@RequestBody JSONObject privilege){
         JSONObject json = privilegeService.updatePojo(privilege);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getPrivilege(@PathVariable int pid){
+    public ResponseMessage getPrivilege(@PathVariable int pid){
         JSONObject json = privilegeService.getPojo(pid);
         return ResponseMessage.ok(json);
     }

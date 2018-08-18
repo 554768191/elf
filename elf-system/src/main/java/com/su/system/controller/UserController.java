@@ -30,7 +30,7 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getUserList(SearchParam param){
+    public ResponseMessage getUserList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         List<User> list = userService.getList(param);
         int total = userService.getCount(param);
@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addUser(@RequestBody User user){
+    public ResponseMessage addUser(@RequestBody User user){
         int id = userService.insertPojo(user);
         JSONObject json = new JSONObject();
         json.put("id", id);
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deleteUser(@PathVariable int pid){
+    public ResponseMessage deleteUser(@PathVariable int pid){
         int result = userService.deletePojo(pid);
         JSONObject json = new JSONObject();
         json.put("result", result);
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String updateRole(@RequestBody User user){
+    public ResponseMessage updateRole(@RequestBody User user){
         int result = userService.updatePojo(user);
         JSONObject json = new JSONObject();
         json.put("result", result);
@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getUser(@PathVariable int pid){
+    public ResponseMessage getUser(@PathVariable int pid){
         User user = userService.getPojo(pid);
         JSONObject json = new JSONObject();
         json.put("user", user);

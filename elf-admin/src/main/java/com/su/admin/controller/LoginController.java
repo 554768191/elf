@@ -66,7 +66,7 @@ public class LoginController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(HttpServletRequest request, HttpServletResponse response, String account,
+    public ResponseMessage login(HttpServletRequest request, HttpServletResponse response, String account,
                         String password, String captcha, String uuid){
 
         String text = null; //(String) session.getAttribute("verifyCode");
@@ -119,7 +119,7 @@ public class LoginController {
 
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public String logout(HttpServletRequest request){
+    public ResponseMessage logout(HttpServletRequest request){
         String token = authService.fetchToken(request);
         if(StringUtils.isNotEmpty(token)){
             authService.expireToken(token);

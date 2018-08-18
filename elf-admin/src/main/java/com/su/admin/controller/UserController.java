@@ -39,7 +39,7 @@ public class UserController {
 
 
     @RequestMapping("/psw")
-    public String changePwd(HttpServletRequest request, String oldPsw, String newPsw){
+    public ResponseMessage changePwd(HttpServletRequest request, String oldPsw, String newPsw){
         String token = authService.fetchToken(request);
         String account = authService.getUserAccount(token);
         if(StringUtils.isAnyEmpty(oldPsw, newPsw)){
@@ -67,32 +67,32 @@ public class UserController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getUserList(SearchParam param){
+    public ResponseMessage getUserList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         JSONObject json = userService.getList(param);
-        return ResponseMessage.ok(json);
+        return ResponseMessage.ok(json.getJSONArray("list")).put("count", json.getInteger("count"));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addUser(@RequestBody JSONObject user){
+    public ResponseMessage addUser(@RequestBody JSONObject user){
         JSONObject json = userService.insertPojo(user);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deleteUser(@PathVariable int pid){
+    public ResponseMessage deleteUser(@PathVariable int pid){
         JSONObject json = userService.deletePojo(pid);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String updateRole(@RequestBody JSONObject user){
+    public ResponseMessage updateRole(@RequestBody JSONObject user){
         JSONObject json = userService.updatePojo(user);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getUser(@PathVariable int pid){
+    public ResponseMessage getUser(@PathVariable int pid){
         JSONObject json = userService.getPojo(pid);
         return ResponseMessage.ok(json);
     }

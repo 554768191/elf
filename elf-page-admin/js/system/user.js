@@ -1,25 +1,24 @@
-layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
+layui.use(['form', 'table', 'util', 'config', 'index'], function () {
     var form = layui.form;
     var table = layui.table;
     var config = layui.config;
     var layer = layui.layer;
     var util = layui.util;
-    var admin = layui.admin;
+    var index = layui.index;
 
     // 渲染表格
     table.render({
         elem: '#user-table',
-        url: config.base_server + 'user/query',
-        method: 'post',
+        url: config.base_server + 'user',
+        method: 'get',
         where: {
-            access_token: config.getToken().access_token
+            token: config.getToken()
         },
         page: true,
         cols: [[
             {type: 'numbers'},
-            {field: 'userId', title: 'ID'},
-            {field: 'username', sort: true, title: '账号'},
-            {field: 'nickName', sort: true, title: '用户名'},
+            {field: 'account', sort: true, title: '账号'},
+            {field: 'nickName', sort: true, title: '昵称'},
             {field: 'phone', sort: true, title: '手机号'},
             {field: 'sex', sort: true, title: '性别'},
             {
@@ -27,7 +26,7 @@ layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
                     return util.toDateString(d.createTime);
                 }, title: '创建时间'
             },
-            {field: 'state', sort: true, templet: '#user-tpl-state', title: '状态'},
+            // {field: 'state', sort: true, templet: '#user-tpl-state', title: '状态'},
             {align: 'center', toolbar: '#user-table-bar', title: '操作'}
         ]]
     });
@@ -48,7 +47,7 @@ layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
             layer.confirm('确定重置此用户的密码吗？', function (i) {
                 layer.close(i);
                 layer.load(2);
-                admin.req('user/psw/' + obj.data.userId, {}, function (data) {
+                config.req('user/psw/' + obj.data.userId, {}, function (data) {
                     layer.closeAll('loading');
                     if (data.code == 200) {
                         layer.msg(data.msg, {icon: 1});
@@ -62,9 +61,9 @@ layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
 
     //显示表单弹窗
     var showEditModel = function (data) {
-        admin.putTempData('t_user', data);
+        indx.putTempData('t_user', data);
         var title = data ? '修改用户' : '添加用户';
-        admin.popupCenter({
+        index.popupCenter({
             title: title,
             path: 'components/system/user_form.html',
             finish: function () {
@@ -83,7 +82,7 @@ layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
     // 修改user状态
     form.on('switch(user-tpl-state)', function (obj) {
         layer.load(2);
-        admin.req('user/state', {
+        config.req('user/state', {
             userId: obj.elem.value,
             state: obj.elem.checked ? 0 : 1
         }, function (data) {

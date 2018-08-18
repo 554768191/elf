@@ -28,32 +28,32 @@ public class RoleController {
     RoleService roleService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getRoleList(SearchParam param){
+    public ResponseMessage getRoleList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         JSONObject json = roleService.getList(param);
-        return ResponseMessage.ok(json);
+        return ResponseMessage.ok(json.getJSONArray("list")).put("count", json.getInteger("count"));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addRole(@RequestBody JSONObject role){
+    public ResponseMessage addRole(@RequestBody JSONObject role){
         JSONObject json = roleService.insertPojo(role);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
-    public String deleteRole(@PathVariable int pid){
+    public ResponseMessage deleteRole(@PathVariable int pid){
         JSONObject json = roleService.deletePojo(pid);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String updateRole(@RequestBody JSONObject role){
+    public ResponseMessage updateRole(@RequestBody JSONObject role){
         JSONObject json = roleService.updatePojo(role);
         return ResponseMessage.ok(json);
     }
 
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
-    public String getRole(@PathVariable int pid){
+    public ResponseMessage getRole(@PathVariable int pid){
         JSONObject json = roleService.getPojo(pid);
         return ResponseMessage.ok(json);
     }
