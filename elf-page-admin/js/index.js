@@ -8,11 +8,12 @@
     var element = layui.element;
 
     // 检查是否登录
+    /*
     if (!config.getToken() || config.getToken() == '') {
         location.replace('login.html');
         return;
     }
-
+    */
     index.initUserInfo();
     index.initLeftNav();
     element.render('nav');
