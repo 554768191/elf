@@ -6,10 +6,9 @@ html {
 
 /** header样式 */
 /** 导航栏下面的线条 */
-.layui-layout-admin .layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
-    height: 2px;
-    background-color: #03152A;
-    top: 0 !important;
+.layui-layout-admin .layui-header .layui-nav-bar {
+    background-color: #7987d4;
+    /*display: none;*/
 }
 
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item {
@@ -41,23 +40,15 @@ html {
     box-shadow: 0 1px 4px 0 rgba(0, 21, 41, .08);
     margin-left: 220px;
 }
-
 .layui-layout-admin .layui-header a {
     color: #fff;
     padding: 0 15px;
 }
+/*
+.layui-layout-admin .layui-header .layui-nav-item a:hover {
+    background-color: #7987d4;
+}*/
 
-.layui-layout-admin .layui-header a:hover {
-    color: #333;
-}
-
-.layui-layout-admin .layui-header .layui-nav .layui-nav-more {
-    border-color: #666 transparent transparent;
-}
-
-.layui-layout-admin .layui-header .layui-nav .layui-nav-mored {
-    border-color: transparent transparent #666;
-}
 
 /** logo部分样式 */
 .layui-layout-admin .layui-header .layui-logo {
@@ -142,6 +133,9 @@ html {
     padding-bottom: 8px;
     color: #546e7a;
 }
+.layui-layout-admin .layui-side .layui-nav .layui-nav-item dl dd a:hover {
+    color: #8c99e0;
+}
 .layui-nav-itemed>a i, .layui-nav-itemed>a cite {
     color: #6572b8;
     font-weight: bold;
@@ -153,6 +147,7 @@ html {
 .layui-nav-tree .layui-nav-child dd.layui-this a {
     font-weight: bold;
 }
+
 /*
 .layui-nav-tree .layui-nav-child dd.layui-this a:before {
     font-family:'FontAwesome';
@@ -263,8 +258,11 @@ html {
         left: 0;
     }
 
+    .layui-layout-admin .layui-header {
+        margin-left: 0;
+    }
     .layui-layout-admin .layui-header .layui-logo {
-        left: -260px;
+        display: none;
     }
 
     .layui-layout-admin .layui-header .layui-layout-left {
@@ -487,7 +485,7 @@ html {
 
 /** laydate加图标 */
 .date-icon {
-    background-image: url(../images/icon_date.png);
+    background-image: url(../images/icons/icon_date.png);
     background-repeat: no-repeat;
     background-position: right center;
 }

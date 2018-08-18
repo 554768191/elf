@@ -14,16 +14,16 @@ layui.use(['laydate', 'table', 'util', 'config'], function () {
         page: true,
         cols: [[
             {type: 'numbers'},
-            {field: 'username', sort: true, title: '账号'},
-            {field: 'nickName', sort: true, title: '用户名'},
-            {field: 'ipAddress', sort: true, title: 'IP'},
-            {field: 'device', sort: true, title: '设备'},
-            {field: 'osName', sort: true, title: '设备类型'},
-            {field: 'browserType', sort: true, title: '浏览器'},
+            {field: 'level', sort: true, title: '等级'},
+            {field: 'module', sort: true, title: '模块'},
+            {field: 'browser', sort: false, title: '浏览器'},
+            {field: 'clientIp', sort: false, title: 'IP'},
+            {field: 'os', sort: false, title: '设备类型'},
+            {field: 'content', sort: false, title: '内容'},
             {
                 field: 'createTime', sort: true, templet: function (d) {
                     return util.toDateString(d.createTime);
-                }, title: '登录时间'
+                }, title: '操作时间'
             }
         ]]
     });

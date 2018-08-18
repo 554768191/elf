@@ -28,7 +28,7 @@ layui.config({
     form.on('submit(login-submit)', function (obj) {
         var field = obj.field;
         field.uuid = uuid;
-
+        field.password = $.md5(field.password);
         layer.load(2);
 
         $.ajax({
