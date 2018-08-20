@@ -8,6 +8,21 @@ layui.define(['config', 'layer', 'element'], function (exports) {
 
     var index = {
         openPageTabs: true,  // 是否开启多标签
+        // 检查多标签功能是否开启
+        checkPageTabs: function () {
+            if (index.openPageTabs) {
+                $('.layui-layout-admin').addClass('open-tab');
+                // 如果开启多标签先加载主页
+                element.tabAdd('index-pagetabs', {
+                    id: 'home',
+                    title: '<i class="layui-icon layui-icon-home"></i>',
+                    content: '<div id="home"></div>'
+                });
+                $('#home').load('template/home');
+            } else {
+                $('.layui-layout-admin').removeClass('open-tab');
+            }
+        },
         // 渲染左侧导航栏
         initLeftNav: function () {
             var authMenus = new Array();
@@ -82,7 +97,7 @@ layui.define(['config', 'layer', 'element'], function (exports) {
             var contentBody = '.layui-layout-admin .layui-body';
             // 判断是否开启了选项卡功能
             if (index.openPageTabs) {
-                $('.layui-layout-admin').addClass('open-tab');
+                // $('.layui-layout-admin').addClass('open-tab');
                 $('.layui-layout-admin .layui-body .layui-tab .layui-tab-title>li').each(function () {
                     if ($(this).attr('lay-id') === menuId) {
                         flag = true;
@@ -111,7 +126,7 @@ layui.define(['config', 'layer', 'element'], function (exports) {
                     $iframe.style.height = "100%";
                 }
             } else {
-                $('.layui-layout-admin').removeClass('open-tab');
+                // $('.layui-layout-admin').removeClass('open-tab');
                 $('.layui-body.admin-iframe-body').removeClass('admin-iframe-body');
             }
 

@@ -12,7 +12,9 @@ html {
     background-color: #888;
     border-radius: 50%;
 }
-
+.layui-tab-title .layui-this:after{
+    border-style: none;
+}
 
 /** header样式 */
 /** 导航栏下面的线条 */
@@ -171,7 +173,7 @@ html {
 /** 主体部分样式 */
 .layui-layout-admin .layui-body {
     left: 220px;
-    top: 50px;
+    top: 35px;
     padding: 15px;
     transition: all .3s;
     overflow-y: scroll;
@@ -196,7 +198,7 @@ html {
     overflow-y: scroll;
     padding: 15px;
     right: 0;
-    top: 50px;
+    top: 70px;
     left: 0;
 }
 
@@ -208,8 +210,9 @@ html {
     position: absolute;
     right: 0;
     /*z-index: 999;*/
-    border: none;
+    /*margin-top: -15px;*/
     overflow: hidden;
+
 }
 
 .layui-layout-admin .layui-body .layui-tab .layui-tab-title li {
@@ -220,7 +223,7 @@ html {
     overflow: hidden;
     /*border: 1px solid transparent;*/
     border-radius: 30px;
-    margin-right: 5px;
+    margin: 15px 5px 0 0;;
     color: #fff;
 }
 
@@ -230,7 +233,7 @@ html {
 
 .layui-layout-admin .layui-body .layui-tab .layui-tab-title li.layui-this,
 .layui-layout-admin .layui-body .layui-tab .layui-tab-title li:hover {
-    background: rgba(255,255,255,0.3);
+    background-color: rgba(255,255,255,0.3);
 }
 .layui-layout-admin .layui-body .layui-tab .layui-tab-title li .layui-tab-close {
     width: 16px;
@@ -238,6 +241,7 @@ html {
     line-height: 16px;
     border-radius: 50%;
     font-size: 12px;
+    color: #fff;
 }
 .layui-layout-admin .layui-body .layui-tab .layui-tab-title li:first-child .layui-tab-close {
     display: none;
@@ -253,14 +257,8 @@ html {
     cursor: pointer;
     transition: all .3s;
     box-sizing: border-box;
-    border-left: 1px solid #f6f6f6;
+    /*border-left: 1px solid #f6f6f6;*/
     z-index: 1000;
-    visibility: hidden;
-    background-color: white;
-}
-
-.layui-layout-admin.open-tab .layui-body .admin-tabs-control {
-    visibility: visible;
 }
 
 .layui-layout-admin .layui-body .admin-tabs-control:hover {
@@ -279,9 +277,12 @@ html {
 
 .layui-layout-admin .layui-body .layui-icon-more-vertical {
     right: 15px;
-    top: 10px;
+    top: 35px;
+    color: #fff;
 }
-
+.layui-layout-admin .layui-body .layui-icon-more-vertical:hover {
+    background: rgba(255,255,255,0.3);;
+}
 .admin-tabs-select.layui-nav {
     position: absolute;
     left: 0;
@@ -305,7 +306,7 @@ html {
 }
 
 .admin-tabs-select.layui-nav .layui-nav-child {
-    top: 50px;
+    top: 40px;
     left: auto;
     right: 0
 }
@@ -403,7 +404,7 @@ body.layui-fluid {
 }
 
 .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed > a {
-    background-color: #8c99e0;
+    background-color: #94a0e0;
 }
 
 /** 修改折叠的图标 */

@@ -14,6 +14,7 @@
         return;
     }
     */
+    index.checkPageTabs();
     index.initUserInfo();
     index.initLeftNav();
     element.render('nav');
