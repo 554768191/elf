@@ -65,7 +65,7 @@ layui.use(['form', 'table', 'util', 'config', 'index'], function () {
         var title = data ? '修改用户' : '添加用户';
         index.popupCenter({
             title: title,
-            path: 'components/system/user_form.html',
+            path: 'template/system/user_form.html',
             finish: function () {
                 table.reload('user-table', {});
             }

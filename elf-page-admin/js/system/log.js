@@ -38,13 +38,13 @@ layui.use(['laydate', 'table', 'util', 'config'], function () {
 
     //搜索按钮点击事件
     $('#log-btn-search').click(function () {
-        var searchDate = $('#log-edt-date').val().split(' - ');
-        var searchAccount = $('#log-edt-account').val();
+        var searchDate = $('#log-date').val().split(' - ');
+        var searchModule = $('#log-module').val();
         table.reload('log-table', {
             where: {
-                startDate: searchDate[0],
-                endDate: searchDate[1],
-                account: searchAccount
+                startTime: searchDate[0],
+                endTime: searchDate[1],
+                name: searchModule
             }
         });
     });

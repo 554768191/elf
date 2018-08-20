@@ -11,12 +11,14 @@
             搜索：
             <select id="user-search-key">
                 <option value="">-请选择-</option>
-                <option value="user_id">ID</option>
                 <option value="username">账号</option>
-                <option value="nick_name">用户名</option>
+                <option value="nick_name">昵称</option>
                 <option value="phone">手机号</option>
             </select>&emsp;
             <input id="user-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            日期：
+            <input id="log-date" class="layui-input search-input date-icon" type="text" placeholder="请选择日期范围"
+                   style="width: 195px;"/>&emsp;
             <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
             <button id="user-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
         </div>
@@ -28,7 +30,7 @@
 
 <!-- 表格操作列 -->
 <script type="text/html" id="user-table-bar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-xs" lay-event="reset">重置密码</a>
 </script>
 

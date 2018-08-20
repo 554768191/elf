@@ -1,12 +1,13 @@
-layui.define(['config', 'layer', 'element', 'form'], function (exports) {
+layui.define(['config', 'layer', 'element'], function (exports) {
     var config = layui.config;
     var layer = layui.layer;
     var element = layui.element;
-    var form = layui.form;
+    // var form = layui.form;
 
     var popupRightIndex, popupCenterIndex, popupCenterParam;
 
     var index = {
+        openPageTabs: true,  // 是否开启多标签
         // 渲染左侧导航栏
         initLeftNav: function () {
             var authMenus = new Array();
@@ -35,6 +36,11 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             Q.init({
                 index: 'home'
             });
+            // tab选项卡切换监听
+            element.on('tab(index-pagetabs)', function () {
+                var layId = $(this).attr('lay-id');
+                Q.go(layId);
+            });
         },
         // 使用递归循环注册
         regAndDraw: function (menus) {
@@ -51,7 +57,12 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                         liContent = liContent + subData.url + '">' + subData.name + '</a></dd> ';
 
                         Q.reg(subData.url, function () {
-                            index.loadView('template/' + subData.path);
+                            // index.loadView('template/' + subData.path);
+                            index.loadView({
+                                menuId: subData.url,
+                                menuPath: 'template/' + subData.path,
+                                menuName: subData.name
+                            });
                         });
                     } );
                     liContent = liContent + '</dl> ';
@@ -62,17 +73,97 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             $("#menu-view").html(liContent);
         },
         // 路由加载组件
-        loadView: function (path) {
+        loadView: function (param) {
+
+            var menuId = param.menuId;
+            var menuPath = param.menuPath;
+            var menuName = param.menuName;
+            var flag;  // 选项卡是否已添加
+            var contentBody = '.layui-layout-admin .layui-body';
+            // 判断是否开启了选项卡功能
+            if (index.openPageTabs) {
+                $('.layui-layout-admin').addClass('open-tab');
+                $('.layui-layout-admin .layui-body .layui-tab .layui-tab-title>li').each(function () {
+                    if ($(this).attr('lay-id') === menuId) {
+                        flag = true;
+                        return false;
+                    }
+                });
+                if (!flag) {
+                    element.tabAdd('index-pagetabs', {
+                        title: menuName,
+                        id: menuId,
+                        content: '<div id="' + menuId + '"></div>'
+                    });
+                }
+                contentBody = '#' + menuId;
+                element.tabChange('index-pagetabs', menuId);
+                index.rollPage('auto');
+
+                // 切换tab关闭表格内浮窗
+                $('.layui-table-tips-c').trigger('click');
+                //index.removeLoading('.layui-layout-admin .layui-body');
+                // 解决切换tab滚动条时而消失的问题
+                var $iframe = $('.layui-layout-admin .layui-body .layui-tab-content .layui-tab-item.layui-show .admin-iframe')[0];
+                if ($iframe) {
+                    $iframe.style.height = "99%";
+                    $iframe.scrollWidth;
+                    $iframe.style.height = "100%";
+                }
+            } else {
+                $('.layui-layout-admin').removeClass('open-tab');
+                $('.layui-body.admin-iframe-body').removeClass('admin-iframe-body');
+            }
+
+
             index.showLoading('.layui-layout-admin .layui-body');
-            $('.layui-layout-admin .layui-body').load(path, function () {
+
+            $(contentBody).load(menuPath, function () {
                 element.render('breadcrumb');
-                form.render('select');
+                //form.render('select');
                 index.removeLoading('.layui-layout-admin .layui-body');
             });
             index.activeNav(Q.lash);
             // 移动设备切换页面隐藏侧导航
             if (document.body.clientWidth <= 750) {
                 index.flexible(true);
+            }
+        },
+        // 多标签功能
+        // 打开新页面
+        openNewTab: function (param) {
+            var menuId = param.menuId;
+            var url = param.url;
+            var title = param.title;
+            index.loadView({
+                menuId: menuId,
+                menuPath: url,
+                menuName: title
+            });
+        },
+        // 关闭选项卡
+        closeTab: function (menuId) {
+            element.tabDelete('index-pagetabs', menuId);
+        },
+
+        // 滑动选项卡
+        rollPage: function (d) {
+            var $tabTitle = $('.layui-layout-admin .layui-body .layui-tab .layui-tab-title');
+            var left = $tabTitle.scrollLeft();
+            if ('left' === d) {
+                $tabTitle.scrollLeft(left - 120);
+            } else if ('auto' === d) {
+                var autoLeft = 0;
+                $tabTitle.children("li").each(function () {
+                    if ($(this).hasClass('layui-this')) {
+                        return false;
+                    } else {
+                        autoLeft += $(this).outerWidth();
+                    }
+                });
+                $tabTitle.scrollLeft(autoLeft - 47);
+            } else {
+                $tabTitle.scrollLeft(left + 120);
             }
         },
 
@@ -288,6 +379,22 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 }
                 ti.addClass(ic).removeClass(ac);
             }
+        },
+        // 关闭当前选项卡
+        closeThisTabs: function () {
+            var $title = $('.layui-layout-admin .layui-body .layui-tab .layui-tab-title');
+            if ($title.find('li').first().hasClass('layui-this')) {
+                return;
+            }
+            $title.find('li.layui-this').find(".layui-tab-close").trigger("click");
+        },
+        // 关闭其他选项卡
+        closeOtherTabs: function () {
+            $('.layui-layout-admin .layui-body .layui-tab .layui-tab-title li:gt(0):not(.layui-this)').find('.layui-tab-close').trigger('click');
+        },
+        // 关闭所有选项卡
+        closeAllTabs: function () {
+            $('.layui-layout-admin .layui-body .layui-tab .layui-tab-title li:gt(0)').find('.layui-tab-close').trigger('click');
         }
     };
 

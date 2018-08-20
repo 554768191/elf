@@ -49,8 +49,8 @@ layui.define(function (exports) {
                 auth: 'get:/role'
             }, {
                 name: '权限管理',
-                url: 'authorities',
-                path: 'system/authorities.html',
+                url: 'privilege',
+                path: 'system/privilege.html',
                 auth: 'get:/authorities'
             }, {
                 name: '系统日志',
