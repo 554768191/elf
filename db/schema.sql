@@ -7,7 +7,7 @@ CREATE TABLE `privilege` (
   `parent_id` int(11) DEFAULT NULL COMMENT '父菜单',
   `link` varchar(64) DEFAULT NULL,
   `seq` tinyint DEFAULT 0 COMMENT '排序',
-  `category` tinyint DEFAULT 1 COMMENT '1菜单 2按钮',
+  `category` tinyint DEFAULT 1 COMMENT '1目录 2菜单 3按钮',
   `create_time` timestamp NOT NULL DEFAULT '2017-01-01 00:00:00',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

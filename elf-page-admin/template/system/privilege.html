@@ -27,5 +27,10 @@
     <input type="checkbox" lay-filter="auth-state" value="{{d.authority}}" lay-skin="switch" lay-text="ON|OFF"
            {{d.checked==1?'checked':''}}/>
 </script>
+<!-- 表格操作列 -->
+<script type="text/html" id="auth-opt">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 
 <script type="text/javascript" src="js/system/privilege.js"></script>

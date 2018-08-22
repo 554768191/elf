@@ -5,11 +5,13 @@ INSERT INTO `user`(account, password, nickname, is_super, create_time) VALUES ('
 
 -- 权限功能表
 INSERT INTO `privilege`(id, privilege_name, parent_id, link, seq, category, create_time, update_time) VALUES (1, '系统管理', 0, '', 1, 1 ,now(), now());
-INSERT INTO `privilege` VALUES (2, '权限管理', 1, 'privilege', 1, 1, now(), now());
-INSERT INTO `privilege` VALUES (3, '角色管理', 1, 'role', 1, 1, now(), now());
-INSERT INTO `privilege` VALUES (4, '用户管理', 1, 'user', 1, 1, now(), now());
-INSERT INTO `privilege` VALUES (5, '系统日志', 1, 'log', 1, 1, now(), now());
-INSERT INTO `privilege` VALUES (6, '公众号管理', 1, 'mp', 1, 1, now(), now());
+INSERT INTO `privilege` VALUES (2, '权限管理', 1, 'privilege', 1, 2, now(), now());
+INSERT INTO `privilege` VALUES (3, '角色管理', 1, 'role', 1, 2, now(), now());
+INSERT INTO `privilege` VALUES (4, '用户管理', 1, 'user', 1, 2, now(), now());
+INSERT INTO `privilege` VALUES (5, '系统日志', 1, 'log', 1, 2, now(), now());
+
+
+INSERT INTO `privilege` VALUES (6, '公众号管理', 1, 'mp', 1, 2, now(), now());
 
 INSERT INTO `privilege`(id, privilege_name, level, parent_id, link, create_time, update_time) VALUES (20, '公众号', 1, 0, '' , now(), now());
 INSERT INTO `privilege` VALUES (21, '素材管理', 2, 20, 'matter', now(), now());

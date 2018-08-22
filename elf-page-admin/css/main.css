@@ -8,12 +8,21 @@ html {
 .layui-btn {
     background-color: #6572b8;
 }
+.layui-btn-primary {
+    background-color: #fff;
+}
+.layui-btn-primary:hover {
+    border-color: #6572b8;
+}
 .layui-laypage .layui-laypage-curr .layui-laypage-em {
     background-color: #888;
     border-radius: 50%;
 }
 .layui-tab-title .layui-this:after{
     border-style: none;
+}
+.laydate-theme-molv .layui-laydate-header {
+    background-color: #6572b8;
 }
 
 /** header样式 */
@@ -212,7 +221,6 @@ html {
     /*z-index: 999;*/
     /*margin-top: -15px;*/
     overflow: hidden;
-
 }
 
 .layui-layout-admin .layui-body .layui-tab .layui-tab-title li {

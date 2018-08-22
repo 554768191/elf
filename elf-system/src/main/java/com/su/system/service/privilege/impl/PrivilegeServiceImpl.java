@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Desc
@@ -35,15 +37,25 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     public List<Privilege> getList(SearchParam params) {
-        List<Privilege> list = getPrivilegeByParentId(0);
-        if(!CollectionUtils.isEmpty(list)){
-            for(Privilege p:list){
-                List<Privilege> subList = getPrivilegeByParentId(p.getId());
-                p.setSubprivileges(subList);
+        Map<Integer, String> map = new HashMap<>();
+        List<Privilege> pList = getPrivilegeByParentId(0);
+        if(!CollectionUtils.isEmpty(pList)){
+            for(Privilege p:pList){
+                map.put(p.getId(), p.getPrivilegeName());
+//                List<Privilege> subList = getPrivilegeByParentId(p.getId());
+//                p.setSubprivileges(subList);
+            }
+        }
+        //return list;
+        List<Privilege> list = privilegeMapper.getList(params);
+        if(!CollectionUtils.isEmpty(list)) {
+            for (Privilege p : list) {
+                if(p.getParentId()>0){
+                    p.setParentName(map.get(p.getParentId()));
+                }
             }
         }
         return list;
-
     }
 
     @Override

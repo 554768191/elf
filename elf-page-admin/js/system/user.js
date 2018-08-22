@@ -17,9 +17,9 @@ layui.use(['form', 'table', 'util', 'config', 'index'], function () {
         page: true,
         cols: [[
             {type: 'numbers'},
-            {field: 'account', sort: true, title: '账号'},
-            {field: 'nickName', sort: true, title: '昵称'},
-            {field: 'phone', sort: true, title: '手机号'},
+            {field: 'account', sort: false, title: '账号'},
+            {field: 'nickName', sort: false, title: '昵称'},
+            {field: 'phone', sort: false, title: '手机号'},
             {field: 'sex', sort: true, title: '性别'},
             {
                 sort: true, templet: function (d) {

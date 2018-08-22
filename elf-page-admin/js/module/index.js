@@ -1,8 +1,8 @@
-layui.define(['config', 'layer', 'element'], function (exports) {
+layui.define(['config', 'layer', 'element', 'base'], function (exports) {
     var config = layui.config;
     var layer = layui.layer;
     var element = layui.element;
-    // var form = layui.form;
+    var base = layui.base;
 
     var popupRightIndex, popupCenterIndex, popupCenterParam;
 
@@ -31,7 +31,7 @@ layui.define(['config', 'layer', 'element'], function (exports) {
                 var tempSubMenus = new Array();
                 for (var j = 0; j < tempMenu.subMenus.length; j++) {
                     var tempSubMenu = tempMenu.subMenus[j];
-                    if (index.hasPerm(tempSubMenu.auth)) {
+                    if (base.hasPerm(tempSubMenu.auth)) {
                         tempSubMenus.push(tempSubMenu);
                     }
                 }
@@ -145,6 +145,7 @@ layui.define(['config', 'layer', 'element'], function (exports) {
             }
         },
         // 多标签功能
+        /*
         // 打开新页面
         openNewTab: function (param) {
             var menuId = param.menuId;
@@ -160,7 +161,7 @@ layui.define(['config', 'layer', 'element'], function (exports) {
         closeTab: function (menuId) {
             element.tabDelete('index-pagetabs', menuId);
         },
-
+        */
         // 滑动选项卡
         rollPage: function (d) {
             var $tabTitle = $('.layui-layout-admin .layui-body .layui-tab .layui-tab-title');
@@ -185,7 +186,7 @@ layui.define(['config', 'layer', 'element'], function (exports) {
         // 从服务器获取登录用户的信息
         initUserInfo: function () {
             // 获取当前用户信息
-            var loginUser = config.getUser();
+            var loginUser = base.getUser();
             if(loginUser){
 
             }
@@ -321,37 +322,8 @@ layui.define(['config', 'layer', 'element'], function (exports) {
         // 移除加载动画
         removeLoading: function (element) {
             $(element + '>.admin-loading').remove();
-        },
-        // 缓存临时数据
-        putTempData: function (key, value) {
-            if (value) {
-                layui.sessionData('tempData', {key: key, value: value});
-            } else {
-                layui.sessionData('tempData', {key: key, remove: true});
-            }
-        },
-        // 获取缓存临时数据
-        getTempData: function (key) {
-            return layui.sessionData('tempData')[key];
-        },
-        // 判断是否有权限
-        hasPerm: function (auth) {
-            /*
-            var user = config.getUser();
-            if(user.isSuper==1){
-                return true;
-            }
-            if (user.authorities) {
-                for (var i = 0; i < user.authorities.length; i++) {
-                    if (auth == user.authorities[i].authority) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-            */
-            return true;
         }
+
     };
 
     // ewAdmin提供的事件

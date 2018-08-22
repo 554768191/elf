@@ -1,15 +1,16 @@
-layui.use(['laydate', 'table', 'util', 'config'], function () {
+layui.use(['laydate', 'table', 'util', 'config', 'base'], function () {
     var laydate = layui.laydate;
     var table = layui.table;
     var config = layui.config;
     var util = layui.util;
+    var base = layui.base;
 
     //渲染表格
     table.render({
         elem: '#log-table',
         url: config.base_server + 'log',
         where: {
-            token: config.getToken()
+            token: base.getToken()
         },
         page: true,
         cols: [[
@@ -30,7 +31,7 @@ layui.use(['laydate', 'table', 'util', 'config'], function () {
 
     //时间范围
     laydate.render({
-        elem: '#log-edt-date',
+        elem: '#log-date',
         type: 'date',
         range: true,
         theme: 'molv'

@@ -1,31 +1,59 @@
-layui.use(['form', 'table', 'util', 'config'], function () {
+layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], function () {
     var form = layui.form;
     var table = layui.table;
     var config = layui.config;
     var layer = layui.layer;
     var util = layui.util;
-    // var index = layui.index;
+    var index = layui.index;
+    var base = layui.base;
+    var laydate = layui.laydate;
+
+    //时间范围
+    laydate.render({
+        elem: '#privilege-date',
+        type: 'date',
+        range: true,
+        theme: 'molv'
+    });
 
     // 渲染表格
-    table.render({
-        elem: '#auth-table',
-        url: config.base_server + 'privilege',
-        where: {
-            token: config.getToken()
-        },
-        page: false,
-        cols: [[
-            {type: 'numbers'},
-            {field: 'authorityName', sort: true, title: '权限'},
-            {field: 'authority', sort: true, title: '权限标识'},
-            {
-                field: 'createTime', sort: true, templet: function (d) {
-                    return util.toDateString(d.createTime);
-                }, title: '创建时间'
+    var renderTable = function (){
+        table.render({
+            elem: '#auth-table',
+            url: config.base_server + 'privilege',
+            where: {
+                token: base.getToken()
             },
-            {field: 'checked', sort: true, templet: '#auth-state', title: '授权'}
-        ]]
-    });
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'privilegeName', sort: false, title: '权限'},
+                {field: 'parentName', sort: false, title: '上级'},
+                {field: 'link', sort: false, title: 'url'},
+                {field: 'seq', sort: true, title: '排序'},
+                {
+                    field: 'category', width: 80, align: 'center', templet: function (d) {
+                        if (d.category == 3) {
+                            return '<span class="layui-badge layui-bg-gray">按钮</span>';
+                        }
+                        if (d.category == 1) {
+                            return '<span class="layui-badge layui-bg-blue">目录</span>';
+                        } else {
+                            return '<span class="layui-badge-rim">菜单</span>';
+                        }
+                    }, title: '类型'
+                },
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {templet: '#auth-opt', width: 120, align: 'center', title: '操作'}
+            ]]
+        });
+    }
+
+    renderTable();
 
     // 角色切换事件
     form.on('select(auth-slt-role)', function (data) {
@@ -54,17 +82,30 @@ layui.use(['form', 'table', 'util', 'config'], function () {
         });
     });
 
-    // 获取角色
-    //admin.showLoading('.toolbar');
-    config.req('role', {}, function (data) {
-        //admin.removeLoading('.toolbar');
-        if (0 == data.code) {
-            $('#auth-slt-role').vm({roles: data.data});
-            form.render('select');
-        } else {
-            layer.msg('获取角色失败', {icon: 2});
+    // 工具条点击事件
+    table.on('tool(auth-table)', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        console.log(data);
+        if (layEvent === 'edit') { // 修改
+            showEditModel(data);
+        } else if (layEvent === 'del') { // 重置密码
+            layer.confirm('确定删除此权限吗？', function () {
+                layer.load(2);
+                $.post('system/authorities/delete', {
+                    authorityId: obj.data.authorityId
+                }, function (data) {
+                    layer.closeAll('loading');
+                    if (data.code == 200) {
+                        layer.msg(data.msg, {icon: 1});
+                        renderTable();
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                });
+            });
         }
-    }, 'GET');
+    });
 
     // 监听状态开关操作
     form.on('switch(auth-state)', function (obj) {
@@ -90,4 +131,23 @@ layui.use(['form', 'table', 'util', 'config'], function () {
             }
         }, obj.elem.checked ? 'POST' : 'DELETE');
     });
+
+    // 同步按钮点击事件
+    $('#privilege-btn-add').click(function () {
+        showEditModel();
+    });
+
+    // 显示表单弹窗
+    var showEditModel = function (data) {
+        var title = data ? '修改权限' : '添加权限';
+        base.putTempData('t_authoritie', data);
+        index.popupCenter({
+            title: title,
+            path: 'template/system/privilege_form.html',
+            finish: function () {
+                renderTable();
+            }
+        });
+    };
+
 });

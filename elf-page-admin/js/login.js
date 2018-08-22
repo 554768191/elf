@@ -2,10 +2,10 @@ var uuid='';
 
 layui.config({
     base: 'js/module/'
-}).use(['config', 'form'], function () {
-    // var $ = layui.jquery;
+}).use(['config', 'form', 'base'], function () {
     var form = layui.form;
     var config = layui.config;
+    var base = layui.base;
 
     $('.form-control').on("focus", function() {
         $(this).parents('.layui-form-item').addClass("input-group-focus");
@@ -39,7 +39,7 @@ layui.config({
             success: function (data) {
                 console.log(JSON.stringify(data));
                 if (data.code==0) {
-                    config.putToken(data.data.token);
+                    base.putToken(data.data.token);
                     layer.msg('登录成功', {icon: 1}, function () {
                         location.replace('./');
                     });
