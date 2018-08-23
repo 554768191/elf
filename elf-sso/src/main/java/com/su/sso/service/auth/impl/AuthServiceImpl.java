@@ -1,6 +1,7 @@
 package com.su.sso.service.auth.impl;
 
 
+import com.su.common.CodeEnum;
 import com.su.common.Constants;
 import com.su.common.exception.CommonException;
 import com.su.sso.SsoConstants;
@@ -139,7 +140,7 @@ public class AuthServiceImpl implements AuthService {
                         }
                     }
                 }
-                throw new CommonException(Constants.NO_PERMISSION, "no permission");
+                throw new CommonException(CodeEnum.NO_PERMISSION);
             }else{
                 logger.warn("[{}]的用户token是[{}], 与缓存的clientIP不一致, 可能是伪造的请求", clientIP, token);
             }

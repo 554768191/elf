@@ -23,15 +23,6 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RestService restService;
 
-    @Override
-    public int deletePrivilege(int roleId) {
-        return 0;
-    }
-
-    @Override
-    public void batchInsertRolePrivilege(List<RolePrivilege> list) {
-        //roleMapper.batchInsertRolePrivilege(list);
-    }
 
     @Override
     public JSONObject getList(SearchParam params) {
@@ -59,4 +50,8 @@ public class RoleServiceImpl implements RoleService {
         return restService.exchange("http://system/role/" + id, HttpMethod.DELETE, id+"");
     }
 
+    @Override
+    public JSONObject updateRolePrivilege(int roleId, List<Integer> list) {
+        return restService.post("http://system/role/" + roleId + "/privilege", list.toString());
+    }
 }

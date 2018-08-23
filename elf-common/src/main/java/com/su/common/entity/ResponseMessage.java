@@ -2,7 +2,7 @@ package com.su.common.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
+import com.su.common.CodeEnum;
 
 /**
  * 返回结果对象
@@ -22,13 +22,6 @@ public class ResponseMessage extends JSONObject {
     /**
      * 返回成功
      */
-    public static ResponseMessage ok(int code) {
-        return msg(code, "成功！", null);
-    }
-
-    /**
-     * 返回成功
-     */
     public static ResponseMessage ok(String message) {
         return msg(0, message, null);
     }
@@ -39,7 +32,14 @@ public class ResponseMessage extends JSONObject {
     public static ResponseMessage ok(JSON data) {
         return msg(0, "成功！", data);
     }
-    
+
+    /**
+     * 返回成功
+     */
+    public static ResponseMessage ok(int code, String message) {
+        return msg(code, message, null);
+    }
+
 
     /**
      * 返回失败
@@ -47,19 +47,19 @@ public class ResponseMessage extends JSONObject {
     public static ResponseMessage error() {
         return msg(-1,"失败！", null);
     }
-
-    /**
-     * 返回失败
-     */
-    public static ResponseMessage error(int code) {
-        return msg(code,"失败！", null);
-    }
     
     /**
      * 返回失败
      */
     public static ResponseMessage error(String message) {
         return msg(-1, message, null);
+    }
+
+    /**
+     * 返回失败
+     */
+    public static ResponseMessage error(CodeEnum codeEnum) {
+        return msg(codeEnum.getCode(),codeEnum.getMsg(), null);
     }
 
     /**

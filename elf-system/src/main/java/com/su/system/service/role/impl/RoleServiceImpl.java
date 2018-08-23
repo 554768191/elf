@@ -7,7 +7,9 @@ import com.su.system.mapper.RoleMapper;
 import com.su.system.service.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,13 +25,21 @@ public class RoleServiceImpl implements RoleService {
     RoleMapper roleMapper;
 
     @Override
-    public int deletePrivilege(int roleId) {
-        return roleMapper.deletePrivilege(roleId);
-    }
-
-    @Override
-    public void batchInsertRolePrivilege(List<RolePrivilege> list) {
-        roleMapper.batchInsertRolePrivilege(list);
+    public int updateRolePrivilege(int roleId, List<Integer> pids) {
+        int r = 0;
+        roleMapper.deletePrivilege(roleId);
+        if(!CollectionUtils.isEmpty(pids)){
+            List<RolePrivilege> list = new ArrayList<>();
+            RolePrivilege rp;
+            for(Integer i:pids){
+                rp = new RolePrivilege();
+                rp.setRoleId(roleId);
+                rp.setPrivilegeId(i);
+                list.add(rp);
+            }
+            r = roleMapper.batchInsertRolePrivilege(list);
+        }
+        return r;
     }
 
     @Override

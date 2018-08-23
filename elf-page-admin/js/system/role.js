@@ -137,18 +137,24 @@ layui.use(['form', 'table', 'util', 'config', 'base'], function () {
                 for (var i = 0; i < nodes.length; i++) {
                     ids[i] = nodes[i].id;
                 }
-                $.post('system/role/updateRoleAuth', {
-                    roleId: roleId,
-                    authIds: JSON.stringify(ids)
-                }, function (data) {
-                    layer.closeAll('loading');
-                    if (0 == data.code) {
-                        layer.msg(data.msg, {icon: 1});
-                        layer.close(index);
-                    } else {
-                        layer.msg(data.msg, {icon: 2});
+
+                $.ajax({
+                    url:config.base_server + 'role/' + roleId + '/privilege',
+                    type:"post",
+                    contentType:"application/json",
+                    data: JSON.stringify(ids),
+                    dataType:"json",
+                    success:function(data){
+                        layer.closeAll('loading');
+                        if (0 == data.code) {
+                            layer.msg(data.msg, {icon: 1});
+                            layer.close(index);
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                        }
                     }
-                }, 'json');
+                });
+
             }
         });
     }

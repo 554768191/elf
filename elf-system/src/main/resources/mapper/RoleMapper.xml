@@ -6,6 +6,8 @@
         <result column="role_name" property="roleName" />
         <result column="create_time" property="createTime" />
     </resultMap>
+
+
     
     <sql id="base_Column_List" >
         id, role_name, comments, create_time
@@ -73,8 +75,8 @@
     <insert id="batchInsertRolePrivilege" parameterType="java.util.List" >
       INSERT INTO role_privilege_ref(role_id, privilege_id)
       VALUES 
-        <foreach collection ="list" item="com.su.system.entity.RolePrivilege" separator =",">
-            (#{roleId}, #{privilegeId})
+        <foreach collection ="list" item="rp" separator =",">
+            (#{rp.roleId}, #{rp.privilegeId})
         </foreach>
 
     </insert>

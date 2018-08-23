@@ -1,10 +1,11 @@
-layui.use(['form', 'table', 'util', 'config', 'index'], function () {
+layui.use(['form', 'table', 'util', 'config', 'index', 'base'], function () {
     var form = layui.form;
     var table = layui.table;
     var config = layui.config;
     var layer = layui.layer;
     var util = layui.util;
     var index = layui.index;
+    var base = layui.base;
 
     // 渲染表格
     table.render({
@@ -12,7 +13,7 @@ layui.use(['form', 'table', 'util', 'config', 'index'], function () {
         url: config.base_server + 'user',
         method: 'get',
         where: {
-            token: config.getToken()
+            token: base.getToken()
         },
         page: true,
         cols: [[
@@ -20,7 +21,16 @@ layui.use(['form', 'table', 'util', 'config', 'index'], function () {
             {field: 'account', sort: false, title: '账号'},
             {field: 'nickName', sort: false, title: '昵称'},
             {field: 'phone', sort: false, title: '手机号'},
-            {field: 'sex', sort: true, title: '性别'},
+            // {field: 'sex', sort: true, title: '性别'},
+            {
+                field: 'sex', width: 80, align: 'center', templet: function (d) {
+                    if (d.sex == 1) {
+                        return '男';
+                    }else {
+                        return '女';
+                    }
+                }, title: '性别'
+            },
             {
                 sort: true, templet: function (d) {
                     return util.toDateString(d.createTime);
@@ -47,7 +57,7 @@ layui.use(['form', 'table', 'util', 'config', 'index'], function () {
             layer.confirm('确定重置此用户的密码吗？', function (i) {
                 layer.close(i);
                 layer.load(2);
-                config.req('user/psw/' + obj.data.userId, {}, function (data) {
+                base.req('user/psw/' + obj.data.userId, {}, function (data) {
                     layer.closeAll('loading');
                     if (data.code == 200) {
                         layer.msg(data.msg, {icon: 1});
@@ -61,7 +71,27 @@ layui.use(['form', 'table', 'util', 'config', 'index'], function () {
 
     //显示表单弹窗
     var showEditModel = function (data) {
-        indx.putTempData('t_user', data);
+
+        layer.open({
+            type: 1,
+            title: data ? '修改用户' : '添加用户',
+            area: '450px',
+            offset: '120px',
+            content: $('#user-model').html(),
+            success: function () {
+                $('#user-form')[0].reset();
+                $('#user-form').attr('method', 'POST');
+                if (data) {
+                    form.val('user-form', data);
+                    $('#user-form').attr('method', 'PUT');
+                }
+                $('#user-form .close').click(function () {
+                    layer.closeAll('page');
+                });
+            }
+        });
+        /*
+        base.putTempData('t_user', data);
         var title = data ? '修改用户' : '添加用户';
         index.popupCenter({
             title: title,
@@ -70,6 +100,7 @@ layui.use(['form', 'table', 'util', 'config', 'index'], function () {
                 table.reload('user-table', {});
             }
         });
+        */
     };
 
     // 搜索按钮点击事件
@@ -97,4 +128,20 @@ layui.use(['form', 'table', 'util', 'config', 'index'], function () {
             }
         }, 'PUT');
     });
+
+    // 表单提交事件
+    form.on('submit(user-form-submit)', function (data) {
+        layer.load(2);
+        base.req('user', data.field, function (data) {
+            layer.closeAll('loading');
+            if (data.code == 0) {
+                layer.msg(data.msg, {icon: 1});
+                index.finishPopupCenter();
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        }, $('#user-form').attr('method'));
+        return false;
+    });
+
 });

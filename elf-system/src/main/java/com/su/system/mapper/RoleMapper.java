@@ -12,6 +12,6 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     int deletePrivilege(int roleId);
 
-    void batchInsertRolePrivilege(List<RolePrivilege> list);
+    int batchInsertRolePrivilege(List<RolePrivilege> list);
 
 }

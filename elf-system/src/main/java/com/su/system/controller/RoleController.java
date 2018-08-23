@@ -1,11 +1,13 @@
 package com.su.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.su.common.CodeEnum;
 import com.su.common.entity.ResponseMessage;
 import com.su.common.entity.SearchParam;
 import com.su.system.entity.Role;
 import com.su.system.service.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +71,20 @@ public class RoleController {
         Role role = roleService.getPojo(pid);
         JSONObject json = new JSONObject();
         json.put("role", role);
+        return ResponseMessage.ok(json);
+    }
+
+    @RequestMapping(value = "/{roleId}/privilege", method = RequestMethod.POST)
+    public ResponseMessage updateRolePrivilege(@PathVariable int roleId,
+                                               @RequestBody List<Integer> privilegeIds){
+        System.out.println(roleId);
+        System.out.println(privilegeIds);
+        if(roleId==0){
+            return ResponseMessage.error(CodeEnum.EMPTY_PARAM);
+        }
+        int result = roleService.updateRolePrivilege(roleId, privilegeIds);
+        JSONObject json = new JSONObject();
+        json.put("result", result);
         return ResponseMessage.ok(json);
     }
 

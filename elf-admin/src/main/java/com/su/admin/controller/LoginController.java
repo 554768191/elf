@@ -3,7 +3,7 @@ package com.su.admin.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.su.admin.service.privilege.PrivilegeService;
 import com.su.admin.service.user.UserService;
-import com.su.common.Constants;
+import com.su.common.CodeEnum;
 import com.su.common.entity.ResponseMessage;
 import com.su.common.redis.RedisDao;
 import com.su.common.utils.CaptchaUtil;
@@ -75,12 +75,12 @@ public class LoginController {
         }
 
         if(StringUtils.isEmpty(text) || !text.equalsIgnoreCase(captcha)){
-            return ResponseMessage.error(Constants.ILLEGAL_PARAM, "验证码不正确");
+            return ResponseMessage.error(CodeEnum.ILLEGAL_PARAM.getCode(), "验证码不正确");
         }
 
         //校验用户名密码
         if(!RegexUtil.isRegexMatch(account, "^[A-Za-z0-9@#$-_.]{1,64}$")){
-            return ResponseMessage.error(Constants.ILLEGAL_PARAM, "用户名格式不合法");
+            return ResponseMessage.error(CodeEnum.ILLEGAL_PARAM.getCode(), "用户名格式不合法");
         }
 
         SsoUser user = userService.getByName(account);
@@ -109,10 +109,10 @@ public class LoginController {
                 return ResponseMessage.ok(jsonObject);//.put("token", "").put("user", user);
             }else{
                 userService.addLoginLog(request, account, "密码错误");
-                return ResponseMessage.error(Constants.ILLEGAL_PARAM, "密码错误");
+                return ResponseMessage.error(CodeEnum.ILLEGAL_PARAM.getCode(), "密码错误");
             }
         }else{
-            return ResponseMessage.error(Constants.NO_USER, "用户不存在");
+            return ResponseMessage.error(CodeEnum.NO_USER.getCode(), "用户不存在");
         }
 
     }

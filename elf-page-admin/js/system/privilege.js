@@ -35,8 +35,7 @@ layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], funct
                     field: 'category', width: 80, align: 'center', templet: function (d) {
                         if (d.category == 3) {
                             return '<span class="layui-badge layui-bg-gray">按钮</span>';
-                        }
-                        if (d.category == 1) {
+                        }else if (d.category == 1) {
                             return '<span class="layui-badge layui-bg-blue">目录</span>';
                         } else {
                             return '<span class="layui-badge-rim">菜单</span>';

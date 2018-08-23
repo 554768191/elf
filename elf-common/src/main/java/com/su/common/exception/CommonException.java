@@ -1,5 +1,7 @@
 package com.su.common.exception;
 
+import com.su.common.CodeEnum;
+
 public class CommonException extends RuntimeException {
 
     /**
@@ -30,6 +32,16 @@ public class CommonException extends RuntimeException {
     public CommonException(int errorCode, String message) {
         super(message);
         setErrorCode(errorCode);
+    }
+
+    /**
+     * 构造一个基本异常.
+     *
+     * @param codeEnum
+     */
+    public CommonException(CodeEnum codeEnum) {
+        super(codeEnum.getMsg());
+        setErrorCode(codeEnum.getCode());
     }
 
     public int getErrorCode() {

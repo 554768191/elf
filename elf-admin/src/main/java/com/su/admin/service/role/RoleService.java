@@ -2,7 +2,7 @@ package com.su.admin.service.role;
 
 
 
-import com.su.admin.entity.RolePrivilege;
+import com.alibaba.fastjson.JSONObject;
 import com.su.admin.service.BaseService;
 
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.List;
  */
 public interface RoleService extends BaseService {
 
-    int deletePrivilege(int roleId);
+//    int deletePrivilege(int roleId);
 
-    void batchInsertRolePrivilege(List<RolePrivilege> list);
+    JSONObject updateRolePrivilege(int roleId, List<Integer> list);
 
 }

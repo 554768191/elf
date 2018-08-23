@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
 /**
  * @Desc
@@ -55,6 +56,13 @@ public class RoleController {
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
     public ResponseMessage getRole(@PathVariable int pid){
         JSONObject json = roleService.getPojo(pid);
+        return ResponseMessage.ok(json);
+    }
+
+    @RequestMapping(value = "/{roleId}/privilege", method = RequestMethod.POST)
+    public ResponseMessage updateRolePrivilege(@PathVariable int roleId,
+                                               @RequestBody List<Integer> privilegeIds){
+        JSONObject json = roleService.updateRolePrivilege(roleId, privilegeIds);
         return ResponseMessage.ok(json);
     }
 
