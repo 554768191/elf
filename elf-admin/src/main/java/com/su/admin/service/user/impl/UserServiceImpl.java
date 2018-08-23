@@ -77,13 +77,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public JSONObject getList(SearchParam params) {
-        StringBuilder sb = new StringBuilder("http://system/user");
-        if(params!=null){
-            if(StringUtils.isNotEmpty(params.getName())){
-                sb.append("?name=").append(params.getName());
-            }
-        }
-        return restService.get(sb.toString());
+        return restService.get("http://system/user?" + params.toString());
     }
 
     @Override

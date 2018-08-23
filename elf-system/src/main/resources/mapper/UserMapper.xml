@@ -23,6 +23,9 @@
         <if test="name!=null and name!='' " >
             AND u.account = #{name}
         </if>
+        <if test="phone!=null and phone!='' " >
+            AND u.phone = #{phone}
+        </if>
         <if test="startTime!=null and startTime!=''">
             AND u.create_time >= #{startTime}
         </if>
@@ -36,6 +39,9 @@
         SELECT count(*) FROM user where 1=1
         <if test="name!=null and name!='' " >
             AND account = #{name}
+        </if>
+        <if test="phone!=null and phone!='' " >
+            AND phone = #{phone}
         </if>
         <if test="startTime!=null and startTime!=''">
             AND create_time >= #{startTime}
@@ -53,7 +59,7 @@
 
     <insert id="insert" parameterType="com.su.system.entity.User" useGeneratedKeys="true" keyProperty="id">
       INSERT INTO user(account, nickname, password, phone, sex, create_time)
-      VALUES (#{account}, #{nickName}, #{passWord}, #{phone}, #{sex}, now())
+      VALUES (#{account}, #{nickName}, #{password}, #{phone}, #{sex}, now())
     </insert>
     
     <update id="update" parameterType="com.su.system.entity.User" >

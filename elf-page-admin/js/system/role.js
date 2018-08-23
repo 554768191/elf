@@ -1,35 +1,72 @@
-layui.use(['form', 'table', 'util', 'config', 'base'], function () {
+layui.use(['form', 'table', 'util', 'laydate', 'config', 'base'], function () {
     var form = layui.form;
     var table = layui.table;
     var config = layui.config;
     var layer = layui.layer;
     var util = layui.util;
     var base = layui.base;
+    var laydate = layui.laydate;
 
-    //渲染表格
-    table.render({
-        elem: '#role-table',
-        url: config.base_server + 'role',
-        where: {
-            token: base.getToken()
-        },
-        page: false,
-        cols: [[
-            {type: 'numbers'},
-            {field: 'roleName', sort: false, title: '角色名'},
-            {field: 'comments', sort: false, title: '备注'},
-            {
-                field: 'createTime', sort: true, templet: function (d) {
-                    return util.toDateString(d.createTime);
-                }, title: '创建时间'
-            },
-            {align: 'center', toolbar: '#role-table-bar', title: '操作'}
-        ]]
+    //时间范围
+    laydate.render({
+        elem: '#role-date',
+        type: 'date',
+        range: true,
+        theme: 'molv'
     });
+    var renderTable = function(){
+        //渲染表格
+        table.render({
+            elem: '#role-table',
+            url: config.base_server + 'role',
+            where: {
+                token: base.getToken()
+            },
+            page: false,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'roleName', sort: false, title: '角色名'},
+                {field: 'comments', sort: false, title: '备注'},
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {align: 'center', toolbar: '#role-table-bar', title: '操作'}
+            ]]
+        });
+    }
+    renderTable();
 
     // 添加按钮点击事件
     $('#role-btn-add').click(function () {
         showEditModel();
+    });
+    // 搜索按钮点击事件
+    $('#role-btn-search').click(function () {
+        var keyword = $('#role-edit-search').val();
+        var searchDate = $('#role-date').val().split(' - ');
+
+        table.reload('role-table', {
+            where: {
+                startTime: searchDate[0],
+                endTime: searchDate[1],
+                name: keyword
+            }
+        });
+
+    });
+
+    // 工具条点击事件
+    table.on('tool(role-table)', function (obj) {
+        var data = obj.data;
+        if (obj.event === 'edit') { //修改
+            showEditModel(data);
+        } else if (obj.event === 'del') { //删除
+            doDelete(obj);
+        } else if (obj.event === 'auth') {  // 权限管理
+            showPermDialog(obj.data.id);
+        }
     });
 
     // 表单提交事件
@@ -46,24 +83,6 @@ layui.use(['form', 'table', 'util', 'config', 'base'], function () {
             }
         }, $('#role-form').attr('method'));
         return false;
-    });
-
-    // 工具条点击事件
-    table.on('tool(role-table)', function (obj) {
-        var data = obj.data;
-        if (obj.event === 'edit') { //修改
-            showEditModel(data);
-        } else if (obj.event === 'del') { //删除
-            doDelete(obj);
-        } else if (obj.event === 'auth') {  // 权限管理
-            showPermDialog(obj.data.id);
-        }
-    });
-
-    // 搜索按钮点击事件
-    $('#role-btn-search').click(function () {
-        var keyword = $('#role-edit-search').val();
-        table.reload('role-table', {where: {keyword: keyword}});
     });
 
     // 显示编辑弹窗
@@ -97,7 +116,8 @@ layui.use(['form', 'table', 'util', 'config', 'base'], function () {
                 layer.closeAll('loading');
                 if (data.code == 0) {
                     layer.msg(data.msg, {icon: 1});
-                    obj.del();
+                    //obj.del();
+                    renderTable();
                 } else {
                     layer.msg(data.msg, {icon: 2});
                 }

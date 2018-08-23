@@ -26,7 +26,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public JSONObject getList(SearchParam params) {
-        return restService.get("http://system/role");
+        return restService.get("http://system/role?" + params.toString());
     }
 
 

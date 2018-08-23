@@ -75,6 +75,8 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseMessage addUser(@RequestBody JSONObject user){
+        //todo 校验参数
+
         JSONObject json = userService.insertPojo(user);
         return ResponseMessage.ok(json);
     }

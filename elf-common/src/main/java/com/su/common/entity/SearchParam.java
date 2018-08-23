@@ -13,6 +13,7 @@ public class SearchParam {
     private int id;
     private int roleId;
     private String name;  // 用户名
+    private String phone;  // 用户名
 
     private int limit = 10;
     private int offset;
@@ -43,6 +44,14 @@ public class SearchParam {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getLimit() {
@@ -97,6 +106,9 @@ public class SearchParam {
         }
         if(StringUtils.isNotEmpty(this.name)){
             sb.append("&name=").append(this.name);
+        }
+        if(StringUtils.isNotEmpty(this.phone)){
+            sb.append("&phone=").append(this.phone);
         }
         if(StringUtils.isNotEmpty(this.startTime)){
             sb.append("&startTime=").append(this.startTime);

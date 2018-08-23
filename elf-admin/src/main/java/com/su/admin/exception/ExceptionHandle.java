@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.ResourceAccessException;
 
 @ControllerAdvice
 public class ExceptionHandle {
@@ -17,13 +18,15 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ResponseMessage Handle(Exception e){
+        //将系统异常以打印出来
+        logger.error(e.getMessage(), e);
         if (e instanceof CommonException){
             CommonException exception = (CommonException) e;
             return ResponseMessage.error(exception.getErrorCode(), exception.getMessage());
+        } else if(e instanceof ResourceAccessException){
+            return ResponseMessage.error(Constants.SERVER_ERROR, "服务调用失败");
+        } else {
 
-        }else {
-            //将系统异常以打印出来
-            logger.error(e.getMessage(), e);
             return ResponseMessage.error(Constants.SERVER_ERROR, "内部错误");
         }
 

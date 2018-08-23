@@ -1,10 +1,10 @@
-layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], function () {
+layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], function () {
     var form = layui.form;
     var table = layui.table;
     var config = layui.config;
     var layer = layui.layer;
     var util = layui.util;
-    var index = layui.index;
+    //var index = layui.index;
     var base = layui.base;
     var laydate = layui.laydate;
 
@@ -54,30 +54,20 @@ layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], funct
 
     renderTable();
 
-    // 角色切换事件
-    form.on('select(auth-slt-role)', function (data) {
-        table.reload('auth-table', {where: {roleId: data.value}});
-    });
-
     // 同步按钮点击事件
-    $('#auth-btn-sync').click(function () {
-        layer.confirm('确定进行同步？', {
-            btn: ['确定', '取消'] //按钮
-        }, function () {
-            layer.load(2);
-            $.get(config.base_server + 'v2/api-docs', function (data) {
-                config.req('authorities/sync', {
-                    json: JSON.stringify(data)
-                }, function (data) {
-                    layer.closeAll('loading');
-                    if (200 == data.code) {
-                        layer.msg(data.msg, {icon: 1});
-                        table.reload('auth-table');
-                    } else {
-                        layer.msg(data.msg, {icon: 2});
-                    }
-                }, 'POST');
-            });
+    $('#privilege-btn-add').click(function () {
+        showEditModel();
+    });
+    //搜索按钮点击事件
+    $('#privilege-btn-search').click(function () {
+        var searchDate = $('#privilege-date').val().split(' - ');
+        var searchName = $('#privilege-search').val();
+        table.reload('auth-table', {
+            where: {
+                startTime: searchDate[0],
+                endTime: searchDate[1],
+                name: searchName
+            }
         });
     });
 
@@ -89,30 +79,75 @@ layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], funct
         if (layEvent === 'edit') { // 修改
             showEditModel(data);
         } else if (layEvent === 'del') { // 重置密码
-            layer.confirm('确定删除此权限吗？', function () {
-                layer.load(2);
-
-                $.ajax({
-                    url:config.base_server + 'privilege/' + data.id,
-                    type:"delete",
-                    // contentType:"application/json",
-                    dataType:"json",
-                    success:function(data){
-                        layer.closeAll('loading');
-                        if (data.code == 0) {
-                            layer.msg(data.msg, {icon: 1});
-                            renderTable();
-                        } else {
-                            layer.msg(data.msg, {icon: 2});
-                        }
-                    }
-                });
-                //return false;
-
-            });
+            doDelete(obj);
         }
     });
 
+    form.on('submit(privilege-form-submit)', function (data) {
+        layer.load(2);
+        console.log(data.field);
+        base.req('privilege', data.field, function (data) {
+            layer.closeAll('loading');
+            if (data.code == 0) {
+                layer.msg(data.msg, {icon: 1});
+                table.reload('auth-table');
+                //renderTable();
+                layer.closeAll('page');
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        }, $('#privilege-form').attr('method'));
+        return false;
+    });
+
+    // 显示表单弹窗
+    var showEditModel = function (data) {
+
+        layer.open({
+            type: 1,
+            title: data ? '修改权限' : '添加权限',
+            area: '450px',
+            offset: '120px',
+            content: $('#privilege-model').html(),
+            success: function () {
+                form.render('select');
+                $('#privilege-form')[0].reset();
+                $('#privilege-form').attr('method', 'POST');
+                if (data) {
+                    form.val('privilege-form', data);
+                    $('#privilege-form').attr('method', 'PUT');
+                }
+                $('#privilege-form .close').click(function () {
+                    layer.closeAll('page');
+                });
+            }
+        });
+
+    };
+    // 删除
+    var doDelete = function (obj) {
+        layer.confirm('确定删除此权限吗？', function (i) {
+            //layer.close(i);
+            layer.load(2);
+            base.req('privilege/' + obj.data.id, {}, function (data) {
+                layer.closeAll('loading');
+                if (data.code == 0) {
+                    layer.msg(data.msg, {icon: 1});
+                    //obj.del();
+                    //renderTable();
+                    table.reload('auth-table');
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            }, 'DELETE');
+        });
+    };
+
+    /*
+    // 角色切换事件
+    form.on('select(auth-slt-role)', function (data) {
+        table.reload('auth-table', {where: {roleId: data.value}});
+    });
     // 监听状态开关操作
     form.on('switch(auth-state)', function (obj) {
         var roleId = $('#auth-slt-role').val();
@@ -137,36 +172,6 @@ layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], funct
             }
         }, obj.elem.checked ? 'POST' : 'DELETE');
     });
-
-    // 同步按钮点击事件
-    $('#privilege-btn-add').click(function () {
-        showEditModel();
-    });
-
-    // 显示表单弹窗
-    var showEditModel = function (data) {
-        var title = data ? '修改权限' : '添加权限';
-        base.putTempData('t_privilege', data);
-        index.popupCenter({
-            title: title,
-            path: 'template/system/privilege_form.html',
-            finish: function () {
-                renderTable();
-            }
-        });
-    };
-
-    //搜索按钮点击事件
-    $('#privilege-btn-search').click(function () {
-        var searchDate = $('#privilege-date').val().split(' - ');
-        var searchName = $('#privilege-search').val();
-        table.reload('auth-table', {
-            where: {
-                startTime: searchDate[0],
-                endTime: searchDate[1],
-                name: searchName
-            }
-        });
-    });
+    */
 
 });

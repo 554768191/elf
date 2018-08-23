@@ -24,7 +24,7 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public JSONObject getList(SearchParam params) {
-        return restService.get("http://system/log");
+        return restService.get("http://system/log?" + params.toString());
     }
 
 
