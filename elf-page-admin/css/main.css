@@ -24,7 +24,9 @@ html {
 .laydate-theme-molv .layui-laydate-header {
     background-color: #6572b8;
 }
-
+.layui-btn-danger {
+    background-color: #FF5722;
+}
 /** header样式 */
 /** 导航栏下面的线条 */
 .layui-layout-admin .layui-header .layui-nav-bar {

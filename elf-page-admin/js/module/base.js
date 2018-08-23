@@ -71,15 +71,12 @@ layui.define(['config'], function (exports) {
         },
         // 封装ajax请求
         req: function (url, data, success, method) {
-
             var token = base.getToken();
-            if (token) {
-                data.token = token;
-            }
             $.ajax({
                 url: config.base_server + url,
-                data: data,
+                data: JSON.stringify(data),
                 type: method,
+                contentType : "application/json",
                 dataType: 'JSON',
                 success: function (data) {
                     success(data);
@@ -96,7 +93,7 @@ layui.define(['config'], function (exports) {
                     }
                 },
                 beforeSend: function (xhr) {
-                    var token = config.getToken();
+                    var token = base.getToken();
                     if (token) {
                         xhr.setRequestHeader('token', token);
                     }

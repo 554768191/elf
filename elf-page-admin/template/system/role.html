@@ -9,7 +9,7 @@
     <div class="layui-card-body">
         <div class="layui-form toolbar">
             搜索：
-            <input id="role-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <input id="role-edit-search" class="layui-input search-input" type="text" placeholder="输入角色名"/>&emsp;
             日期：
             <input id="log-date" class="layui-input search-input date-icon" type="text" placeholder="请选择日期范围"
                    style="width: 195px;"/>&emsp;
@@ -25,7 +25,7 @@
 <!-- 表单弹窗 -->
 <script type="text/html" id="role-model">
     <form id="role-form" lay-filter="role-form" class="layui-form model-form">
-        <input name="roleId" type="hidden"/>
+        <input name="id" type="hidden"/>
         <div class="layui-form-item">
             <label class="layui-form-label">角色名</label>
             <div class="layui-input-block">

@@ -63,7 +63,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     public JSONObject getList(SearchParam params) {
-        return restService.get("http://system/privilege");
+        return restService.get("http://system/privilege?" + params.toString());
     }
 
 

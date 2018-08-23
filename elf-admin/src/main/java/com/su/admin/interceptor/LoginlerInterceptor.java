@@ -38,7 +38,8 @@ public class LoginlerInterceptor extends HandlerInterceptorAdapter {
 
         // 跨域
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with");
+        response.setHeader("Access-Control-Allow-Headers", "origin, content-type, accept, "
+                + "x-requested-with, token");
         //response.setHeader("Access-Control-Max-Age", "60");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
         response.setHeader("Access-Control-Allow-Credentials", "true");

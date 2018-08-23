@@ -1,5 +1,6 @@
 package com.su.admin.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.su.admin.service.privilege.PrivilegeService;
 import com.su.common.entity.ResponseMessage;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
 /**
  * @Desc
@@ -57,6 +59,45 @@ public class PrivilegeController {
     public ResponseMessage getPrivilege(@PathVariable int pid){
         JSONObject json = privilegeService.getPojo(pid);
         return ResponseMessage.ok(json);
+    }
+
+    @RequestMapping(value = "/role/{roleId}", method = RequestMethod.GET)
+    public ResponseMessage getPrivilegeListByRole(@PathVariable int roleId){
+        JSONArray list = new JSONArray();
+        SearchParam param = new SearchParam();
+        param.setLimit(0);
+        JSONObject json = privilegeService.getList(param);
+        if(json!=null){
+            JSONArray all = json.getJSONArray("list");
+            List<String> own = privilegeService.getPrivilegeByRoleId(roleId);
+            if(all!=null){
+                JSONObject o;
+                for(int i=0;i<all.size();i++){
+                    o = all.getJSONObject(i);
+                    if(own!=null && own.contains(o.getString("link"))){
+                        o.put("checked", true);
+                    }else{
+                        o.put("checked", false);
+                    }
+
+                    o.put("name", o.getString("privilegeName"));
+                    o.put("pId", o.getInteger("parentId"));
+                    o.put("open", true);
+                    o.remove("privilegeName");
+                    o.remove("parentId");
+                    o.remove("createTime");
+                    o.remove("seq");
+                    o.remove("hasChild");
+                    o.remove("category");
+                    o.remove("subprivileges");
+                    o.remove("link");
+                    o.remove("parentName");
+                    list.add(o);
+                }
+            }
+        }
+
+        return ResponseMessage.ok(list);
     }
 
 }

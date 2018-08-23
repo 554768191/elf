@@ -8,7 +8,7 @@
     </resultMap>
     
     <sql id="base_Column_List" >
-        id, role_name, create_time
+        id, role_name, comments, create_time
     </sql>
 
     <select id="getList" resultMap="baseRoleMap" parameterType="com.su.common.entity.SearchParam" >
@@ -54,6 +54,9 @@
         <trim  suffixOverrides=",">
             <if test="roleName!=null and roleName!='' ">
                 role_name = #{roleName},
+            </if>
+            <if test="comments!=null and comments!='' ">
+                comments = #{comments},
             </if>
         </trim>
        WHERE id = #{id}

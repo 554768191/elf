@@ -92,17 +92,24 @@ layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], funct
         } else if (layEvent === 'del') { // 重置密码
             layer.confirm('确定删除此权限吗？', function () {
                 layer.load(2);
-                $.post('system/authorities/delete', {
-                    authorityId: obj.data.authorityId
-                }, function (data) {
-                    layer.closeAll('loading');
-                    if (data.code == 200) {
-                        layer.msg(data.msg, {icon: 1});
-                        renderTable();
-                    } else {
-                        layer.msg(data.msg, {icon: 2});
+
+                $.ajax({
+                    url:config.base_server + 'privilege/' + data.id,
+                    type:"delete",
+                    // contentType:"application/json",
+                    dataType:"json",
+                    success:function(data){
+                        layer.closeAll('loading');
+                        if (data.code == 0) {
+                            layer.msg(data.msg, {icon: 1});
+                            renderTable();
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                        }
                     }
                 });
+                //return false;
+
             });
         }
     });
@@ -140,7 +147,7 @@ layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], funct
     // 显示表单弹窗
     var showEditModel = function (data) {
         var title = data ? '修改权限' : '添加权限';
-        base.putTempData('t_authoritie', data);
+        base.putTempData('t_privilege', data);
         index.popupCenter({
             title: title,
             path: 'template/system/privilege_form.html',
@@ -149,5 +156,18 @@ layui.use(['form', 'table', 'util', 'config', 'index', 'base', 'laydate'], funct
             }
         });
     };
+
+    //搜索按钮点击事件
+    $('#privilege-btn-search').click(function () {
+        var searchDate = $('#privilege-date').val().split(' - ');
+        var searchName = $('#privilege-search').val();
+        table.reload('auth-table', {
+            where: {
+                startTime: searchDate[0],
+                endTime: searchDate[1],
+                name: searchName
+            }
+        });
+    });
 
 });

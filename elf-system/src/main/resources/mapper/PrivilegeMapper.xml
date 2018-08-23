@@ -26,7 +26,10 @@
         <if test="endTime!=null and endTime!=''">
             AND create_time &lt;= #{endTime}
         </if>
-        limit #{limit} offset #{offset}
+        <if test="limit>0">
+            limit #{limit} offset #{offset}
+        </if>
+
     </select>
 
     <select id="getCount" resultType="int" parameterType="com.su.common.entity.SearchParam" >

@@ -1,5 +1,7 @@
 package com.su.common.entity;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @Desc
  * @author surongyao
@@ -81,5 +83,27 @@ public class SearchParam {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("page=").append(this.page).append("&limit=").append(this.limit);
+        if(this.id>0){
+            sb.append("&id=").append(this.id);
+        }
+        if(this.roleId>0){
+            sb.append("&roleId=").append(this.roleId);
+        }
+        if(StringUtils.isNotEmpty(this.name)){
+            sb.append("&name=").append(this.name);
+        }
+        if(StringUtils.isNotEmpty(this.startTime)){
+            sb.append("&startTime=").append(this.startTime);
+        }
+        if(StringUtils.isNotEmpty(this.endTime)){
+            sb.append("&endTime=").append(this.endTime);
+        }
+        return sb.toString();
     }
 }
