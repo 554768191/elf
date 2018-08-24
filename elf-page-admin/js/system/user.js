@@ -28,8 +28,8 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], funct
         cols: [[
             {type: 'numbers'},
             {field: 'account', sort: false, title: '账号'},
-            {field: 'nickName', sort: false, title: '昵称'},
-            {field: 'phone', sort: false, title: '手机号'},
+            {field: 'nickName', width:120, sort: false, title: '昵称'},
+            {field: 'phone', width:120, sort: false, title: '手机号'},
             // {field: 'sex', sort: true, title: '性别'},
             {
                 field: 'sex', width: 80, align: 'center', templet: function (d) {
@@ -109,7 +109,47 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], funct
 
     //显示表单弹窗
     var showEditModel = function (data) {
+        var title = data ? '修改用户' : '添加用户';
 
+        $.get(config.base_server + 'role', { limit: 0 },
+            function(result){
+                var list = result.data;
+                var selectContent = '<option value="0">--请选择--</option>';
+                if(list){
+                    for(var i = 0;i<list.length; i++){
+                        if(data && data.roleId == list[i].id){
+                            selectContent = selectContent + '<option value="' + list[i].id + '" selected="selected">' + list[i].roleName + '</option>';
+                        }else{
+                            selectContent = selectContent + '<option value="' + list[i].id + '">' + list[i].roleName + '</option>';
+                        }
+                    }
+                }
+                $("select[name='roleId']").html(selectContent);
+            });
+
+        index.popupCenter({
+            title: title,
+            content: $('#user-model').html(),
+            success: function () {
+                form.render('select');
+                $('#user-form')[0].reset();
+                $('#user-form').attr('method', 'POST');
+                if (data) {
+                    form.val('user-form', data);
+                    $('#user-form').attr('method', 'PUT');
+                }
+                $('#user-form .close').click(function () {
+                    layer.closeAll('page');
+                    table.reload('user-table');
+                });
+                $('.layui-layer-close.layui-layer-close1').click(function () {
+                    layer.closeAll('page');
+                    table.reload('user-table');
+                });
+
+            }
+        });
+        /*
         layer.open({
             type: 1,
             title: data ? '修改用户' : '添加用户',
@@ -128,7 +168,7 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], funct
                 });
             }
         });
-        /*
+
         base.putTempData('t_user', data);
         var title = data ? '修改用户' : '添加用户';
         index.popupCenter({

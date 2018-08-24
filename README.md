@@ -1,6 +1,6 @@
 # 说明 #
 
-自己作为技术学习的CMS微服务系统，取名elf **（精灵）** ，前后分离。前端主要用bootstrap，后端用springboot、springcloud。
+自己作为技术学习的CMS微服务系统，取名elf **（精灵）** ，前后分离。前端主要用bootstrap、layui，后端用springboot、springcloud。
 
 * elf-admin: 后台应用接口
 * elf-common: 通用jar包
@@ -10,5 +10,8 @@
 * elf-sso: sso jar包
 * elf-system: 系统管理服务
 * ekf-web: 前台应用接口
+
+目前只完成了登录和系统管理部分.
+在线演示地址: http://www.sususky.com/elf
 
 

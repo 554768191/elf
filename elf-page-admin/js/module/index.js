@@ -4,7 +4,7 @@ layui.define(['config', 'layer', 'element', 'base'], function (exports) {
     var element = layui.element;
     var base = layui.base;
 
-    var popupRightIndex, popupCenterIndex, popupCenterParam;
+    var popupRightIndex, popupCenterIndex; //, popupCenterParam;
 
     var index = {
         openPageTabs: true,  // 是否开启多标签
@@ -271,7 +271,7 @@ layui.define(['config', 'layer', 'element', 'base'], function (exports) {
         },
         // 中间弹出
         popupCenter: function (param) {
-            popupCenterParam = param;
+            //popupCenterParam = param;
             popupCenterIndex = layer.open({
                 type: 1,
                 id: 'adminPopupC',
@@ -281,25 +281,22 @@ layui.define(['config', 'layer', 'element', 'base'], function (exports) {
                 area: param.area ? param.area : '450px',
                 resize: false,
                 skin: 'layui-layer-adminCenter',
+                content: param.content,
                 success: function () {
-                    $('#adminPopupC').load(param.path, function () {
-                        $('#adminPopupC .close').click(function () {
-                            layer.close(popupCenterIndex);
-                        });
-                        param.success ? param.success() : '';
-                    });
+                    param.success ? param.success() : '';
                 },
                 end: function () {
                     layer.closeAll('tips');
-                    param.end ? param.end() : '';
+                    //param.end ? param.end() : '';
                 }
             });
         },
         // 关闭中间弹出并且触发finish回调
+        /*
         finishPopupCenter: function () {
             layer.close(popupCenterIndex);
             popupCenterParam.finish ? popupCenterParam.finish() : '';
-        },
+        },*/
         // 关闭中间弹出
         closePopupCenter: function () {
             layer.close(popupCenterIndex);
