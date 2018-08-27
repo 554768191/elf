@@ -12,6 +12,7 @@
 * ekf-web: 前台应用接口
 
 目前只完成了登录和系统管理部分.
-在线演示地址: http://www.sususky.com/elf
+在线演示地址: http://www.sususky.com/admin/login.html
+用户名/密码: admin/admin
 
 

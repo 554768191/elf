@@ -1,5 +1,6 @@
 package com.su.admin.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.su.admin.service.user.UserService;
 import com.su.common.entity.ResponseMessage;
@@ -70,7 +71,11 @@ public class UserController {
     public ResponseMessage getUserList(SearchParam param){
         param.setOffset((param.getPage()-1)*param.getLimit());
         JSONObject json = userService.getList(param);
-        return ResponseMessage.ok(json.getJSONArray("list")).put("count", json.getInteger("count"));
+        JSONArray array = json.getJSONArray("list");
+        for(int i=0;i<array.size();i++){
+            array.getJSONObject(i).remove("password");
+        }
+        return ResponseMessage.ok(array).put("count", json.getInteger("count"));
     }
 
     @RequestMapping(method = RequestMethod.POST)
