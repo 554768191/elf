@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
                 user.setAccount(json.getString("account"));
                 user.setRoleId(json.getInteger("roleId"));
                 user.setIsSuper(json.getInteger("isSuper"));
+                user.setReadOnly(json.getInteger("readonly"));
                 user.setPassWord(json.getString("password"));
                 return user;
             }
