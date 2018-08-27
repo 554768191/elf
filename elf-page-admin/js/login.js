@@ -40,6 +40,7 @@ layui.config({
                 console.log(JSON.stringify(data));
                 if (data.code==0) {
                     base.putToken(data.data.token);
+                    base.putUser(data.data.user);
                     layer.msg('登录成功', {icon: 1}, function () {
                         location.replace('./');
                     });

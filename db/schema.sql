@@ -42,7 +42,7 @@ CREATE TABLE `user` (
   `account` varchar(64) NOT NULL,
   `nickname` varchar(32) DEFAULT '',
   `password` varchar(32) NOT NULL,
-  `readonly` tinyint DEFAULT 0,
+  `readonly` tinyint DEFAULT 1 COMMENT '1只读 2读写',
   `enable` tinyint DEFAULT 1,
   `is_super` tinyint DEFAULT 0,
   `email` varchar(32) DEFAULT '',

@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         if(json!=null){
             JSONArray array = json.getJSONArray("list");
             if(array!=null && array.size()>0){
-                SsoUser user= new SsoUser();;
+                SsoUser user= new SsoUser();
                 json = array.getJSONObject(0);
                 user.setId(json.getInteger("id"));
                 user.setAccount(json.getString("account"));

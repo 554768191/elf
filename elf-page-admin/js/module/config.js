@@ -11,7 +11,8 @@ layui.define(function (exports) {
             subMenus: [{
                 name: 'home',
                 url: 'home',
-                path: 'home.html'
+                path: 'home.html',
+                noAuth: true
             }]
         }, {
             name: '系统管理',
@@ -19,7 +20,8 @@ layui.define(function (exports) {
             subMenus: [{
                 name: '用户管理',
                 url: 'user',  // 这里url不能带斜杠，因为是用递归循环进行关键字注册，带斜杠会被q.js理解为其他注册模式
-                path: 'system/user.html'
+                path: 'system/user.html',
+
             }, {
                 name: '角色管理',
                 url: 'role',

@@ -2,20 +2,19 @@
     base: 'js/module/'
 }).extend({
     // formSelects: 'formSelects/formSelects-v4'
-}).use(['config', 'index', 'element'], function () {
-    var config = layui.config;
+}).use(['index', 'element', 'base'], function () {
     var index = layui.index;
     var element = layui.element;
+    var base = layui.base;
 
     // 检查是否登录
-    /*
-    if (!config.getToken() || config.getToken() == '') {
+    if (!base.getToken() || base.getToken() == '') {
         location.replace('login.html');
         return;
     }
-    */
+
     index.checkPageTabs();
-    index.initUserInfo();
+    //index.initUserInfo();
     index.initLeftNav();
     element.render('nav');
     index.bindEvent();

@@ -1,5 +1,7 @@
 package com.su.admin.interceptor;
 
+import com.su.common.CodeEnum;
+import com.su.common.exception.CommonException;
 import com.su.sso.service.auth.AuthService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -51,6 +53,10 @@ public class LoginlerInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
+        if(request.getMethod().equalsIgnoreCase("options")){
+            return true;
+        }
+
         if(StringUtils.isNotEmpty(excludes)){
             String [] excludeArray = excludes.split(",");
             String [] uris = uri.split("/");
@@ -61,17 +67,15 @@ public class LoginlerInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
-        /*
         boolean flag = authService.check(request);
-        // todo 添加校验是否只读， 只读用户只可以执行get、options方法，post、delete、put方法没权限
-        // request.getMethod()
+
         if(flag){
             logger.info("uri: [{}]校验通过", uri);
             return true;
         }
         logger.warn("uri: [{}]校验失败", uri);
-        throw new CommonException(Constants.UN_AUTH, "auth failed");
-        */
-        return true;
+        throw new CommonException(CodeEnum.NO_PERMISSION);
+
+        //return true;
     }
 }

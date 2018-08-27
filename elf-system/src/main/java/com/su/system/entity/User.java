@@ -13,6 +13,7 @@ public class User {
 	private int roleId;
 	private String roleName = "";
 	private int isSuper;
+	private int readonly;
 	private String createTime;
 	private List<String> privaleges;
 
@@ -86,6 +87,14 @@ public class User {
 
 	public void setIsSuper(int isSuper) {
 		this.isSuper = isSuper;
+	}
+
+	public int getReadonly() {
+		return readonly;
+	}
+
+	public void setReadonly(int readonly) {
+		this.readonly = readonly;
 	}
 
 	public String getCreateTime() {

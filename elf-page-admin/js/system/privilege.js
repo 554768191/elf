@@ -129,7 +129,7 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], funct
         layer.confirm('确定删除此权限吗？', function (i) {
             //layer.close(i);
             layer.load(2);
-            base.req('privilege/' + obj.data.id, {}, function (data) {
+            base.jsonReq('privilege/' + obj.data.id, {}, function (data) {
                 layer.closeAll('loading');
                 if (data.code == 0) {
                     layer.msg(data.msg, {icon: 1});

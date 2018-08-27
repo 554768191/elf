@@ -31,7 +31,9 @@ layui.define(['config', 'layer', 'element', 'base'], function (exports) {
                 var tempSubMenus = new Array();
                 for (var j = 0; j < tempMenu.subMenus.length; j++) {
                     var tempSubMenu = tempMenu.subMenus[j];
-                    if (base.hasPerm(tempSubMenu.auth)) {
+                    if(tempSubMenu.noAuth){
+                        tempSubMenus.push(tempSubMenu);
+                    }else if (base.hasPerm(tempSubMenu.url)) {
                         tempSubMenus.push(tempSubMenu);
                     }
                 }
@@ -186,10 +188,11 @@ layui.define(['config', 'layer', 'element', 'base'], function (exports) {
         // 从服务器获取登录用户的信息
         initUserInfo: function () {
             // 获取当前用户信息
-            var loginUser = base.getUser();
-            if(loginUser){
+            base.getReq("user/" + base.getUser().id, {}, function (data) {
 
-            }
+            });
+
+
         },
         // 页面元素绑定事件监听
         bindEvent: function () {

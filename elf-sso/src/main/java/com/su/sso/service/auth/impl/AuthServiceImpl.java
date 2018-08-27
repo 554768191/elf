@@ -73,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
         ops.put("client", request.getRemoteAddr());
         ops.put("userAccount", ssoUser.getAccount());
         ops.put("is_super", ssoUser.getIsSuper()+"");
-        //ops.put("readOnly", ssoUser.getReadOnly()+"");
+        ops.put("readOnly", ssoUser.getReadOnly()+"");
 
         //redisDao.hset(token, "client", request.getRemoteAddr());
         //redisDao.hset(token, "userAccount", ssoUser.getAccount());
@@ -81,7 +81,7 @@ public class AuthServiceImpl implements AuthService {
         //redisDao.hset(token, "readOnly", ssoUser.getReadOnly()+"");
 
         if(ssoUser.getIsSuper()!=1){
-            List<String> list = ssoUser.getPrivaleges();
+            List<String> list = ssoUser.getPrivileges();
             StringBuilder sb = new StringBuilder();
             if(list!=null && list.size()>0){
                 for(String p:list){
@@ -134,6 +134,16 @@ public class AuthServiceImpl implements AuthService {
                     String [] ps = privileges.split(",");
                     for(String p:ps){
                         if(uri.indexOf(p)>=0){
+                            // 添加校验是否只读， 只读用户只可以执行get、options方法，post、delete、put方法没权限
+                            String method = request.getMethod();
+                            boolean b = isReadOnly(token);
+                            if(b){
+                                if(method.equalsIgnoreCase("post")
+                                        || method.equalsIgnoreCase("put")
+                                        || method.equalsIgnoreCase("delete")){
+                                    return false;
+                                }
+                            }
                             addCache(token+"_"+uri);
                             redisTemplate.expire(token, SsoConstants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
                             return true;
@@ -145,6 +155,8 @@ public class AuthServiceImpl implements AuthService {
                 logger.warn("[{}]的用户token是[{}], 与缓存的clientIP不一致, 可能是伪造的请求", clientIP, token);
             }
 
+        }else{
+            throw new CommonException(CodeEnum.UN_AUTH);
         }
 
         return false;

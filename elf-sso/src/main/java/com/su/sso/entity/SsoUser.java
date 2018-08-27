@@ -10,7 +10,7 @@ public class SsoUser {
 	private int roleId;
 	private int isSuper;
 	private int readOnly;
-	private List<String> privaleges;
+	private List<String> privileges;
 
 	public int getId() {
 		return id;
@@ -60,11 +60,12 @@ public class SsoUser {
 		this.readOnly = readOnly;
 	}
 
-	public List<String> getPrivaleges() {
-		return privaleges;
+	public List<String> getPrivileges() {
+		return privileges;
 	}
 
-	public void setPrivaleges(List<String> privaleges) {
-		this.privaleges = privaleges;
+	public void setPrivileges(List<String> privileges) {
+		this.privileges = privileges;
 	}
+
 }

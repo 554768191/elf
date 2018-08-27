@@ -94,7 +94,7 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], funct
     form.on('submit(user-form-submit)', function (data) {
         layer.load(2);
         data.field.password = $.md5(data.field.password);
-        base.req('user', data.field, function (data) {
+        base.jsonReq('user', data.field, function (data) {
             layer.closeAll('loading');
             if (data.code == 0) {
                 layer.msg(data.msg, {icon: 1});
@@ -110,22 +110,21 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], funct
     //显示表单弹窗
     var showEditModel = function (data) {
         var title = data ? '修改用户' : '添加用户';
-
-        $.get(config.base_server + 'role', { limit: 0 },
-            function(result){
-                var list = result.data;
-                var selectContent = '<option value="0">--请选择--</option>';
-                if(list){
-                    for(var i = 0;i<list.length; i++){
-                        if(data && data.roleId == list[i].id){
-                            selectContent = selectContent + '<option value="' + list[i].id + '" selected="selected">' + list[i].roleName + '</option>';
-                        }else{
-                            selectContent = selectContent + '<option value="' + list[i].id + '">' + list[i].roleName + '</option>';
-                        }
+        base.getReq('role', {limit: 0}, function (result) {
+            var list = result.data;
+            var selectContent = '<option value="0">--请选择--</option>';
+            if(list){
+                for(var i = 0;i<list.length; i++){
+                    if(data && data.roleId == list[i].id){
+                        selectContent = selectContent + '<option value="' + list[i].id + '" selected="selected">' + list[i].roleName + '</option>';
+                    }else{
+                        selectContent = selectContent + '<option value="' + list[i].id + '">' + list[i].roleName + '</option>';
                     }
                 }
-                $("select[name='roleId']").html(selectContent);
-            });
+            }
+            $("select[name='roleId']").html(selectContent);
+        });
+
 
         index.popupCenter({
             title: title,
@@ -184,7 +183,7 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], funct
     var doDelete = function (obj) {
         layer.confirm('确定要删除此用户吗？', function () {
             layer.load(2);
-            base.req('user/' + obj.data.id, {}, function (data) {
+            base.jsonReq('user/' + obj.data.id, {}, function (data) {
                 layer.closeAll('loading');
                 if (data.code == 0) {
                     layer.msg(data.msg, {icon: 1});
@@ -200,7 +199,7 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'index', 'base'], funct
         layer.confirm('确定重置此用户的密码吗？', function (i) {
             layer.close(i);
             layer.load(2);
-            base.req('user/psw/' + field.userId, {}, function (data) {
+            base.jsonReq('user/psw/' + field.userId, {}, function (data) {
                 layer.closeAll('loading');
                 if (data.code == 0) {
                     layer.msg(data.msg, {icon: 1});

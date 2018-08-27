@@ -91,7 +91,7 @@ public class LoginController {
                 if(user.getIsSuper()!=1){
                     List<String> list = privilegeService.getPrivilegeByRoleId(user.getRoleId());
                     if(list!=null && list.size()>0){
-                        user.setPrivaleges(list);
+                        user.setPrivileges(list);
                     }
                 }
                 String token = authService.generateToken(request, user);
@@ -103,9 +103,11 @@ public class LoginController {
                 userService.addLoginLog(request, account, "登录成功");
 
                 JSONObject jsonObject = new JSONObject();
+                //jsonObject.put("id", user.getId());
                 jsonObject.put("token", token);
-                jsonObject.put("isSuper", user.getIsSuper());
-                jsonObject.put("privileges", user.getPrivaleges());
+                user.setPassWord(null);
+                jsonObject.put("user", user);
+                //jsonObject.put("privileges", user.getPrivaleges());
                 return ResponseMessage.ok(jsonObject);//.put("token", "").put("user", user);
             }else{
                 userService.addLoginLog(request, account, "密码错误");

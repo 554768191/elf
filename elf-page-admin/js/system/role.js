@@ -72,7 +72,7 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'base'], function () {
     // 表单提交事件
     form.on('submit(role-form-submit)', function (data) {
         layer.load(2);
-        base.req('role', data.field, function (data) {
+        base.jsonReq('role', data.field, function (data) {
             layer.closeAll('loading');
             if (data.code == 0) {
                 layer.msg(data.msg, {icon: 1});
@@ -112,7 +112,7 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'base'], function () {
         layer.confirm('确定要删除吗？', function (i) {
             layer.close(i);
             layer.load(2);
-            base.req('role/' + obj.data.id, {}, function (data) {
+            base.jsonReq('role/' + obj.data.id, {}, function (data) {
                 layer.closeAll('loading');
                 if (data.code == 0) {
                     layer.msg(data.msg, {icon: 1});
@@ -144,10 +144,10 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'base'], function () {
                         simpleData: {enable: true}
                     }
                 };
-                $.get(config.base_server + 'privilege/role/' + roleId, {}, function (data) {
+                base.getReq('privilege/role/' + roleId, {}, function (data) {
                     $.fn.zTree.init($('#treeAuth'), setting, data.data);
                     layer.closeAll('loading');
-                }, 'json');
+                });
             },
             yes: function (index) {
                 layer.load(1);
@@ -158,6 +158,16 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'base'], function () {
                     ids[i] = nodes[i].id;
                 }
 
+                base.jsonReq('role/' + roleId + '/privilege', ids, function (data) {
+                    layer.closeAll('loading');
+                    if (0 == data.code) {
+                        layer.msg(data.msg, {icon: 1});
+                        layer.close(index);
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                }, 'POST');
+                /*
                 $.ajax({
                     url:config.base_server + 'role/' + roleId + '/privilege',
                     type:"post",
@@ -172,8 +182,15 @@ layui.use(['form', 'table', 'util', 'laydate', 'config', 'base'], function () {
                         } else {
                             layer.msg(data.msg, {icon: 2});
                         }
+                    },
+                    beforeSend: function (xhr) {
+                        var token = base.getToken();
+                        if (token) {
+                            xhr.setRequestHeader('token', token);
+                        }
                     }
                 });
+                */
 
             }
         });
