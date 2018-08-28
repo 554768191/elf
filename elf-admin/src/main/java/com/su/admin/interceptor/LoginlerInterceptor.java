@@ -44,11 +44,8 @@ public class LoginlerInterceptor extends HandlerInterceptorAdapter {
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
-        String uri = request.getRequestURI();
-        String path = request.getContextPath();
-        if(StringUtils.isNotEmpty(path)){
-            uri = uri.replace(path, "");
-        }
+        String uri = request.getServletPath();
+
         if(uri.equals("/")){
             return true;
         }

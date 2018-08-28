@@ -18,15 +18,17 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ResponseMessage Handle(Exception e){
-        //将系统异常以打印出来
-        logger.error(e.getMessage(), e);
+
         if (e instanceof CommonException){
+            logger.error(e.getMessage());
             CommonException exception = (CommonException) e;
             return ResponseMessage.error(exception.getErrorCode(), exception.getMessage());
         } else if(e instanceof ResourceAccessException){
+            logger.error(e.getMessage());
             return ResponseMessage.error(Constants.SERVER_ERROR, "服务调用失败");
         } else {
-
+            //将系统异常以打印出来
+            logger.error(e.getMessage(), e);
             return ResponseMessage.error(Constants.SERVER_ERROR, "内部错误");
         }
 

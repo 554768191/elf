@@ -42,5 +42,6 @@ logging:
     com.su: debug
 #logging.level.org.springframework.transaction=debug
     org.mybatis: debug
+  file: /var/log/java/system.log
 
 

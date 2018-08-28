@@ -21,19 +21,20 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ResponseMessage Handle(Exception e){
-        //将系统异常以打印出来
-        logger.error(e.getMessage(), e);
 
         if (e instanceof CommonException){
+            logger.error(e.getMessage());
             CommonException exception = (CommonException) e;
             return ResponseMessage.error(exception.getErrorCode(), exception.getMessage());
         }else if (e.getCause() instanceof SQLException){
+            logger.error(e.getMessage());
             if(e instanceof DuplicateKeyException){
                 return ResponseMessage.error(CodeEnum.SQL_INDEX_CONFLICT);
             }
             return ResponseMessage.error(CodeEnum.SQL_ERROR);
         }else {
-            //logger.error(e.getMessage(), e);
+            //将系统异常以打印出来
+            logger.error(e.getMessage(), e);
             return ResponseMessage.error(Constants.SERVER_ERROR, "内部错误");
         }
 

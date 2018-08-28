@@ -107,8 +107,13 @@ public class AuthServiceImpl implements AuthService {
         String token = fetchToken(request);
         // 是否需要auth
         String clientIP = request.getRemoteAddr();
-        String uri = request.getRequestURI();
-        if(weakHashMap.get(token+"_"+uri)!=null){
+        String uri = request.getServletPath();
+        String method = request.getMethod();
+        if(logger.isDebugEnabled()){
+            logger.debug("开始校验uri:{}, method:{}", uri, method);
+        }
+
+        if(weakHashMap.get(token + "_" + uri + "_" + method)!=null){
             CacheData cacheData = weakHashMap.get(token+"_"+uri);
             long now = System.currentTimeMillis();
             if(now - cacheData.getTime() < SsoConstants.MEMORY_CACHE_SECONDS*1000){
@@ -125,7 +130,7 @@ public class AuthServiceImpl implements AuthService {
             if(cacheClientIP.equals(clientIP)){
                 String isSuper = ops.get("is_super");
                 if(StringUtils.isNotEmpty(isSuper) && isSuper.equals("1")){
-                    addCache(token+"_"+uri);
+                    addCache(token + "_" + uri + "_" + method);
                     redisTemplate.expire(token, SsoConstants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
                     return true;
                 }
@@ -135,16 +140,19 @@ public class AuthServiceImpl implements AuthService {
                     for(String p:ps){
                         if(uri.indexOf(p)>=0){
                             // 添加校验是否只读， 只读用户只可以执行get、options方法，post、delete、put方法没权限
-                            String method = request.getMethod();
+
                             boolean b = isReadOnly(token);
                             if(b){
                                 if(method.equalsIgnoreCase("post")
                                         || method.equalsIgnoreCase("put")
                                         || method.equalsIgnoreCase("delete")){
+                                    if(logger.isDebugEnabled()){
+                                        logger.debug("用户只读，没有写权限");
+                                    }
                                     return false;
                                 }
                             }
-                            addCache(token+"_"+uri);
+                            addCache(token + "_" + uri + "_" + method);
                             redisTemplate.expire(token, SsoConstants.TOKEN_CACHE_SECONDS, TimeUnit.SECONDS);
                             return true;
                         }
@@ -190,6 +198,9 @@ public class AuthServiceImpl implements AuthService {
             BoundHashOperations<String, String, String> ops = redisTemplate.boundHashOps(token);
             String isSuper = ops.get("is_super");
             if(StringUtils.isNotEmpty(isSuper) && isSuper.equals("1")){
+                if(logger.isDebugEnabled()){
+                    logger.debug("token:{}, 用户是超管", token);
+                }
                 return true;
             }
         }
@@ -201,6 +212,9 @@ public class AuthServiceImpl implements AuthService {
         BoundHashOperations<String, String, String> ops = redisTemplate.boundHashOps(token);
         String readOnly = ops.get("readOnly");
         if(StringUtils.isNotEmpty(readOnly) && readOnly.equals("1")){
+            if(logger.isDebugEnabled()){
+                logger.debug("token:{}, 只读用户", token);
+            }
             return true;
         }
         return false;

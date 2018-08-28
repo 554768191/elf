@@ -9,7 +9,9 @@ auth:
   excludes: login,logout,static,captcha   # 不做授权校验的URL
 
 #server.port=8080
-#server.servlet.context-path=/system
+#server:
+#  servlet:
+#    context-path: /admin
 
 eureka:
   client:
@@ -34,3 +36,4 @@ spring:
 logging:
   level:
     com.su: debug
+  file: /var/log/java/admin.log
